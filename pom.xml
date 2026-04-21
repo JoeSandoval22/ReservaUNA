@@ -21,10 +21,10 @@
             <version>23</version>
         </dependency>
         <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc17</artifactId>
-            <version>23.4.0.24.05</version>
-        </dependency>
+    <groupId>com.oracle.database.jdbc</groupId>
+    <artifactId>ojdbc11</artifactId>
+    <version>21.3.0.0</version>
+</dependency>
     </dependencies>
     <build>
         <plugins>

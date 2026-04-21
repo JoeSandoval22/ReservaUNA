@@ -5,7 +5,7 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.model.Equipment;
-import javafx.scene.control.ListView;
+import java.util.List;
 
 /**
  *
@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 public interface EquipmentInterface extends ResourceInterface {
     boolean insertEquipment(Equipment equipment);
     boolean deleteEquipment(Equipment equipment);
-    boolean upgradeEquipment(Equipment equipment);
+    boolean updateEquipment(Equipment equipment);
     Equipment findEquipmentById(int id);
-    ListView<Equipment> getAllEquipmentes();
+    List<Equipment> getAllEquipmentes();
 }

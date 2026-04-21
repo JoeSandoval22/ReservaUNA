@@ -4,18 +4,39 @@
  */
 package cr.ac.una.reservauna.dao;
 
+import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.model.User;
-import javafx.scene.control.ListView;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
  * @author User
  */
 public class UserDAO implements UserInterface {
+    private Connection connection;
+    
+    public UserDAO(){
+        this.connection = Conexion.getConnection();
+    }
 
     @Override
     public boolean insertUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO USERS_TABLE (user_name, user_mail, role_id, user_state) VALUES (?, ?, ?, ?)";
+        try(Connection conn = Conexion.getConnection()){
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getUserMail());
+            ps.setInt(3, user.getUserRole().getRoleId());
+            ps.setString(4, user.getUserState());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.getLogger(UserDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return false;
+        }
     }
 
     @Override
@@ -24,7 +45,7 @@ public class UserDAO implements UserInterface {
     }
 
     @Override
-    public boolean upgradeUser(User user) {
+    public boolean updateUser(User user) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -34,7 +55,7 @@ public class UserDAO implements UserInterface {
     }
 
     @Override
-    public ListView getAllUsers() {
+    public List<User> getAllUsers() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

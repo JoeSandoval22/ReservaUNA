@@ -6,7 +6,7 @@ package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.model.Place;
 import cr.ac.una.reservauna.model.Resource;
-import javafx.scene.control.ListView;
+import java.util.List;
 
 /**
  *
@@ -25,7 +25,7 @@ public class PlaceDAO implements PlaceInterface {
     }
 
     @Override
-    public boolean upgradePlace(Place place) {
+    public boolean updatePlace(Place place) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -35,7 +35,7 @@ public class PlaceDAO implements PlaceInterface {
     }
 
     @Override
-    public ListView<Place> getAllPlaces() {
+    public List<Place> getAllPlaces() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -50,7 +50,7 @@ public class PlaceDAO implements PlaceInterface {
     }
 
     @Override
-    public boolean upgradeResource(Resource resource) {
+    public boolean updateResource(Resource resource) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -60,7 +60,7 @@ public class PlaceDAO implements PlaceInterface {
     }
 
     @Override
-    public ListView<Resource> getAllResources() {
+    public List<Resource> getAllResources() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

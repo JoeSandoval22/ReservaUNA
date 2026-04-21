@@ -4,64 +4,90 @@
  */
 package cr.ac.una.reservauna.dao;
 
-import cr.ac.una.reservauna.model.Equipment;
-import cr.ac.una.reservauna.model.Resource;
+import cr.ac.una.reservauna.model.ReserveItem;
+import cr.ac.una.reservauna.model.ReserveStatus;
+import cr.ac.una.reservauna.model.Role;
+import java.time.LocalDateTime;
 import java.util.List;
-import javafx.scene.control.ListView;
 
 /**
  *
- * @author User
+ * @author andre_3e6xvb2
  */
-public class EquipmentDAO implements EquipmentInterface {
+public class ReserveItemDAO implements ReserveItemInterface {
 
     @Override
-    public boolean insertEquipment(Equipment equipment) {
+    public boolean insertReserveItem(ReserveItem item) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean deleteEquipment(Equipment equipment) {
+    public boolean deleteReserveItem(ReserveItem item) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean updateEquipment(Equipment equipment) {
+    public boolean updateReserveItem(ReserveItem item) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Equipment findEquipmentById(int id) {
+    public ReserveItem findReserveItemById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Equipment> getAllEquipmentes() {
+    public List<ReserveItem> getAllReserveItems() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean insertResource(Resource resource) {
+    public boolean reserveLimitPerUser(int userId, Role role) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean deleteResource(Resource resource) {
+    public boolean isThereAnOverlap(int id, LocalDateTime startDate, LocalDateTime endDate) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean updateResource(Resource resource) {
+    public ReserveItem findReserveById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Resource findResourceById(int id) {
+    public List<ReserveItem> findByStatus(ReserveStatus status) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Resource> getAllResources() {
+    public List<ReserveItem> findByDate(LocalDateTime date) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ReserveItem> findByUserId(int userId, int reserveId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ReserveItem> findByUserId(int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean approveReserve(int reserveId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean rejectReserve(int reserveId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean cancelReserve(int reserveId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

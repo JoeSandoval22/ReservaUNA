@@ -5,7 +5,7 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.model.User;
-import javafx.scene.control.ListView;
+import java.util.List;
 
 /**
  *
@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 public interface UserInterface {
     boolean insertUser(User user);
     boolean deleteUser(User user);
-    boolean upgradeUser(User user);
+    boolean updateUser(User user);
     User findUserById(int id);
-    ListView getAllUsers();
+    List<User> getAllUsers();
 }

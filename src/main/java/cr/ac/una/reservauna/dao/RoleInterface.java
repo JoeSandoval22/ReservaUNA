@@ -5,7 +5,7 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.model.Role;
-import javafx.scene.control.ListView;
+import java.util.List;
 
 /**
  *
@@ -13,5 +13,5 @@ import javafx.scene.control.ListView;
  */
 public interface RoleInterface {
     Role findRoleById(int id);
-    ListView<Role> callRoles();
+    List<Role> callRoles();
 }

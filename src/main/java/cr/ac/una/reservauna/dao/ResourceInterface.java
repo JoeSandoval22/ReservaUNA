@@ -5,7 +5,7 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.model.Resource;
-import javafx.scene.control.ListView;
+import java.util.List;
 
 /**
  *
@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 public interface ResourceInterface {
     boolean insertResource(Resource resource);
     boolean deleteResource(Resource resource);
-    boolean upgradeResource(Resource resource);
+    boolean updateResource(Resource resource);
     Resource findResourceById(int id);
-    ListView<Resource> getAllResources();
+    List<Resource> getAllResources();
 }

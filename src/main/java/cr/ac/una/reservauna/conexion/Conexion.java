@@ -26,7 +26,7 @@ public class Conexion {
         if(instance == null){
             try{
                 String url = "jdbc:oracle:thin:@localhost:1521:xe";
-                String user = "C##reservadb";
+                String user = "C##Reserva_dev";
                 String password = "Joe1234";
                 instance = DriverManager.getConnection(url, user, password);
             }catch(SQLException e){

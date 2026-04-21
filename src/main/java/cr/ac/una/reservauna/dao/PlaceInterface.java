@@ -5,7 +5,7 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.model.Place;
-import javafx.scene.control.ListView;
+import java.util.List;
 
 /**
  *
@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 public interface PlaceInterface extends ResourceInterface {
     boolean insertPlace(Place place);
     boolean deletePlace(Place place);
-    boolean upgradePlace(Place place);
+    boolean updatePlace(Place place);
     Place findPlaceById(int id);
-    ListView<Place> getAllPlaces();
+    List<Place> getAllPlaces();
 }
