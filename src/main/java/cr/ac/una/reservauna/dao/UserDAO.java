@@ -5,10 +5,13 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.conexion.Conexion;
+import cr.ac.una.reservauna.model.Role;
 import cr.ac.una.reservauna.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +28,7 @@ public class UserDAO implements UserInterface {
     @Override
     public boolean insertUser(User user) {
         String sql = "INSERT INTO USERS_TABLE (user_name, user_mail, role_id, user_state) VALUES (?, ?, ?, ?)";
-        try(Connection conn = Conexion.getConnection()){
+        try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getUserMail());
@@ -34,29 +37,76 @@ public class UserDAO implements UserInterface {
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            System.getLogger(UserDAO.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.out.println("Error: " + ex.getMessage());
             return false;
         }
     }
 
     @Override
     public boolean deleteUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM USERS_TABLE WHERE user_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, user.getUserId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            return false;
+        }
     }
 
     @Override
     public boolean updateUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE USERS_TABLE SET user_name = ?, user_mail = ?, role_id = ?, user_state = ? WHERE user_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getUserMail());
+            ps.setInt(3, user.getUserRole().getRoleId());
+            ps.setString(4, user.getUserState());
+            ps.setInt(5, user.getUserId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex){
+            System.out.println("Error: " + ex.getMessage());
+            return false;
+        }      
     }
 
     @Override
     public User findUserById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM USERS_TABLE WHERE user_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return new User(rs.getInt("user_id"),rs.getString("user_name"),rs.getString("user_mail"),Role.values()[rs.getInt("role_id")-1],rs.getString("user_state"));
+            }
+        } catch(SQLException ex){
+            System.out.println("Error: " + ex.getMessage());
+            return null;
+        }
+     return null;   
     }
 
     @Override
     public List<User> getAllUsers() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM USERS_TABLE";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                User user = new User(rs.getInt("user_id"),rs.getString("user_name"),rs.getString("user_mail"),Role.values()[rs.getInt("role_id")-1],rs.getString("user_state"));
+                users.add(user);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            return null;
+        }
+        return users;
     }
     
 }

@@ -5,4 +5,7 @@ module cr.ac.una.reservauna {
 
     opens cr.ac.una.reservauna to javafx.fxml;
     exports cr.ac.una.reservauna;
+    opens cr.ac.una.reservauna.dao;
+    opens cr.ac.una.reservauna.model;
+    opens cr.ac.una.reservauna.conexion;
 }
