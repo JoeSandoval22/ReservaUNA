@@ -43,7 +43,7 @@ public abstract class Resource {
         this.resourceState=state;
     }
     //Getters
-    public int getRosourceId(){
+    public int getResourceId(){
         return this.resourceId;
     }
     public String getResourceName(){
