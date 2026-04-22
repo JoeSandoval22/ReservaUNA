@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author User
  */
-public interface EquipmentInterface extends ResourceInterface {
+public interface EquipmentInterface {
     boolean insertEquipment(Equipment equipment);
     boolean deleteEquipment(Equipment equipment);
     boolean updateEquipment(Equipment equipment);

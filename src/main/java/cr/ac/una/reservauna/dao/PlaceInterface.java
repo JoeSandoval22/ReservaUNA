@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author User
  */ 
-public interface PlaceInterface extends ResourceInterface {
+public interface PlaceInterface {
     boolean insertPlace(Place place);
     boolean deletePlace(Place place);
     boolean updatePlace(Place place);
