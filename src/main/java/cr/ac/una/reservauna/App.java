@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.dao.EquipmentDAO;
+import cr.ac.una.reservauna.dao.PlaceDAO;
 import cr.ac.una.reservauna.dao.UserDAO;
 import cr.ac.una.reservauna.model.Equipment;
+import cr.ac.una.reservauna.model.Place;
 
 import cr.ac.una.reservauna.model.Role;
 import cr.ac.una.reservauna.model.User;
@@ -42,15 +44,15 @@ public class App extends Application {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-EquipmentDAO equipmentDAO = new EquipmentDAO();
+PlaceDAO placeDAO = new PlaceDAO();
 int opcion;
 do {
-    System.out.println("\n===== RESERVAUNA - EQUIPOS =====");
-    System.out.println("1. Registrar equipo");
-    System.out.println("2. Listar equipos");
-    System.out.println("3. Buscar equipo por ID");
-    System.out.println("4. Actualizar equipo");
-    System.out.println("5. Borrar equipo");
+    System.out.println("\n===== RESERVAUNA - LUGARES =====");
+    System.out.println("1. Registrar lugar");
+    System.out.println("2. Listar lugares");
+    System.out.println("3. Buscar lugar por ID");
+    System.out.println("4. Actualizar lugar");
+    System.out.println("5. Borrar lugar");
     System.out.println("0. Salir");
     System.out.print("Seleccione una opción: ");
     opcion = Integer.parseInt(sc.nextLine());
@@ -62,31 +64,31 @@ do {
             String descripcion = sc.nextLine();
             System.out.print("Estado (DISPONIBLE/NO DISPONIBLE): ");
             String estado = sc.nextLine();
-            System.out.print("Marca: ");
-            String marca = sc.nextLine();
-            System.out.print("Modelo: ");
-            String modelo = sc.nextLine();
-            System.out.print("Serie: ");
-            String serie = sc.nextLine();
-            Equipment equipment = new Equipment(nombre, descripcion, estado, marca, modelo, serie);
-            equipmentDAO.insertEquipment(equipment);
+            System.out.print("Capacidad: ");
+            int capacidad = Integer.parseInt(sc.nextLine());
+            System.out.print("Ubicación: ");
+            String ubicacion = sc.nextLine();
+            System.out.print("Tipo (LABORATORIO/AULA): ");
+            String tipo = sc.nextLine();
+            Place place = new Place(nombre, descripcion, estado, capacidad, ubicacion, tipo);
+            placeDAO.insertPlace(place);
         }
         case 2 -> {
-            List<Equipment> equipments = equipmentDAO.getAllEquipmentes();
-            equipments.forEach(e -> System.out.println(e.getResourceId() + " - " + e.getResourceName() + " - " + e.getBrand() + " - " + e.getModel()));
+            List<Place> places = placeDAO.getAllPlaces();
+            places.forEach(p -> System.out.println(p.getResourceId() + " - " + p.getResourceName() + " - " + p.getLocation() + " - " + p.getType()));
         }
         case 3 -> {
-            System.out.print("ID del equipo: ");
+            System.out.print("ID del lugar: ");
             int id = Integer.parseInt(sc.nextLine());
-            Equipment e = equipmentDAO.findEquipmentById(id);
-            if (e != null) {
-                System.out.println(e.getResourceId() + " - " + e.getResourceName() + " - " + e.getBrand() + " - " + e.getModel());
+            Place p = placeDAO.findPlaceById(id);
+            if (p != null) {
+                System.out.println(p.getResourceId() + " - " + p.getResourceName() + " - " + p.getLocation() + " - " + p.getType());
             } else {
-                System.out.println("Equipo no encontrado.");
+                System.out.println("Lugar no encontrado.");
             }
         }
         case 4 -> {
-            System.out.print("ID del equipo a actualizar: ");
+            System.out.print("ID del lugar a actualizar: ");
             int id = Integer.parseInt(sc.nextLine());
             System.out.print("Nuevo nombre: ");
             String nombre = sc.nextLine();
@@ -94,20 +96,20 @@ do {
             String descripcion = sc.nextLine();
             System.out.print("Nuevo estado (DISPONIBLE/NO DISPONIBLE): ");
             String estado = sc.nextLine();
-            System.out.print("Nueva marca: ");
-            String marca = sc.nextLine();
-            System.out.print("Nuevo modelo: ");
-            String modelo = sc.nextLine();
-            System.out.print("Nueva serie: ");
-            String serie = sc.nextLine();
-            Equipment equipment = new Equipment(id, nombre, descripcion, estado, marca, modelo, serie);
-            equipmentDAO.updateEquipment(equipment);
+            System.out.print("Nueva capacidad: ");
+            int capacidad = Integer.parseInt(sc.nextLine());
+            System.out.print("Nueva ubicación: ");
+            String ubicacion = sc.nextLine();
+            System.out.print("Nuevo tipo (LABORATORIO/AULA): ");
+            String tipo = sc.nextLine();
+            Place place = new Place(id, nombre, descripcion, estado, capacidad, ubicacion, tipo);
+            placeDAO.updatePlace(place);
         }
         case 5 -> {
-            System.out.print("ID del equipo a borrar: ");
+            System.out.print("ID del lugar a borrar: ");
             int id = Integer.parseInt(sc.nextLine());
-            Equipment equipment = new Equipment(id, "", "", "", "", "", "");
-            equipmentDAO.deleteEquipment(equipment);
+            Place place = new Place(id, "", "", "", 0, "", "");
+            placeDAO.deletePlace(place);
         }
         case 0 -> System.out.println("Saliendo...");
         default -> System.out.println("Opción inválida.");
