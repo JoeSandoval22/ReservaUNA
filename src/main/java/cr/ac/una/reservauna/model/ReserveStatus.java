@@ -9,10 +9,10 @@ package cr.ac.una.reservauna.model;
  * @author User
  */
 public enum ReserveStatus {
-    PENDIENTE("Pendiente"),
-    APROBADA("Aprobada"),
-    RECHAZADA("Rechazada"), 
-    CANCELADA("Cancelada");
+    PENDIENTE("PENDIENTE"),
+    APROBADA("APROBADA"),
+    RECHAZADA("RECHAZADA"), 
+    CANCELADA("CANCELADA");
     
     private final String status;
     

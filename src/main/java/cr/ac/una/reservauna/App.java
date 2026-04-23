@@ -11,12 +11,18 @@ import java.sql.Connection;
 import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.dao.EquipmentDAO;
 import cr.ac.una.reservauna.dao.PlaceDAO;
+import cr.ac.una.reservauna.dao.ReserveDao;
 import cr.ac.una.reservauna.dao.UserDAO;
 import cr.ac.una.reservauna.model.Equipment;
 import cr.ac.una.reservauna.model.Place;
+import cr.ac.una.reservauna.model.Reserve;
+import cr.ac.una.reservauna.model.ReserveStatus;
+import cr.ac.una.reservauna.model.Resource;
 
 import cr.ac.una.reservauna.model.Role;
 import cr.ac.una.reservauna.model.User;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 /**
@@ -44,72 +50,82 @@ public class App extends Application {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-PlaceDAO placeDAO = new PlaceDAO();
+ReserveDao reserveDAO = new ReserveDao();
 int opcion;
 do {
-    System.out.println("\n===== RESERVAUNA - LUGARES =====");
-    System.out.println("1. Registrar lugar");
-    System.out.println("2. Listar lugares");
-    System.out.println("3. Buscar lugar por ID");
-    System.out.println("4. Actualizar lugar");
-    System.out.println("5. Borrar lugar");
+    System.out.println("\n===== RESERVAUNA - RESERVAS =====");
+    System.out.println("1. Registrar reserva");
+    System.out.println("2. Listar reservas");
+    System.out.println("3. Buscar reserva por ID");
+    System.out.println("4. Actualizar reserva");
+    System.out.println("5. Borrar reserva");
+    System.out.println("6. Aprobar reserva");
+    System.out.println("7. Rechazar reserva");
+    System.out.println("8. Cancelar reserva");
     System.out.println("0. Salir");
     System.out.print("Seleccione una opción: ");
     opcion = Integer.parseInt(sc.nextLine());
     switch (opcion) {
         case 1 -> {
-            System.out.print("Nombre del recurso: ");
-            String nombre = sc.nextLine();
-            System.out.print("Descripción: ");
-            String descripcion = sc.nextLine();
-            System.out.print("Estado (DISPONIBLE/NO DISPONIBLE): ");
-            String estado = sc.nextLine();
-            System.out.print("Capacidad: ");
-            int capacidad = Integer.parseInt(sc.nextLine());
-            System.out.print("Ubicación: ");
-            String ubicacion = sc.nextLine();
-            System.out.print("Tipo (LABORATORIO/AULA): ");
-            String tipo = sc.nextLine();
-            Place place = new Place(nombre, descripcion, estado, capacidad, ubicacion, tipo);
-            placeDAO.insertPlace(place);
+            System.out.print("ID del usuario: ");
+            int userId = Integer.parseInt(sc.nextLine());
+            System.out.print("ID del recurso: ");
+            int resourceId = Integer.parseInt(sc.nextLine());
+            System.out.print("Fecha inicio (yyyy-MM-dd HH:mm): ");
+            LocalDateTime startDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            System.out.print("Fecha fin (yyyy-MM-dd HH:mm): ");
+            LocalDateTime endDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            System.out.print("Motivo: ");
+            String reason = sc.nextLine();
+            User user = new UserDAO().findUserById(userId);
+            Resource resource = new EquipmentDAO().findEquipmentById(resourceId);
+            Reserve reserve = new Reserve(user, resource, startDate, endDate, reason, LocalDateTime.now(), ReserveStatus.PENDIENTE);
+            reserveDAO.insertReserve(reserve);
         }
         case 2 -> {
-            List<Place> places = placeDAO.getAllPlaces();
-            places.forEach(p -> System.out.println(p.getResourceId() + " - " + p.getResourceName() + " - " + p.getLocation() + " - " + p.getType()));
+            List<Reserve> reserves = reserveDAO.getAllReserves();
+            reserves.forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus()));
         }
         case 3 -> {
-            System.out.print("ID del lugar: ");
+            System.out.print("ID de la reserva: ");
             int id = Integer.parseInt(sc.nextLine());
-            Place p = placeDAO.findPlaceById(id);
-            if (p != null) {
-                System.out.println(p.getResourceId() + " - " + p.getResourceName() + " - " + p.getLocation() + " - " + p.getType());
+            Reserve r = reserveDAO.findReserveById(id);
+            if (r != null) {
+                System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus());
             } else {
-                System.out.println("Lugar no encontrado.");
+                System.out.println("Reserva no encontrada.");
             }
         }
         case 4 -> {
-            System.out.print("ID del lugar a actualizar: ");
+            System.out.print("ID de la reserva a actualizar: ");
             int id = Integer.parseInt(sc.nextLine());
-            System.out.print("Nuevo nombre: ");
-            String nombre = sc.nextLine();
-            System.out.print("Nueva descripción: ");
-            String descripcion = sc.nextLine();
-            System.out.print("Nuevo estado (DISPONIBLE/NO DISPONIBLE): ");
-            String estado = sc.nextLine();
-            System.out.print("Nueva capacidad: ");
-            int capacidad = Integer.parseInt(sc.nextLine());
-            System.out.print("Nueva ubicación: ");
-            String ubicacion = sc.nextLine();
-            System.out.print("Nuevo tipo (LABORATORIO/AULA): ");
-            String tipo = sc.nextLine();
-            Place place = new Place(id, nombre, descripcion, estado, capacidad, ubicacion, tipo);
-            placeDAO.updatePlace(place);
+            System.out.print("Nueva fecha inicio (yyyy-MM-dd HH:mm): ");
+            LocalDateTime startDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            System.out.print("Nueva fecha fin (yyyy-MM-dd HH:mm): ");
+            LocalDateTime endDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            System.out.print("Nuevo motivo: ");
+            String reason = sc.nextLine();
+            reserveDAO.updateReserve(new Reserve(id, null, null, startDate, endDate, reason, LocalDateTime.now(), ReserveStatus.PENDIENTE));
         }
         case 5 -> {
-            System.out.print("ID del lugar a borrar: ");
+            System.out.print("ID de la reserva a borrar: ");
             int id = Integer.parseInt(sc.nextLine());
-            Place place = new Place(id, "", "", "", 0, "", "");
-            placeDAO.deletePlace(place);
+            reserveDAO.deleteReserve(new Reserve(id, null, null, null, null, null, null, null));
+        }
+        case 6 -> {
+            System.out.print("ID de la reserva a aprobar: ");
+            int id = Integer.parseInt(sc.nextLine());
+            reserveDAO.approveReserve(id);
+        }
+        case 7 -> {
+            System.out.print("ID de la reserva a rechazar: ");
+            int id = Integer.parseInt(sc.nextLine());
+            reserveDAO.rejectReserve(id);
+            }
+        case 8 -> {
+            System.out.print("ID de la reserva a cancelar: ");
+            int id = Integer.parseInt(sc.nextLine());
+            reserveDAO.cancelReserve(id);
         }
         case 0 -> System.out.println("Saliendo...");
         default -> System.out.println("Opción inválida.");

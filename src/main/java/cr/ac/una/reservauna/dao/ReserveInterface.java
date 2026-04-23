@@ -16,7 +16,7 @@ import java.util.List;
 public interface ReserveInterface {
     boolean insertReserve(Reserve reserve);
     boolean deleteReserve(Reserve reserve);
-    boolean updateRserve(Reserve reserve);
+    boolean updateReserve(Reserve reserve);
     boolean isThereAnOverlap(int id, LocalDateTime startDate,LocalDateTime endDate);
     //Este método llama a una única reserva por medio de su ID
     Reserve findReserveById(int id);

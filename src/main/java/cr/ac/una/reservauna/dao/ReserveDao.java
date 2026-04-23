@@ -4,9 +4,16 @@
  */
 package cr.ac.una.reservauna.dao;
 
+import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.model.Reserve;
 import cr.ac.una.reservauna.model.ReserveStatus;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,20 +21,63 @@ import java.util.List;
  * @author andre_3e6xvb2
  */
 public class ReserveDao implements ReserveInterface {
-
+    private Connection connection;
+    
+    public ReserveDao(){
+        this.connection = Conexion.getConnection();
+    }
+    
     @Override
     public boolean insertReserve(Reserve reserve) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,?)";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sqlReserve);
+            ps.setInt(1, reserve.getUser().getUserId());
+            ps.setInt(2, reserve.getResource().getResourceId());
+            ps.setTimestamp(3, Timestamp.valueOf(reserve.getStartDate()));
+            ps.setTimestamp(4, Timestamp.valueOf(reserve.getEndDate()));
+            ps.setString(5, reserve.getReason());
+            ps.setTimestamp(6, Timestamp.valueOf(reserve.getCreateAt()));
+            ps.setString(7, reserve.getStatus().getStatus());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            return false;
+        }
     }
 
     @Override
     public boolean deleteReserve(Reserve reserve) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sqlReserve = "DELETE FROM RESERVE WHERE reserve_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sqlReserve);
+            ps.setInt(1, reserve.getReserveId());
+            ps.executeUpdate();
+            return true;
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return false;
+        }
     }
 
     @Override
-    public boolean updateRserve(Reserve reserve) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean updateReserve(Reserve reserve) {
+        String sqlReserve = "UPDATE RESERVE SET start_date = ?, end_date = ?, reason = ?, creat_at = ?, reserve_status = ? WHERE reserve_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sqlReserve);
+            ps.setTimestamp(1, Timestamp.valueOf(reserve.getStartDate()));
+            ps.setTimestamp(2, Timestamp.valueOf(reserve.getEndDate()));
+            ps.setString(3, reserve.getReason());
+            ps.setTimestamp(4, Timestamp.valueOf(reserve.getCreateAt()));
+            ps.setString(5, reserve.getStatus().getStatus());
+            ps.setInt(6, reserve.getReserveId());
+            ps.executeUpdate();
+            return true;
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -37,12 +87,57 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public Reserve findReserveById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM RESERVE WHERE reserve_id = ?";
+        UserDAO userDAO = new UserDAO();
+        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return new Reserve(
+                            rs.getInt("reserve_id"),
+                            userDAO.findUserById(rs.getInt("user_id")),
+                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),
+                            rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),
+                            ReserveStatus.valueOf(rs.getString("reserve_status"))
+                            );
+            }
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return null;
+        }
+        return null;
     }
 
     @Override
     public List<Reserve> getAllReserves() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Reserve> reserves = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        String sql = "SELECT * FROM RESERVE";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Reserve reserve = new Reserve(rs.getInt("reserve_id"),
+                            userDAO.findUserById(rs.getInt("user_id")),
+                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),
+                            rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),
+                            ReserveStatus.valueOf(rs.getString("reserve_status")));
+                reserves.add(reserve);
+            }
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return null;
+        }
+        return reserves;
     }
 
     @Override
