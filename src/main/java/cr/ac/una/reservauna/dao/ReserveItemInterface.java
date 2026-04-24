@@ -29,7 +29,7 @@ public interface ReserveItemInterface {
     //Consulta de carácter general sin ID de reserva
     List<ReserveItem>findByStatus(ReserveStatus status);
     //Consulta de carácter general sin ID
-    List<ReserveItem>findByDate(LocalDateTime date);
+    List<ReserveItem>findByDate(LocalDateTime startDate, LocalDateTime endDate);
     //Consulta de carácter específico con el ID de usuario y de reserva
     List<ReserveItem>findByUserId(int userId, int reserveId);
     //Consulta para todas las reservas de un usario con el ID de reserva

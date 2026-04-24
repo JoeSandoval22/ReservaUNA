@@ -142,22 +142,116 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public List<Reserve> findByStatus(ReserveStatus status) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Reserve> reservesByStatus = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        String sql = "SELECT * FROM RESERVE WHERE reserve_status = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, status.getStatus());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Reserve reserve = new Reserve(rs.getInt("reserve_id"),
+                            userDAO.findUserById(rs.getInt("user_id")),
+                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),
+                            rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),
+                            ReserveStatus.valueOf(rs.getString("reserve_status")));
+                reservesByStatus.add(reserve);
+            }  
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            return null;
+        }
+        return reservesByStatus;
     }
 
     @Override
-    public List<Reserve> findByDate(LocalDateTime date) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Reserve> findByDate(LocalDateTime startDate, LocalDateTime endDate) {
+        List<Reserve> reservesByDate = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        String sql = "SELECT * FROM RESERVE WHERE start_date >= ? AND end_date <= ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setTimestamp(1, Timestamp.valueOf(startDate));
+            ps.setTimestamp(2, Timestamp.valueOf(endDate));
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Reserve reserves = new Reserve(rs.getInt("reserve_id"),
+                            userDAO.findUserById(rs.getInt("user_id")),
+                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),
+                            rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),
+                            ReserveStatus.valueOf(rs.getString("reserve_status")));
+                reservesByDate.add(reserves);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());    
+            return null;
+        }
+        return reservesByDate;
     }
-
+    
     @Override
-    public List<Reserve> findByUserId(int userId, int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Reserve findByUserId(int userId, int reserveId){
+        UserDAO userDAO = new UserDAO();
+        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        String sql = "SELECT * FROM RESERVE WHERE user_id = ? AND reserve_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, reserveId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return new Reserve(
+                            rs.getInt("reserve_id"),
+                            userDAO.findUserById(rs.getInt("user_id")),
+                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),
+                            rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),
+                            ReserveStatus.valueOf(rs.getString("reserve_status"))
+                            );
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());    
+            return null;
+        }
+        return null;
     }
 
     @Override
     public List<Reserve> findByUserId(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Reserve> reservesByUserId = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        String sql = "SELECT * FROM RESERVE WHERE user_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Reserve reserve = new Reserve(rs.getInt("reserve_id"),
+                            userDAO.findUserById(rs.getInt("user_id")),
+                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),
+                            rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),
+                            ReserveStatus.valueOf(rs.getString("reserve_status")));
+                reservesByUserId.add(reserve);
+            }
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return null;
+        }
+        return reservesByUserId;
     }
 
     @Override

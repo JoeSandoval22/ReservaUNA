@@ -22,12 +22,12 @@ public interface ReserveInterface {
     Reserve findReserveById(int id);
     //Esta consulta es para todas las reservas con todos los datos de cada una
     List<Reserve> getAllReserves();
-    //Consulta de carácter general sin ID de reserva
+    //Consulta de carácter general con es status de las reservas
     List<Reserve>findByStatus(ReserveStatus status);
-    //Consulta de carácter general sin ID
-    List<Reserve>findByDate(LocalDateTime date);
-    //Consulta de carácter específico con el ID de usuario y de reserva
-    List<Reserve>findByUserId(int userId, int reserveId);
+    //Busca de forma específica al usuario como a una de sus posibles reservas
+    Reserve findByUserId(int userId, int reserveId);
+    //Consulta de carácter general con las fechas de las reservas
+    List<Reserve>findByDate(LocalDateTime starDate, LocalDateTime endDate);
     //Consulta para todas las reservas de un usario con el ID de reserva
     List<Reserve>findByUserId(int userId);
     boolean approveReserve(int reserveId);

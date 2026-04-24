@@ -4,10 +4,17 @@
  */
 package cr.ac.una.reservauna.dao;
 
+import cr.ac.una.reservauna.conexion.Conexion;
+import cr.ac.una.reservauna.model.Reserve;
 import cr.ac.una.reservauna.model.ReserveItem;
 import cr.ac.una.reservauna.model.ReserveStatus;
 import cr.ac.una.reservauna.model.Role;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +22,11 @@ import java.util.List;
  * @author andre_3e6xvb2
  */
 public class ReserveItemDAO implements ReserveItemInterface {
+    private Connection connection;
+    
+    public ReserveItemDAO(){
+        this.connection=Conexion.getConnection();
+    }
 
     @Override
     public boolean insertReserveItem(ReserveItem item) {
@@ -62,7 +74,7 @@ public class ReserveItemDAO implements ReserveItemInterface {
     }
 
     @Override
-    public List<ReserveItem> findByDate(LocalDateTime date) {
+    public List<ReserveItem> findByDate(LocalDateTime startDate, LocalDateTime endDate) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

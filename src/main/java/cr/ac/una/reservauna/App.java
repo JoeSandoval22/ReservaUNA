@@ -62,6 +62,10 @@ do {
     System.out.println("6. Aprobar reserva");
     System.out.println("7. Rechazar reserva");
     System.out.println("8. Cancelar reserva");
+    System.out.println("9. Buscar por estado");
+    System.out.println("10. Buscar por fecha");
+    System.out.println("11. Buscar por usuario");
+    System.out.println("12. Buscar reserva específica de usuario");
     System.out.println("0. Salir");
     System.out.print("Seleccione una opción: ");
     opcion = Integer.parseInt(sc.nextLine());
@@ -79,6 +83,9 @@ do {
             String reason = sc.nextLine();
             User user = new UserDAO().findUserById(userId);
             Resource resource = new EquipmentDAO().findEquipmentById(resourceId);
+            if (resource == null) {
+                resource = new PlaceDAO().findPlaceById(resourceId);
+            }
             Reserve reserve = new Reserve(user, resource, startDate, endDate, reason, LocalDateTime.now(), ReserveStatus.PENDIENTE);
             reserveDAO.insertReserve(reserve);
         }
@@ -121,16 +128,48 @@ do {
             System.out.print("ID de la reserva a rechazar: ");
             int id = Integer.parseInt(sc.nextLine());
             reserveDAO.rejectReserve(id);
-            }
+        }
         case 8 -> {
             System.out.print("ID de la reserva a cancelar: ");
             int id = Integer.parseInt(sc.nextLine());
             reserveDAO.cancelReserve(id);
         }
+        case 9 -> {
+            System.out.println("Estado (PENDIENTE/APROBADA/RECHAZADA/CANCELADA): ");
+            ReserveStatus status = ReserveStatus.valueOf(sc.nextLine());
+            List<Reserve> reserves = reserveDAO.findByStatus(status);
+            reserves.forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus()));
+        }
+        case 10 -> {
+            System.out.print("Fecha inicio (yyyy-MM-dd HH:mm): ");
+            LocalDateTime startDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            System.out.print("Fecha fin (yyyy-MM-dd HH:mm): ");
+            LocalDateTime endDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            List<Reserve> reserves = reserveDAO.findByDate(startDate, endDate);
+            reserves.forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus()));
+        }
+        case 11 -> {
+            System.out.print("ID del usuario: ");
+            int userId = Integer.parseInt(sc.nextLine());
+            List<Reserve> reserves = reserveDAO.findByUserId(userId);
+            reserves.forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus()));
+        }
+        case 12 -> {
+            System.out.print("ID del usuario: ");
+            int userId = Integer.parseInt(sc.nextLine());
+            System.out.print("ID de la reserva: ");
+            int reserveId = Integer.parseInt(sc.nextLine());
+            Reserve r = reserveDAO.findByUserId(userId, reserveId);
+            if (r != null) {
+                System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus());
+            } else {
+                System.out.println("Reserva no encontrada.");
+            }
+        }
         case 0 -> System.out.println("Saliendo...");
         default -> System.out.println("Opción inválida.");
-    }
-} while (opcion != 0);
+        }
+        } while (opcion != 0);        
         launch();
     }
 }
