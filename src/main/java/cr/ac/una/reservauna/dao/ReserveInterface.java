@@ -33,4 +33,5 @@ public interface ReserveInterface {
     boolean approveReserve(int reserveId);
     boolean rejectReserve(int reserveId);
     boolean cancelReserve(int reserveId);
+    boolean canChangeStatus(int reserveId,ReserveStatus status);
 }

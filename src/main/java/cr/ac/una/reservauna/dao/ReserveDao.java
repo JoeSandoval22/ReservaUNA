@@ -251,20 +251,79 @@ public class ReserveDao implements ReserveInterface {
         }
         return reservesByUserId;
     }
+    
+    @Override
+    public boolean canChangeStatus(int reserveId, ReserveStatus status){
+        Reserve reserve = findReserveById(reserveId);
+        if(reserve==null)return false;
+        ReserveStatus currentStatus = reserve.getStatus();
+        switch (currentStatus){
+            case PENDIENTE->{
+                return status == ReserveStatus.APROBADA || status == ReserveStatus.RECHAZADA;
+            }
+            case APROBADA->{
+                return status == ReserveStatus.CANCELADA;
+            }
+            case RECHAZADA, CANCELADA->{
+                return false;
+            }
+            default->{
+                return false;
+            }
+        }
+    }
 
     @Override
     public boolean approveReserve(int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(!canChangeStatus(reserveId,ReserveStatus.APROBADA)){
+            System.out.println("No es posible aprobar esta solicitud.");
+            return false;
+        }
+        String sqlApprove = "UPDATE RESERVE SET reserve_status = 'APROBADA' WHERE reserve_id = ? ";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sqlApprove);
+            ps.setInt(1, reserveId);
+            ps.executeUpdate();
+            return true;
+        }catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return false;
+        }
     }
 
     @Override
     public boolean rejectReserve(int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(!canChangeStatus(reserveId,ReserveStatus.RECHAZADA)){
+            System.out.println("No es posible rechazar esta solicitud.");
+            return false;
+        }
+        String sqlReject = "UPDATE RESERVE SET reserve_status = 'RECHAZADA' WHERE reserve_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sqlReject);
+            ps.setInt(1, reserveId);
+            ps.executeUpdate();
+            return true;
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return false;
+        }
     }
 
     @Override
     public boolean cancelReserve(int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(!canChangeStatus(reserveId,ReserveStatus.CANCELADA)){
+            System.out.println("No es posible cancelar esta solicitud.");
+            return false;
+        }
+        String sqlCancel = "UPDATE RESERVE SET reserve_status = 'CANCELADA' WHERE reserve_id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sqlCancel);
+            ps.setInt(1, reserveId);
+            ps.executeUpdate();
+            return true;
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return false;
+        }
     }
-    
 }
