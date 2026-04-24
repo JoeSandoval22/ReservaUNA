@@ -12,6 +12,7 @@ import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.dao.EquipmentDAO;
 import cr.ac.una.reservauna.dao.PlaceDAO;
 import cr.ac.una.reservauna.dao.ReserveDao;
+import cr.ac.una.reservauna.dao.ResourceAux;
 import cr.ac.una.reservauna.dao.UserDAO;
 import cr.ac.una.reservauna.model.Equipment;
 import cr.ac.una.reservauna.model.Place;
@@ -82,11 +83,8 @@ do {
             System.out.print("Motivo: ");
             String reason = sc.nextLine();
             User user = new UserDAO().findUserById(userId);
-            Resource resource = new EquipmentDAO().findEquipmentById(resourceId);
-            if (resource == null) {
-                resource = new PlaceDAO().findPlaceById(resourceId);
-            }
-            Reserve reserve = new Reserve(user, resource, startDate, endDate, reason, LocalDateTime.now(), ReserveStatus.PENDIENTE);
+            Resource res = new ResourceAux().findResourceById(resourceId);
+            Reserve reserve = new Reserve(user, res, startDate, endDate, reason, LocalDateTime.now(), ReserveStatus.PENDIENTE);
             reserveDAO.insertReserve(reserve);
         }
         case 2 -> {

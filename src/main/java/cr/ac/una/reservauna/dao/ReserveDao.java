@@ -89,7 +89,7 @@ public class ReserveDao implements ReserveInterface {
     public Reserve findReserveById(int id) {
         String sql = "SELECT * FROM RESERVE WHERE reserve_id = ?";
         UserDAO userDAO = new UserDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        ResourceAux aux = new ResourceAux();
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
@@ -98,13 +98,12 @@ public class ReserveDao implements ReserveInterface {
                 return new Reserve(
                             rs.getInt("reserve_id"),
                             userDAO.findUserById(rs.getInt("user_id")),
-                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),
                             rs.getTimestamp("start_date").toLocalDateTime(),
                             rs.getTimestamp("end_date").toLocalDateTime(),
                             rs.getString("reason"),
                             rs.getTimestamp("creat_at").toLocalDateTime(),
-                            ReserveStatus.valueOf(rs.getString("reserve_status"))
-                            );
+                            ReserveStatus.valueOf(rs.getString("reserve_status")));
             }
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -117,7 +116,7 @@ public class ReserveDao implements ReserveInterface {
     public List<Reserve> getAllReserves() {
         List<Reserve> reserves = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        ResourceAux aux = new ResourceAux();
         String sql = "SELECT * FROM RESERVE";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -125,7 +124,7 @@ public class ReserveDao implements ReserveInterface {
             while(rs.next()){
                 Reserve reserve = new Reserve(rs.getInt("reserve_id"),
                             userDAO.findUserById(rs.getInt("user_id")),
-                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),
                             rs.getTimestamp("start_date").toLocalDateTime(),
                             rs.getTimestamp("end_date").toLocalDateTime(),
                             rs.getString("reason"),
@@ -144,7 +143,7 @@ public class ReserveDao implements ReserveInterface {
     public List<Reserve> findByStatus(ReserveStatus status) {
         List<Reserve> reservesByStatus = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        ResourceAux aux = new ResourceAux();
         String sql = "SELECT * FROM RESERVE WHERE reserve_status = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -153,7 +152,7 @@ public class ReserveDao implements ReserveInterface {
             while(rs.next()){
                 Reserve reserve = new Reserve(rs.getInt("reserve_id"),
                             userDAO.findUserById(rs.getInt("user_id")),
-                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),
                             rs.getTimestamp("start_date").toLocalDateTime(),
                             rs.getTimestamp("end_date").toLocalDateTime(),
                             rs.getString("reason"),
@@ -172,7 +171,7 @@ public class ReserveDao implements ReserveInterface {
     public List<Reserve> findByDate(LocalDateTime startDate, LocalDateTime endDate) {
         List<Reserve> reservesByDate = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        ResourceAux aux = new ResourceAux();
         String sql = "SELECT * FROM RESERVE WHERE start_date >= ? AND end_date <= ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -182,7 +181,7 @@ public class ReserveDao implements ReserveInterface {
             while(rs.next()){
                 Reserve reserves = new Reserve(rs.getInt("reserve_id"),
                             userDAO.findUserById(rs.getInt("user_id")),
-                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),
                             rs.getTimestamp("start_date").toLocalDateTime(),
                             rs.getTimestamp("end_date").toLocalDateTime(),
                             rs.getString("reason"),
@@ -200,7 +199,7 @@ public class ReserveDao implements ReserveInterface {
     @Override
     public Reserve findByUserId(int userId, int reserveId){
         UserDAO userDAO = new UserDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        ResourceAux aux = new ResourceAux();
         String sql = "SELECT * FROM RESERVE WHERE user_id = ? AND reserve_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -211,13 +210,12 @@ public class ReserveDao implements ReserveInterface {
                 return new Reserve(
                             rs.getInt("reserve_id"),
                             userDAO.findUserById(rs.getInt("user_id")),
-                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),
                             rs.getTimestamp("start_date").toLocalDateTime(),
                             rs.getTimestamp("end_date").toLocalDateTime(),
                             rs.getString("reason"),
                             rs.getTimestamp("creat_at").toLocalDateTime(),
-                            ReserveStatus.valueOf(rs.getString("reserve_status"))
-                            );
+                            ReserveStatus.valueOf(rs.getString("reserve_status")));
             }
         } catch (SQLException ex) {
             System.out.println("Error: "+ex.getMessage());    
@@ -230,7 +228,7 @@ public class ReserveDao implements ReserveInterface {
     public List<Reserve> findByUserId(int userId) {
         List<Reserve> reservesByUserId = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        ResourceAux aux = new ResourceAux();
         String sql = "SELECT * FROM RESERVE WHERE user_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -239,7 +237,7 @@ public class ReserveDao implements ReserveInterface {
             if(rs.next()){
                 Reserve reserve = new Reserve(rs.getInt("reserve_id"),
                             userDAO.findUserById(rs.getInt("user_id")),
-                            equipmentDAO.findEquipmentById(rs.getInt("resource_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),
                             rs.getTimestamp("start_date").toLocalDateTime(),
                             rs.getTimestamp("end_date").toLocalDateTime(),
                             rs.getString("reason"),
