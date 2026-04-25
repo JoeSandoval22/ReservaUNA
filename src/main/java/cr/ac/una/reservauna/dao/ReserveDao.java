@@ -29,6 +29,9 @@ public class ReserveDao implements ReserveInterface {
     
     @Override
     public boolean insertReserve(Reserve reserve) {
+        if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){
+            return false;
+        }
         String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,?)";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
@@ -82,7 +85,22 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public boolean isThereAnOverlap(int id, LocalDateTime startDate, LocalDateTime endDate) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM RESERVE WHERE resource_id = ? AND start_date < ? AND end_date > ? AND reserve_status NOT IN ('CANCELADA','RECHAZADA')";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setTimestamp(2, Timestamp.valueOf(endDate));
+            ps.setTimestamp(3, Timestamp.valueOf(startDate));
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                System.out.println("No es posible hace una reserva con este recurso en este período de tiempo.");
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            return false;
+        }
+        return false;
     }
 
     @Override

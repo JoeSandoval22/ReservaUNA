@@ -14,6 +14,9 @@ public class ResourceAux {
     private EquipmentDAO equipment = new EquipmentDAO();
     private PlaceDAO place = new PlaceDAO();
     
+    public ResourceAux(){
+        
+    }
     public Resource findResourceById(int id){
         Resource resource = equipment.findEquipmentById(id);
         if(resource==null){
