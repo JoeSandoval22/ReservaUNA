@@ -114,14 +114,10 @@ public class ReserveDao implements ReserveInterface {
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 return new Reserve(
-                            rs.getInt("reserve_id"),
-                            userDAO.findUserById(rs.getInt("user_id")),
-                            aux.findResourceById(rs.getInt("resource_id")),
-                            rs.getTimestamp("start_date").toLocalDateTime(),
-                            rs.getTimestamp("end_date").toLocalDateTime(),
-                            rs.getString("reason"),
-                            rs.getTimestamp("creat_at").toLocalDateTime(),
-                            ReserveStatus.valueOf(rs.getString("reserve_status")));
+                            rs.getInt("reserve_id"),userDAO.findUserById(rs.getInt("user_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),ReserveStatus.valueOf(rs.getString("reserve_status")));
             }
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -141,12 +137,9 @@ public class ReserveDao implements ReserveInterface {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 Reserve reserve = new Reserve(rs.getInt("reserve_id"),
-                            userDAO.findUserById(rs.getInt("user_id")),
-                            aux.findResourceById(rs.getInt("resource_id")),
-                            rs.getTimestamp("start_date").toLocalDateTime(),
-                            rs.getTimestamp("end_date").toLocalDateTime(),
-                            rs.getString("reason"),
-                            rs.getTimestamp("creat_at").toLocalDateTime(),
+                            userDAO.findUserById(rs.getInt("user_id")),aux.findResourceById(rs.getInt("resource_id")),
+                            rs.getTimestamp("start_date").toLocalDateTime(),rs.getTimestamp("end_date").toLocalDateTime(),
+                            rs.getString("reason"),rs.getTimestamp("creat_at").toLocalDateTime(),
                             ReserveStatus.valueOf(rs.getString("reserve_status")));
                 reserves.add(reserve);
             }
@@ -168,19 +161,14 @@ public class ReserveDao implements ReserveInterface {
             ps.setString(1, status.getStatus());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                Reserve reserve = new Reserve(rs.getInt("reserve_id"),
-                            userDAO.findUserById(rs.getInt("user_id")),
-                            aux.findResourceById(rs.getInt("resource_id")),
-                            rs.getTimestamp("start_date").toLocalDateTime(),
-                            rs.getTimestamp("end_date").toLocalDateTime(),
-                            rs.getString("reason"),
-                            rs.getTimestamp("creat_at").toLocalDateTime(),
-                            ReserveStatus.valueOf(rs.getString("reserve_status")));
+                Reserve reserve = new Reserve(rs.getInt("reserve_id"),userDAO.findUserById(rs.getInt("user_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),ReserveStatus.valueOf(rs.getString("reserve_status")));
                 reservesByStatus.add(reserve);
             }  
         } catch (SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            return null;
+            System.out.println("Error: "+ex.getMessage()); return null;
         }
         return reservesByStatus;
     }
@@ -197,19 +185,14 @@ public class ReserveDao implements ReserveInterface {
             ps.setTimestamp(2, Timestamp.valueOf(endDate));
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                Reserve reserves = new Reserve(rs.getInt("reserve_id"),
-                            userDAO.findUserById(rs.getInt("user_id")),
-                            aux.findResourceById(rs.getInt("resource_id")),
-                            rs.getTimestamp("start_date").toLocalDateTime(),
-                            rs.getTimestamp("end_date").toLocalDateTime(),
-                            rs.getString("reason"),
-                            rs.getTimestamp("creat_at").toLocalDateTime(),
-                            ReserveStatus.valueOf(rs.getString("reserve_status")));
+                Reserve reserves = new Reserve(rs.getInt("reserve_id"),userDAO.findUserById(rs.getInt("user_id")),
+                            aux.findResourceById(rs.getInt("resource_id")),rs.getTimestamp("start_date").toLocalDateTime(),
+                            rs.getTimestamp("end_date").toLocalDateTime(),rs.getString("reason"),
+                            rs.getTimestamp("creat_at").toLocalDateTime(),ReserveStatus.valueOf(rs.getString("reserve_status")));
                 reservesByDate.add(reserves);
             }
         } catch (SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());    
-            return null;
+            System.out.println("Error: "+ex.getMessage()); return null;
         }
         return reservesByDate;
     }
@@ -236,8 +219,7 @@ public class ReserveDao implements ReserveInterface {
                             ReserveStatus.valueOf(rs.getString("reserve_status")));
             }
         } catch (SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());    
-            return null;
+            System.out.println("Error: "+ex.getMessage()); return null;
         }
         return null;
     }
@@ -264,8 +246,7 @@ public class ReserveDao implements ReserveInterface {
                 reservesByUserId.add(reserve);
             }
         } catch(SQLException ex){
-            System.out.println("Error: "+ex.getMessage());
-            return null;
+            System.out.println("Error: "+ex.getMessage()); return null;
         }
         return reservesByUserId;
     }

@@ -12,11 +12,13 @@ import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.dao.EquipmentDAO;
 import cr.ac.una.reservauna.dao.PlaceDAO;
 import cr.ac.una.reservauna.dao.ReserveDao;
+import cr.ac.una.reservauna.dao.ReserveItemDAO;
 import cr.ac.una.reservauna.dao.ResourceAux;
 import cr.ac.una.reservauna.dao.UserDAO;
 import cr.ac.una.reservauna.model.Equipment;
 import cr.ac.una.reservauna.model.Place;
 import cr.ac.una.reservauna.model.Reserve;
+import cr.ac.una.reservauna.model.ReserveItem;
 import cr.ac.una.reservauna.model.ReserveStatus;
 import cr.ac.una.reservauna.model.Resource;
 
@@ -50,12 +52,17 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        // Asegúrate de tener estas instancias inicializadas antes del do-while
+Scanner sc = new Scanner(System.in);
 ReserveDao reserveDAO = new ReserveDao();
+ReserveItemDAO itemDAO = new ReserveItemDAO(); // Tu clase DAO para items
+UserDAO userDAO = new UserDAO();
+ResourceAux resourceAux = new ResourceAux();
+
 int opcion;
 do {
-    System.out.println("\n===== RESERVAUNA - RESERVAS =====");
-    System.out.println("1. Registrar reserva");
+    System.out.println("\n===== RESERVAUNA - GESTIÓN INTEGRAL =====");
+    System.out.println("1. Registrar reserva (Padre)");
     System.out.println("2. Listar reservas");
     System.out.println("3. Buscar reserva por ID");
     System.out.println("4. Actualizar reserva");
@@ -67,14 +74,20 @@ do {
     System.out.println("10. Buscar por fecha");
     System.out.println("11. Buscar por usuario");
     System.out.println("12. Buscar reserva específica de usuario");
+    System.out.println("--- GESTIÓN MULTI-RESERVA (ITEMS) ---");
+    System.out.println("13. Agregar Item a Reserva");
+    System.out.println("14. Listar todos los Items");
+    System.out.println("15. Borrar Item de Reserva");
     System.out.println("0. Salir");
     System.out.print("Seleccione una opción: ");
+    
     opcion = Integer.parseInt(sc.nextLine());
+
     switch (opcion) {
         case 1 -> {
             System.out.print("ID del usuario: ");
             int userId = Integer.parseInt(sc.nextLine());
-            System.out.print("ID del recurso: ");
+            System.out.print("ID del recurso principal: ");
             int resourceId = Integer.parseInt(sc.nextLine());
             System.out.print("Fecha inicio (yyyy-MM-dd HH:mm): ");
             LocalDateTime startDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
@@ -82,10 +95,16 @@ do {
             LocalDateTime endDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             System.out.print("Motivo: ");
             String reason = sc.nextLine();
-            User user = new UserDAO().findUserById(userId);
-            Resource res = new ResourceAux().findResourceById(resourceId);
-            Reserve reserve = new Reserve(user, res, startDate, endDate, reason, LocalDateTime.now(), ReserveStatus.PENDIENTE);
-            reserveDAO.insertReserve(reserve);
+            
+            User user = userDAO.findUserById(userId);
+            Resource res = resourceAux.findResourceById(resourceId);
+            
+            if (user != null && res != null) {
+                Reserve reserve = new Reserve(user, res, startDate, endDate, reason, LocalDateTime.now(), ReserveStatus.PENDIENTE);
+                reserveDAO.insertReserve(reserve);
+            } else {
+                System.out.println("Error: Usuario o Recurso no encontrado.");
+            }
         }
         case 2 -> {
             List<Reserve> reserves = reserveDAO.getAllReserves();
@@ -95,11 +114,8 @@ do {
             System.out.print("ID de la reserva: ");
             int id = Integer.parseInt(sc.nextLine());
             Reserve r = reserveDAO.findReserveById(id);
-            if (r != null) {
-                System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus());
-            } else {
-                System.out.println("Reserva no encontrada.");
-            }
+            if (r != null) System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus());
+            else System.out.println("Reserva no encontrada.");
         }
         case 4 -> {
             System.out.print("ID de la reserva a actualizar: ");
@@ -119,55 +135,79 @@ do {
         }
         case 6 -> {
             System.out.print("ID de la reserva a aprobar: ");
-            int id = Integer.parseInt(sc.nextLine());
-            reserveDAO.approveReserve(id);
+            reserveDAO.approveReserve(Integer.parseInt(sc.nextLine()));
         }
         case 7 -> {
             System.out.print("ID de la reserva a rechazar: ");
-            int id = Integer.parseInt(sc.nextLine());
-            reserveDAO.rejectReserve(id);
+            reserveDAO.rejectReserve(Integer.parseInt(sc.nextLine()));
         }
         case 8 -> {
             System.out.print("ID de la reserva a cancelar: ");
-            int id = Integer.parseInt(sc.nextLine());
-            reserveDAO.cancelReserve(id);
+            reserveDAO.cancelReserve(Integer.parseInt(sc.nextLine()));
         }
         case 9 -> {
-            System.out.println("Estado (PENDIENTE/APROBADA/RECHAZADA/CANCELADA): ");
-            ReserveStatus status = ReserveStatus.valueOf(sc.nextLine());
+            System.out.print("Estado (PENDIENTE/APROBADA/RECHAZADA/CANCELADA): ");
+            ReserveStatus status = ReserveStatus.valueOf(sc.nextLine().toUpperCase());
             List<Reserve> reserves = reserveDAO.findByStatus(status);
             reserves.forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus()));
         }
         case 10 -> {
             System.out.print("Fecha inicio (yyyy-MM-dd HH:mm): ");
-            LocalDateTime startDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            LocalDateTime sDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             System.out.print("Fecha fin (yyyy-MM-dd HH:mm): ");
-            LocalDateTime endDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-            List<Reserve> reserves = reserveDAO.findByDate(startDate, endDate);
-            reserves.forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus()));
+            LocalDateTime eDate = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            reserveDAO.findByDate(sDate, eDate).forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName()));
         }
         case 11 -> {
             System.out.print("ID del usuario: ");
-            int userId = Integer.parseInt(sc.nextLine());
-            List<Reserve> reserves = reserveDAO.findByUserId(userId);
-            reserves.forEach(r -> System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus()));
+            reserveDAO.findByUserId(Integer.parseInt(sc.nextLine())).forEach(r -> System.out.println(r.getReserveId() + " - " + r.getStatus()));
         }
         case 12 -> {
             System.out.print("ID del usuario: ");
-            int userId = Integer.parseInt(sc.nextLine());
+            int uId = Integer.parseInt(sc.nextLine());
             System.out.print("ID de la reserva: ");
-            int reserveId = Integer.parseInt(sc.nextLine());
-            Reserve r = reserveDAO.findByUserId(userId, reserveId);
-            if (r != null) {
-                System.out.println(r.getReserveId() + " - " + r.getUser().getUserName() + " - " + r.getStatus());
+            int rId = Integer.parseInt(sc.nextLine());
+            Reserve r = reserveDAO.findByUserId(uId, rId);
+            if (r != null) System.out.println(r.getReserveId() + " - " + r.getStatus());
+            else System.out.println("Reserva no encontrada.");
+        }
+        // --- NUEVA LÓGICA DE ITEMS ---
+        case 13 -> {
+            System.out.print("ID de la reserva padre (parent_reserve): ");
+            int parentId = Integer.parseInt(sc.nextLine());
+            Reserve parent = reserveDAO.findReserveById(parentId);
+            
+            if (parent != null) {
+                System.out.print("ID del recurso: ");
+                int resId = Integer.parseInt(sc.nextLine());
+                Resource res = resourceAux.findResourceById(resId);
+                System.out.print("Fecha inicio (yyyy-MM-dd HH:mm): ");
+                LocalDateTime start = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                System.out.print("Fecha fin (yyyy-MM-dd HH:mm): ");
+                LocalDateTime end = LocalDateTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                
+                ReserveItem newItem = new ReserveItem(0, parent, res, start, end);
+                if (itemDAO.insertReserveItem(newItem)) System.out.println("Item agregado correctamente.");
+                else System.out.println("Error: No se pudo agregar el item (verificar límites o solapamientos).");
             } else {
-                System.out.println("Reserva no encontrada.");
+                System.out.println("Error: Reserva padre no encontrada.");
             }
+        }
+        case 14 -> {
+            List<ReserveItem> items = itemDAO.getAllReserveItems();
+            if (items != null) items.forEach(i -> System.out.println("ID Item: " + i.getReserveItemId() + " | Reserva Padre: " + i.getParentReserve().getReserveId()));
+        }
+        case 15 -> {
+            System.out.print("ID del item a borrar: ");
+            int id = Integer.parseInt(sc.nextLine());
+            ReserveItem item = new ReserveItem(id, null, null, null, null);
+            if (itemDAO.deleteReserveItem(item)) System.out.println("Item eliminado.");
+            else System.out.println("Error al borrar el item.");
         }
         case 0 -> System.out.println("Saliendo...");
         default -> System.out.println("Opción inválida.");
-        }
-        } while (opcion != 0);        
+    }
+} while (opcion != 0);        
         launch();
     }
 }
