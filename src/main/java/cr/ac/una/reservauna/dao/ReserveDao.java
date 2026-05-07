@@ -5,6 +5,7 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.conexion.Conexion;
+import cr.ac.una.reservauna.model.Log;
 import cr.ac.una.reservauna.model.Reserve;
 import cr.ac.una.reservauna.model.ReserveStatus;
 import java.sql.Connection;
@@ -22,16 +23,20 @@ import java.util.List;
  */
 public class ReserveDao implements ReserveInterface {
     private Connection connection;
+    private LogDAO logDao = new LogDAO();
+    
+    
     
     public ReserveDao(){
         this.connection = Conexion.getConnection();
     }
+    public void setLogDAO(LogDAO logDao){
+        this.logDao=logDao;
+    }
     
     @Override
     public boolean insertReserve(Reserve reserve) {
-        if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){
-            return false;
-        }
+        if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){return false;}
         String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,?)";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
@@ -43,20 +48,26 @@ public class ReserveDao implements ReserveInterface {
             ps.setTimestamp(6, Timestamp.valueOf(reserve.getCreateAt()));
             ps.setString(7, reserve.getStatus().getStatus());
             ps.executeUpdate();
+            Log log = new Log(reserve,reserve.getUser().getUserId(),LocalDateTime.now(),"CREAR","Reserva creada.");
+            this.logDao.insertLog(log);
             return true;
         } catch (SQLException ex) {
             System.out.println("Error: "+ex.getMessage());
             return false;
-        }
+        } 
     }
 
     @Override
     public boolean deleteReserve(Reserve reserve) {
+        Reserve existingReserve = findReserveById(reserve.getReserveId());
+        System.out.println("DEBUG - reserveId: " + reserve.getReserveId() + " | existingReserve: " + existingReserve);
         String sqlReserve = "DELETE FROM RESERVE WHERE reserve_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
             ps.setInt(1, reserve.getReserveId());
             ps.executeUpdate();
+            Log log = new Log(existingReserve,existingReserve.getUser().getUserId(),LocalDateTime.now(),"ELIMINAR","Reserva eliminada");
+            this.logDao.insertLog(log);
             return true;
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -66,6 +77,8 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public boolean updateReserve(Reserve reserve) {
+        Reserve existingReserve = findReserveById(reserve.getReserveId());
+        System.out.println("DEBUG - reserveId: " + reserve.getReserveId() + " | existingReserve: " + existingReserve);
         String sqlReserve = "UPDATE RESERVE SET start_date = ?, end_date = ?, reason = ?, creat_at = ?, reserve_status = ? WHERE reserve_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
@@ -76,6 +89,8 @@ public class ReserveDao implements ReserveInterface {
             ps.setString(5, reserve.getStatus().getStatus());
             ps.setInt(6, reserve.getReserveId());
             ps.executeUpdate();
+            Log log = new Log(existingReserve,existingReserve.getUser().getUserId(),LocalDateTime.now(),"ACTUALIZAR","Reserva actualizada.");
+            this.logDao.insertLog(log);
             return true;
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -93,7 +108,7 @@ public class ReserveDao implements ReserveInterface {
             ps.setTimestamp(3, Timestamp.valueOf(startDate));
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                System.out.println("No es posible hace una reserva con este recurso en este período de tiempo.");
+                System.out.println("No es posible hace una reserva con este recurso en este periodo de tiempo.");
                 return true;
             }
         } catch (SQLException ex) {
@@ -274,6 +289,7 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public boolean approveReserve(int reserveId) {
+        Reserve reserveUser = findReserveById(reserveId);
         if(!canChangeStatus(reserveId,ReserveStatus.APROBADA)){
             System.out.println("No es posible aprobar esta solicitud.");
             return false;
@@ -283,6 +299,8 @@ public class ReserveDao implements ReserveInterface {
             PreparedStatement ps = connection.prepareStatement(sqlApprove);
             ps.setInt(1, reserveId);
             ps.executeUpdate();
+            Log log = new Log(reserveUser,reserveUser.getUser().getUserId(),LocalDateTime.now(),"APROBAR","Reserva aprobada");
+            this.logDao.insertLog(log);
             return true;
         }catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -292,6 +310,7 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public boolean rejectReserve(int reserveId) {
+        Reserve reserveUser = findReserveById(reserveId);
         if(!canChangeStatus(reserveId,ReserveStatus.RECHAZADA)){
             System.out.println("No es posible rechazar esta solicitud.");
             return false;
@@ -301,6 +320,8 @@ public class ReserveDao implements ReserveInterface {
             PreparedStatement ps = connection.prepareStatement(sqlReject);
             ps.setInt(1, reserveId);
             ps.executeUpdate();
+            Log log = new Log(reserveUser,reserveUser.getUser().getUserId(),LocalDateTime.now(),"RECHAZAR","Reserva rechazada");
+            this.logDao.insertLog(log);
             return true;
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -310,6 +331,7 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public boolean cancelReserve(int reserveId) {
+        Reserve reserveUser = findReserveById(reserveId);
         if(!canChangeStatus(reserveId,ReserveStatus.CANCELADA)){
             System.out.println("No es posible cancelar esta solicitud.");
             return false;
@@ -319,6 +341,8 @@ public class ReserveDao implements ReserveInterface {
             PreparedStatement ps = connection.prepareStatement(sqlCancel);
             ps.setInt(1, reserveId);
             ps.executeUpdate();
+            Log log = new Log(reserveUser,reserveUser.getUser().getUserId(),LocalDateTime.now(),"CANCELAR","Reserva cancelada");
+            this.logDao.insertLog(log);
             return true;
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());

@@ -10,12 +10,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.dao.EquipmentDAO;
+import cr.ac.una.reservauna.dao.LogDAO;
 import cr.ac.una.reservauna.dao.PlaceDAO;
 import cr.ac.una.reservauna.dao.ReserveDao;
 import cr.ac.una.reservauna.dao.ReserveItemDAO;
 import cr.ac.una.reservauna.dao.ResourceAux;
 import cr.ac.una.reservauna.dao.UserDAO;
 import cr.ac.una.reservauna.model.Equipment;
+import cr.ac.una.reservauna.model.Log;
 import cr.ac.una.reservauna.model.Place;
 import cr.ac.una.reservauna.model.Reserve;
 import cr.ac.una.reservauna.model.ReserveItem;
@@ -50,14 +52,15 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-
+ 
     public static void main(String[] args) {
-        // Asegúrate de tener estas instancias inicializadas antes del do-while
 Scanner sc = new Scanner(System.in);
 ReserveDao reserveDAO = new ReserveDao();
 ReserveItemDAO itemDAO = new ReserveItemDAO(); // Tu clase DAO para items
 UserDAO userDAO = new UserDAO();
 ResourceAux resourceAux = new ResourceAux();
+LogDAO logDAO = new LogDAO();
+reserveDAO.setLogDAO(logDAO);
 
 int opcion;
 do {
@@ -78,6 +81,9 @@ do {
     System.out.println("13. Agregar Item a Reserva");
     System.out.println("14. Listar todos los Items");
     System.out.println("15. Borrar Item de Reserva");
+    System.out.println("--- GESTIÓN DE AUDITORÍA (LOGS) ---");
+    System.out.println("16. Listar todos los logs");
+    System.out.println("17. Buscar log por ID");
     System.out.println("0. Salir");
     System.out.print("Seleccione una opción: ");
     
@@ -203,6 +209,25 @@ do {
             ReserveItem item = new ReserveItem(id, null, null, null, null);
             if (itemDAO.deleteReserveItem(item)) System.out.println("Item eliminado.");
             else System.out.println("Error al borrar el item.");
+        }
+        // --- GESTIÓN DE LOGS ---
+        case 16 -> {
+            List<Log> logs = logDAO.getAllLogs();
+            if (logs != null && !logs.isEmpty()) {
+                logs.forEach(l -> System.out.println("Log ID: " + l.getLogId() + " | Acción: " + l.getActionPerformed() + " | Fecha: " + l.getDate()+l.getDetail()));
+            } else {
+                System.out.println("No hay registros en la bitácora.");
+            }
+        }
+        case 17 -> {
+            System.out.print("ID del log: ");
+            int id = Integer.parseInt(sc.nextLine());
+            Log l = logDAO.findLogById(id);
+            if (l != null) {
+                System.out.println("Log ID: " + l.getLogId()+" | Accion: "+l.getActionPerformed()+" | Fecha: "+l.getDate()+" | Detalle: "+l.getDetail()); // Ajusta el toString() según tus necesidades
+            } else {
+                System.out.println("Log no encontrado.");
+            }
         }
         case 0 -> System.out.println("Saliendo...");
         default -> System.out.println("Opción inválida.");

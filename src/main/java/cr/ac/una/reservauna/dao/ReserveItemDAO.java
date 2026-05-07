@@ -5,11 +5,9 @@
 package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.conexion.Conexion;
-import cr.ac.una.reservauna.model.Reserve;
+import cr.ac.una.reservauna.model.Log;
 import cr.ac.una.reservauna.model.ReserveItem;
-import cr.ac.una.reservauna.model.ReserveStatus;
 import cr.ac.una.reservauna.model.Role;
-import cr.ac.una.reservauna.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +23,14 @@ import java.util.List;
  */
 public class ReserveItemDAO implements ReserveItemInterface {
     private Connection connection;
+    private LogDAO logDao = new LogDAO();
     
     public ReserveItemDAO(){
         this.connection=Conexion.getConnection();
+    }
+    
+    public void setLogDAO(LogDAO logDao){
+        this.logDao=logDao;
     }
 
     @Override
@@ -48,6 +51,8 @@ public class ReserveItemDAO implements ReserveItemInterface {
             ps.setTimestamp(3, Timestamp.valueOf(item.getStartDateItem()));
             ps.setTimestamp(4, Timestamp.valueOf(item.getEndDateItem()));
             ps.executeUpdate();
+            Log log = new Log(item.getParentReserve(),item.getParentReserve().getUser().getUserId(),LocalDateTime.now(),"CREAR","Item de reserva aprobado");
+            this.logDao.insertLog(log);
             return true;
         } catch (SQLException ex) {
             System.out.println("Error:"+ex.getMessage());   
@@ -62,6 +67,8 @@ public class ReserveItemDAO implements ReserveItemInterface {
             PreparedStatement ps = connection.prepareStatement(sqlItem);
             ps.setInt(1, item.getReserveItemId());
             ps.executeUpdate();
+            Log log = new Log(item.getParentReserve(),item.getParentReserve().getUser().getUserId(),LocalDateTime.now(),"ELIMINAR","Item de reserva eliminado");
+            this.logDao.insertLog(log);
             return true;
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -80,6 +87,8 @@ public class ReserveItemDAO implements ReserveItemInterface {
             ps.setTimestamp(4, Timestamp.valueOf(item.getEndDateItem()));
             ps.setInt(5, item.getReserveItemId());
             ps.executeUpdate();
+            Log log = new Log(item.getParentReserve(),item.getParentReserve().getUser().getUserId(),LocalDateTime.now(),"ACTUALIZAR","Item de reserva actualizado");
+            this.logDao.insertLog(log);            
             return true;
         } catch (SQLException ex) {
             System.out.println("Error: "+ex.getMessage()); 
@@ -170,45 +179,4 @@ public class ReserveItemDAO implements ReserveItemInterface {
         }
         return false;
     }
-
-    @Override
-    public ReserveItem findReserveById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<ReserveItem> findByStatus(ReserveStatus status) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<ReserveItem> findByDate(LocalDateTime startDate, LocalDateTime endDate) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<ReserveItem> findByUserId(int userId, int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<ReserveItem> findByUserId(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean approveReserve(int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean rejectReserve(int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean cancelReserve(int reserveId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }

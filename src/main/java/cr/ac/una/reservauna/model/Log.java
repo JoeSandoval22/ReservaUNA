@@ -13,23 +13,26 @@ import java.time.LocalDateTime;
 public class Log {
     private int logId;
     private Reserve logReserve;
-    private User userLog;
+    private int userLog;
     private LocalDateTime date;
     private String detail;
+    private String actionPerformed;
     
     //Constructor de consulta
-    public Log(int id, Reserve reserve, User user, LocalDateTime date, String detail){
+    public Log(int id, Reserve reserve, int user, LocalDateTime date, String action,String detail){
         this.logId=id;
         this.logReserve=reserve;
         this.userLog=user;
         this.date=date;
+        this.actionPerformed=action;
         this.detail=detail;
     }
     //Constructor de creación
-    public Log(Reserve reserve, User user, LocalDateTime date, String detail){
+    public Log(Reserve reserve, int user,LocalDateTime date, String action ,String detail){
         this.logReserve=reserve;
         this.userLog=user;
         this.date=date;
+        this.actionPerformed=action;
         this.detail=detail;
     }
     
@@ -44,8 +47,11 @@ public class Log {
     public void setLogReserve(Reserve reserve){
         this.logReserve=reserve;
     }
-    public void setUserLog(User user){
+    public void setUserLog(int user){
         this.userLog=user;
+    }
+    public void serActionPerformed(String action){
+        this.actionPerformed=action;
     }
     public void setDate(LocalDateTime date){
         this.date=date;
@@ -60,8 +66,11 @@ public class Log {
     public Reserve getLogReserve(){
         return this.logReserve;
     }
-    public User getUserLog(){
+    public int getUserLog(){
         return this.userLog;
+    }
+    public String getActionPerformed(){
+        return this.actionPerformed;
     }
     public LocalDateTime getDate(){
         return this.date;

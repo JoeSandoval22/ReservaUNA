@@ -24,17 +24,5 @@ public interface ReserveItemInterface {
     List<ReserveItem> getAllReserveItems();
     boolean reserveLimitPerUser(int userId,Role role);
     boolean isThereAnOverlap(int id, LocalDateTime startDate,LocalDateTime endDate);
-    //Este método llama a una única reserva por medio de su ID
-    ReserveItem findReserveById(int id);
-    //Consulta de carácter general sin ID de reserva
-    List<ReserveItem>findByStatus(ReserveStatus status);
-    //Consulta de carácter general sin ID
-    List<ReserveItem>findByDate(LocalDateTime startDate, LocalDateTime endDate);
-    //Consulta de carácter específico con el ID de usuario y de reserva
-    List<ReserveItem>findByUserId(int userId, int reserveId);
-    //Consulta para todas las reservas de un usario con el ID de reserva
-    List<ReserveItem>findByUserId(int userId);
-    boolean approveReserve(int reserveId);
-    boolean rejectReserve(int reserveId);
-    boolean cancelReserve(int reserveId);
+    
 }
