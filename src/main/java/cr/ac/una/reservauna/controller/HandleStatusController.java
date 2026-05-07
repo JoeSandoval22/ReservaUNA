@@ -8,6 +8,6 @@ package cr.ac.una.reservauna.controller;
  *
  * @author andre_3e6xvb2
  */
-public class LogController {
-    //Esta clase va dirigida al administrador
+public class HandleStatusController {
+    //Esta clase va dirigida al administrador y encargado
 }

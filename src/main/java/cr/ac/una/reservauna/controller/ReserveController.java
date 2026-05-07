@@ -9,5 +9,5 @@ package cr.ac.una.reservauna.controller;
  * @author andre_3e6xvb2
  */
 public class ReserveController {
-    
+    //Esta clase va dirigida al profesor y al estudiante.
 }
