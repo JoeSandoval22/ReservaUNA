@@ -1,8 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="cr.ac.una.reservauna.controller.PlaceController">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane prefHeight="560.0" prefWidth="750.0"
+    xmlns="http://javafx.com/javafx/26"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="cr.ac.una.reservauna.controller.PlaceController">
+  <children>
+    <Label layoutX="14.0" layoutY="14.0" text="Gestión de Espacios (PLACE)"
+           style="-fx-font-size:16px;-fx-font-weight:bold;"/>
+    <HBox layoutX="14.0" layoutY="42.0" spacing="8.0">
+      <TextField fx:id="txtBuscar" promptText="Buscar por nombre..." prefWidth="180.0"/>
+      <ComboBox fx:id="cmbFiltroTipo" prefWidth="120.0"/>
+      <ComboBox fx:id="cmbFiltroEstado" prefWidth="130.0"/>
+      <Button text="Buscar" onAction="#BtnBuscar"/>
+      <Button text="+ Nuevo" onAction="#BtnLimpiar"
+              style="-fx-background-color:#2a902a;-fx-text-fill:white;"/>
+      <Button fx:id="btnRegresar" text="Regresar" onAction="#BtnRegresar"/>
+    </HBox>
+    <TableView fx:id="tblEspacios" layoutX="14.0" layoutY="76.0"
+               prefHeight="200.0" prefWidth="722.0">
+      <columns>
+        <TableColumn fx:id="colId" text="resource_id" prefWidth="80.0"/>
+        <TableColumn fx:id="colNombre" text="resource_name" prefWidth="150.0"/>
+        <TableColumn fx:id="colCapacidad" text="Capacidad" prefWidth="80.0"/>
+        <TableColumn fx:id="colUbicacion" text="Ubicación" prefWidth="150.0"/>
+        <TableColumn fx:id="colTipo" text="Tipo" prefWidth="110.0"/>
+        <TableColumn fx:id="colEstado" text="Estado" prefWidth="110.0"/>
+      </columns>
+    </TableView>
+    <Label layoutX="14.0" layoutY="285.0" text="Detalle del espacio"
+           style="-fx-font-size:13px;-fx-font-weight:bold;"/>
+    <HBox layoutX="14.0" layoutY="305.0" spacing="14.0">
+      <VBox spacing="7.0" prefWidth="340.0">
+        <Label text="resource_name *"/>
+        <TextField fx:id="txtNombre" prefWidth="320.0"/>
+        <Label text="res_description *"/>
+        <TextField fx:id="txtDescripcion" prefWidth="320.0"/>
+        <Label text="resource_capacity *"/>
+        <TextField fx:id="txtCapacidad" prefWidth="320.0"/>
+      </VBox>
+      <VBox spacing="7.0" prefWidth="340.0">
+        <Label text="resource_location *"/>
+        <TextField fx:id="txtUbicacion" prefWidth="320.0"/>
+        <Label text="resource_type *"/>
+        <ComboBox fx:id="cmbTipo" prefWidth="320.0"/>
+        <Label text="resource_state *"/>
+        <ComboBox fx:id="cmbEstado" prefWidth="320.0"/>
+      </VBox>
+    </HBox>
+    <HBox layoutX="14.0" layoutY="470.0" spacing="8.0">
+      <Button fx:id="btnGuardar" text="Guardar" onAction="#BtnGuardar"
+              style="-fx-background-color:#2a70b0;-fx-text-fill:white;" prefWidth="100.0"/>
+      <Button fx:id="btnEliminar" text="Marcar no disponible" onAction="#BtnEliminar"
+              style="-fx-background-color:#b03030;-fx-text-fill:white;"/>
+      <Button fx:id="btnLimpiar" text="Limpiar" onAction="#BtnLimpiar" prefWidth="80.0"/>
+    </HBox>
+    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="506.0"
+           style="-fx-font-size:11px;"/>
+  </children>
 </AnchorPane>
-

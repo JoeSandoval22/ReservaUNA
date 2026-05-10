@@ -1,7 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="cr.ac.una.reservauna.controller.ProfessorGUI">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+     xmlns="http://javafx.com/javafx/26"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="cr.ac.una.reservauna.controller.ProfessorGUI">
+  <children>
+    <Label layoutX="6.0" layoutY="5.0" text="ReservaUNA — "/>
+    <Label fx:id="LabelNombre" layoutX="120.0" layoutY="5.0"/>
+    <Label fx:id="LabelCorreo" layoutX="245.0" layoutY="5.0"/>
+    <HBox layoutY="23.0" prefHeight="25.0" prefWidth="600.0">
+      <children>
+        <Button text="Archivo" onAction="#btnIngresarArchivo"/>
+        <Button text="Reservas" onAction="#btnIngresarReservas"/>
+        <Button text="Ayuda" onAction="#btnIngresarAyuda"/>
+      </children>
+    </HBox>
+    <HBox layoutY="49.0" prefHeight="50.0" prefWidth="600.0">
+      <children>
+        <Button fx:id="btnNuevaReserva" text="Nueva reserva" onAction="#btnIngresarNuevaReserva" prefWidth="120.0">
+          <font><Font size="14.0"/></font>
+        </Button>
+        <Button fx:id="btnMisReservas" text="Mis reservas" onAction="#btnIngresarMisReservas" prefWidth="110.0">
+          <font><Font size="14.0"/></font>
+        </Button>
+        <Button text="Calendario" onAction="#btnIngresarCalendario"/>
+        <Label text="Usuario: "/>
+        <Label fx:id="LabelCorreo" prefWidth="120.0"/>
+        <Button fx:id="btnCerrarSesion" text="Cerrar sesión" onAction="#btnRegresarInicio"/>
+      </children>
+    </HBox>
+    <Label layoutX="32.0" layoutY="110.0" text="Reservas Activas"/>
+    <Label fx:id="LabelReservasActivas" layoutX="55.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;"/>
+    <Label layoutX="170.0" layoutY="110.0" text="Pendientes"/>
+    <Label fx:id="LabelPendientes" layoutX="185.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;-fx-text-fill:#7a5000;"/>
+    <Label layoutX="310.0" layoutY="110.0" text="Recursos Disponibles"/>
+    <Label fx:id="LabelRecursosDisponible" layoutX="340.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;"/>
+    <Label layoutX="456.0" layoutY="110.0" text="Cupo Restante"/>
+    <Label fx:id="LabelCupoRestante" layoutX="475.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;-fx-text-fill:#7a1a1a;"/>
+    <TableView fx:id="TablaReservas" layoutX="14.0" layoutY="155.0" prefHeight="200.0" prefWidth="340.0">
+      <columns>
+        <TableColumn fx:id="colRecurso" text="Recurso" prefWidth="110.0"/>
+        <TableColumn fx:id="colFecha" text="Fecha" prefWidth="115.0"/>
+        <TableColumn fx:id="colEstado" text="Estado" prefWidth="115.0"/>
+      </columns>
+    </TableView>
+    <Label layoutX="370.0" layoutY="155.0" text="Accesos rápidos"/>
+    <VBox layoutX="360.0" layoutY="172.0" prefWidth="230.0" spacing="5.0">
+      <children>
+        <Button fx:id="btnNuevaReserva2" text="+ Nueva reserva" onAction="#btnIngresarNuevaReserva2" prefWidth="220.0"/>
+        <Button fx:id="btnVerCalendario" text="Ver calendario" onAction="#btnIngresarVerCalendario" prefWidth="220.0"/>
+        <Button fx:id="btnMisReservas2" text="Mis reservas" onAction="#btnIngresarMisReservas2" prefWidth="220.0"/>
+      </children>
+    </VBox>
+  </children>
 </AnchorPane>

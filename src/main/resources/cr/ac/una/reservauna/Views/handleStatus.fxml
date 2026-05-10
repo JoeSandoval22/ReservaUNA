@@ -1,7 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="cr.ac.una.reservauna.controller.HandleStatusController">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane prefHeight="520.0" prefWidth="780.0"
+    xmlns="http://javafx.com/javafx/26"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="cr.ac.una.reservauna.controller.HandleStatusController">
+  <children>
+    <Label layoutX="14.0" layoutY="14.0" text="Aprobar / Rechazar Reservas"
+           style="-fx-font-size:16px;-fx-font-weight:bold;"/>
+    <HBox layoutX="14.0" layoutY="42.0" spacing="8.0">
+      <ComboBox fx:id="cmbFiltroEstado" prefWidth="120.0"/>
+      <DatePicker fx:id="dpFecha" promptText="Fecha" prefWidth="140.0"/>
+      <TextField fx:id="txtBuscarUsuario" promptText="Filtrar usuario..." prefWidth="160.0"/>
+      <Button text="Buscar" onAction="#BtnBuscar"/>
+    </HBox>
+    <TableView fx:id="tblReservas" layoutX="14.0" layoutY="76.0"
+               prefHeight="200.0" prefWidth="752.0">
+      <columns>
+        <TableColumn fx:id="colId" text="ID" prefWidth="50.0"/>
+        <TableColumn fx:id="colUsuario" text="user_name" prefWidth="130.0"/>
+        <TableColumn fx:id="colRecurso" text="Recurso" prefWidth="140.0"/>
+        <TableColumn fx:id="colInicio" text="start_date" prefWidth="110.0"/>
+        <TableColumn fx:id="colFin" text="end_date" prefWidth="110.0"/>
+        <TableColumn fx:id="colMotivo" text="reason" prefWidth="100.0"/>
+        <TableColumn fx:id="colEstado" text="Estado" prefWidth="100.0"/>
+      </columns>
+    </TableView>
+    <Label fx:id="lblReservaSeleccionada" layoutX="14.0" layoutY="285.0"
+           style="-fx-text-fill:#666;"/>
+    <Label layoutX="14.0" layoutY="305.0" text="Motivo (→ LOG_TABLE.detail) *"/>
+    <TextArea fx:id="txtMotivo" layoutX="14.0" layoutY="322.0"
+              prefHeight="80.0" prefWidth="752.0"
+              promptText="Ingresá el motivo de aprobación o rechazo..."/>
+    <HBox layoutX="14.0" layoutY="412.0" spacing="10.0">
+      <Button fx:id="btnAprobar" text="Aprobar" onAction="#BtnAprobar"
+              prefWidth="120.0" style="-fx-background-color:#2a902a;-fx-text-fill:white;"/>
+      <Button fx:id="btnRechazar" text="Rechazar" onAction="#BtnRechazar"
+              prefWidth="120.0" style="-fx-background-color:#b03030;-fx-text-fill:white;"/>
+      <Button fx:id="btnRegresar" text="Regresar" onAction="#BtnRegresar"/>
+    </HBox>
+    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="450.0"
+           style="-fx-font-size:11px;"/>
+  </children>
 </AnchorPane>

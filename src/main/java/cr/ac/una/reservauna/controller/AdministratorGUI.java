@@ -1,13 +1,90 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cr.ac.una.reservauna.controller;
 
-/**
- *
- * @author andre_3e6xvb2
- */
-public class AdministratorGUI {
-    
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+
+public class AdministratorGUI implements Initializable {
+
+    @FXML private Label LabelNombre;
+    @FXML private Label LabelCorreo;
+    @FXML private Label LabelReservasActivas;
+    @FXML private Label LabelPendientes;
+    @FXML private Label LabelRecursosDisponible;
+    @FXML private Label LabelCupoRestante;
+    @FXML private TableView TablaReservas;
+    @FXML private TableColumn colRecurso;
+    @FXML private TableColumn colFecha;
+    @FXML private TableColumn colEstado;
+    @FXML private Button btnNuevaReserva;
+    @FXML private Button btnMisReservas;
+    @FXML private Button btnCalendario;
+    @FXML private Button btnRecursos;
+    @FXML private Button btnAdministracion;
+    @FXML private Button btnCerrarSesion;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        LabelNombre.setText("Admin Sistema");
+        LabelCorreo.setText("admin@una.ac.cr");
+        LabelReservasActivas.setText("3");
+        LabelPendientes.setText("5");
+        LabelRecursosDisponible.setText("24");
+        LabelCupoRestante.setText("2");
+        // TODO: cargar TableView desde RESERVE WHERE user_id = usuario actual
+    }
+
+    private void cargarPantalla(String fxml, Button btn) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(fxml));
+            Stage stage = (Stage) btn.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Error al cargar: " + fxml + " — " + e.getMessage());
+        }
+    }
+
+    @FXML private void btnIngresarArchivo(ActionEvent e) {}
+    @FXML private void btnIngresarReservas(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
+    }
+    @FXML private void btnIngresarReportes(ActionEvent e) {}
+    @FXML private void btnIngresarAdministracion(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/usersHandle.fxml", btnAdministracion);
+    }
+    @FXML private void btnIngresarAyuda(ActionEvent e) {}
+    @FXML private void btnIngresarNuevaReserva(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnNuevaReserva);
+    }
+    @FXML private void btnIngresarMisReservas(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
+    }
+    @FXML private void btnIngresarCalendario(ActionEvent e) {}
+    @FXML private void btnIngresarRecursos(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/place.fxml", btnRecursos);
+    }
+    @FXML private void btnIngresarNuevaReserva2(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnNuevaReserva);
+    }
+    @FXML private void btnIngresarVerCalendario(ActionEvent e) {}
+    @FXML private void btnIngresarVerRecursos(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/place.fxml", btnRecursos);
+    }
+    @FXML private void btnIngresarMisReservas2(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
+    }
+    @FXML private void btnRegresarInicio(ActionEvent e) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/login.fxml", btnCerrarSesion);
+    }
 }
