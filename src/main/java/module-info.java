@@ -4,6 +4,7 @@ module cr.ac.una.reservauna {
     requires java.sql;
 
     opens cr.ac.una.reservauna to javafx.fxml;
+    opens cr.ac.una.reservauna.controller to javafx.fxml;
     exports cr.ac.una.reservauna;
     opens cr.ac.una.reservauna.dao;
     opens cr.ac.una.reservauna.model;

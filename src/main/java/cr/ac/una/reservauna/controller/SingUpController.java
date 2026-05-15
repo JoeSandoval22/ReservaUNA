@@ -1,5 +1,7 @@
 package cr.ac.una.reservauna.controller;
 
+import cr.ac.una.reservauna.dao.UserDAO;
+import cr.ac.una.reservauna.model.User;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,12 +23,19 @@ public class SingUpController implements Initializable {
     @FXML private TextField txtNombre;
     @FXML private TextField txtCorreo;
     @FXML private PasswordField txtContrasena;
-    @FXML private ComboBox cmbRol;
-    @FXML private ComboBox cmbEstado;
+    private ComboBox cmbRol;
+    private ComboBox cmbEstado;
     @FXML private Label lblMensaje;
     @FXML private Button btnGuardar;
     @FXML private Button btnLimpiar;
     @FXML private Button btnRegresar;
+    
+    private UserDAO userDao = new UserDAO();
+    @FXML
+    private TextField roleField;
+    @FXML
+    private TextField userState;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,7 +50,7 @@ public class SingUpController implements Initializable {
     }
 
     @FXML
-    private void BtnGuardar(ActionEvent event) {
+    public void BtnGuardar(ActionEvent event) {
         if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()
                 || txtContrasena.getText().isEmpty()
                 || cmbRol.getValue() == null || cmbEstado.getValue() == null) {
@@ -49,17 +58,15 @@ public class SingUpController implements Initializable {
                 "Completá todos los campos obligatorios.");
             return;
         }
+        //User user = new User(txtNombre.getText(),txtCorreo.getText(),txtContrasena.getText(),cmbRol.getValue(),cmbEstado.getValue());
         if (!txtCorreo.getText().contains("@")) {
             mostrarAlerta(Alert.AlertType.WARNING, "Correo inválido",
                 "El correo debe tener formato usuario@una.ac.cr");
             return;
         }
-        // Extraer role_id del ComboBox (primer caracter)
+        //userDao.insertUser(user);
         String rolSeleccionado = cmbRol.getValue().toString();
         int roleId = Integer.parseInt(rolSeleccionado.substring(0, 1));
-
-        // TODO: INSERT INTO USERS_TABLE (user_name, user_mail, role_id, user_state)
-        //       VALUES (?, ?, ?, ?)
         mostrarAlerta(Alert.AlertType.INFORMATION, "Registrado",
             "Usuario registrado correctamente.");
         BtnLimpiar(event);

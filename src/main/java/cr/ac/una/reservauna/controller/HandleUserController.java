@@ -48,9 +48,6 @@ public class HandleUserController implements Initializable {
         cmbRol.getItems().addAll(
             "1 · ADMINISTRADOR","2 · ENCARGADO","3 · PROFESOR","4 · ESTUDIANTE");
         cmbEstado.getItems().addAll("ACTIVO","INACTIVO");
-        // TODO: SELECT u.user_id, u.user_name, u.user_mail, u.user_state,
-        //              r.role_name, r.max_reserves
-        //       FROM USERS_TABLE u JOIN USER_ROLE r ON u.role_id=r.role_id
     }
 
     @FXML
@@ -61,12 +58,6 @@ public class HandleUserController implements Initializable {
                 "Completá todos los campos obligatorios.");
             return;
         }
-        // TODO si es nuevo:
-        //   INSERT INTO USERS_TABLE (user_name, user_mail, role_id, user_state)
-        //   VALUES (?, ?, ?, ?)
-        // TODO si es edición:
-        //   UPDATE USERS_TABLE SET user_name=?, user_mail=?, role_id=?, user_state=?
-        //   WHERE user_id=?
         mostrarAlerta(Alert.AlertType.INFORMATION, "Guardado",
             "Usuario guardado correctamente.");
         BtnLimpiar(event);
@@ -79,7 +70,6 @@ public class HandleUserController implements Initializable {
                 "Seleccioná un usuario de la tabla.");
             return;
         }
-        // TODO: UPDATE USERS_TABLE SET user_state='INACTIVO' WHERE user_id=?
         mostrarAlerta(Alert.AlertType.INFORMATION, "Inactivado",
             "Usuario marcado como INACTIVO.");
     }
@@ -99,7 +89,7 @@ public class HandleUserController implements Initializable {
 
     @FXML
     private void BtnBuscar(ActionEvent event) {
-        // TODO: SELECT con filtros por user_name, user_mail, role_id, user_state
+        // SELECT con filtros por user_name, user_mail, role_id, user_state
     }
 
     @FXML

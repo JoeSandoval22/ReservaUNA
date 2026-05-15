@@ -47,9 +47,6 @@ public class PlaceController implements Initializable {
         cmbFiltroEstado.getItems().addAll("Todos","DISPONIBLE","NO DISPONIBLE");
         cmbTipo.getItems().addAll("AULA","LABORATORIO");
         cmbEstado.getItems().addAll("DISPONIBLE","NO DISPONIBLE");
-        // TODO: SELECT r.resource_id, r.resource_name, r.resource_state,
-        //              p.resource_capacity, p.resource_location, p.resource_type
-        //       FROM RESOURCES r JOIN PLACE p ON r.resource_id=p.resource_id
     }
 
     @FXML
@@ -60,10 +57,6 @@ public class PlaceController implements Initializable {
             mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Completá todos los campos.");
             return;
         }
-        // TODO: INSERT INTO RESOURCES (resource_name, res_description, resource_state)
-        //       VALUES (?, ?, ?) → obtener resource_id generado
-        // TODO: INSERT INTO PLACE (resource_capacity, resource_location, resource_type, resource_id)
-        //       VALUES (?, ?, ?, ?)
         mostrarAlerta(Alert.AlertType.INFORMATION, "Guardado", "Espacio registrado correctamente.");
         BtnLimpiar(event);
     }
@@ -74,7 +67,6 @@ public class PlaceController implements Initializable {
             mostrarAlerta(Alert.AlertType.WARNING, "Sin selección", "Seleccioná un espacio.");
             return;
         }
-        // TODO: UPDATE RESOURCES SET resource_state='NO DISPONIBLE' WHERE resource_id=?
         mostrarAlerta(Alert.AlertType.INFORMATION, "Eliminado", "Espacio marcado como no disponible.");
     }
 
