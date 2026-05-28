@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.Login">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.Login">
   <children>
-    <Label layoutX="150.0" layoutY="60.0" text="ReservaUNA">
+    <Label layoutX="155.0" layoutY="33.0" text="ReservaUNA">
       <font><Font size="28.0" /></font>
     </Label>
-    <Label layoutX="120.0" layoutY="100.0" text="Sistema de reservas de espacios y equipos" />
+    <Label layoutX="120.0" layoutY="80.0" text="Sistema de reservas de espacios y equipos" />
     <Label layoutX="140.0" layoutY="155.0" text="Correo institucional" />
-    <TextField fx:id="TextFCorreo" layoutX="140.0" layoutY="175.0" prefWidth="220.0" promptText="usuario@una.ac.cr" />
+    <TextField fx:id="emailText" layoutX="140.0" layoutY="175.0" prefWidth="220.0" promptText="usuario@una.ac.cr" />
     <Label layoutX="140.0" layoutY="215.0" text="Contraseña" />
-    <PasswordField fx:id="TextFContraseña" layoutX="140.0" layoutY="235.0" prefWidth="220.0" />
-    <Button fx:id="btnIniciarSesion" layoutX="190.0" layoutY="290.0" onAction="#BtnIniciarSesion" prefWidth="120.0" text="Iniciar sesión" />
+    <PasswordField fx:id="passwordText" layoutX="140.0" layoutY="235.0" prefWidth="220.0" />
+    <Button fx:id="loginButton" layoutX="190.0" layoutY="290.0" onAction="#doLogin" prefWidth="120.0" text="Iniciar sesión" />
     <Label fx:id="lblMensaje" layoutX="120.0" layoutY="330.0" prefWidth="260.0" style="-fx-text-fill: red;" />
-    <Label layoutX="80.0" layoutY="370.0" style="-fx-font-size: 10px;" text="Roles: Administrador · Encargado · Profesor · Estudiante" />
-      <Button fx:id="registerId" layoutX="412.0" layoutY="358.0" mnemonicParsing="false" onAction="#switchToSingUp" text="Registrarse" />
+    <Label layoutX="140.0" layoutY="376.0" style="-fx-font-size: 10px;" text="Roles: Administrador · Encargado · Profesor · Estudiante" />
+      <Button fx:id="registerButton" layoutX="412.0" layoutY="358.0" mnemonicParsing="false" onAction="#switchToSingUp" text="Registrarse" />
   </children>
 </AnchorPane>

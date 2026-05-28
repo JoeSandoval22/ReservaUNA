@@ -13,10 +13,10 @@ public class User {
     private String userName;
     private String userMail;
     private Role role;
-    private String userState;
+    private UserState userState;
     private String password;
     
-    public User(int id,String name,String mail,Role role,String state, String password){
+    public User(int id,String name,String mail,Role role,UserState state, String password){
         this.userId=id;
         this.userName=name;
         this.userMail=mail;
@@ -25,12 +25,16 @@ public class User {
         this.password=password;
     }
     
-    public User(String name,String mail,Role role,String state, String password){
+    public User(String name,String mail,Role role,UserState state, String password){
         this.userName=name;
         this.userMail=mail;
         this.role=role;
         this.userState=state;
         this.password=password;
+    }
+    
+    public User(Role role){
+        this.role=role;
     }
     
     public User(){
@@ -49,7 +53,7 @@ public class User {
     public void setUserRole(Role role){
         this.role=role;
     }
-    public void setUserState(String state){
+    public void setUserState(UserState state){
         this.userState=state;
     }
     public void setUserPassword(String password){
@@ -68,7 +72,7 @@ public class User {
     public Role getUserRole(){
         return this.role;
     }
-    public String getUserState(){
+    public UserState getUserState(){
         return this.userState;
     }
     public String getUserPassword(){

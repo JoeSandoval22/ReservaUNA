@@ -1,5 +1,7 @@
 package cr.ac.una.reservauna.controller;
 
+import cr.ac.una.reservauna.dao.UserDAO;
+import cr.ac.una.reservauna.model.Role;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,56 +20,27 @@ import javafx.stage.Stage;
 
 public class Login implements Initializable {
 
-    @FXML private TextField TextFCorreo;
-    @FXML private PasswordField TextFContraseña;
-    @FXML private Button btnIniciarSesion;
-    @FXML private Label lblMensaje;
+    @FXML 
+    private Label lblMensaje;
     @FXML
-    private Button registerId;
-    
-    private SingUpController singUp = new SingUpController();
+    private TextField emailText;
+    @FXML
+    private PasswordField passwordText;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button registerButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    @FXML
-    private void BtnIniciarSesion(ActionEvent event) {
-        String correo = TextFCorreo.getText().trim();
-        String contrasena = TextFContraseña.getText().trim();
-        if (correo.isEmpty() || contrasena.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING,
-                "Campos vacíos",
-                "Ingresá el correo y la contraseña.");
-            return;
-        }
-        String rol = "ADMINISTRADOR";
-        try {
-            String fxml = switch (rol) {
-                case "ADMINISTRADOR" -> "/cr/ac/una/reservauna/Views/administrator.fxml";
-                case "ENCARGADO"     -> "/cr/ac/una/reservauna/Views/manager.fxml";
-                case "PROFESOR"      -> "/cr/ac/una/reservauna/Views/professor.fxml";
-                case "ESTUDIANTE"    -> "/cr/ac/una/reservauna/Views/student.fxml";
-                default -> null;
-            };
-            if (fxml == null) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "Rol no reconocido.");
-                return;
-            }
-            Parent root = FXMLLoader.load(getClass().getResource(fxml));
-            Stage stage = (Stage) btnIniciarSesion.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo cargar la pantalla: " + e.getMessage());
-        }
-    }
 
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(mensaje);
+        alert.setContentText(message);
         alert.showAndWait();
     }
     
@@ -78,5 +51,36 @@ public class Login implements Initializable {
         javafx.scene.Node source = (javafx.scene.Node) event.getSource();
         Stage currentWindow = (Stage) source.getScene().getWindow();
         currentWindow.getScene().setRoot(root);
+    }
+
+    @FXML
+    private void doLogin(ActionEvent event) { 
+        String email = emailText.getText().trim();
+        String password = passwordText.getText().trim();
+        if(email.isEmpty() || password.isEmpty()){
+            showAlert(Alert.AlertType.WARNING,"Espacios vacíos","No deje espacios sin completar.");
+            return;
+        }
+        try{
+            UserDAO userDao = new UserDAO();
+            Role user = userDao.findUser(email, password);
+            if(user==null){
+                showAlert(Alert.AlertType.ERROR,"Usuario inexistente","No existe un usuario con esas credenciales.");
+                return;
+            }
+            String fxmlFile = switch(user){
+                case ADMINISTRADOR -> "/cr/ac/una/reservauna/Views/administrator.fxml";
+                case ENCARGADO ->  "/cr/ac/una/reservauna/Views/manager.fxml";
+                case PROFESOR -> "/cr/ac/una/reservauna/Views/professor.fxml";
+                case ESTUDIANTE -> "/cr/ac/una/reservauna/Views/student.fxml";
+                default -> null;
+            };
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();          
+        }catch(Exception ex){
+            System.out.println("Error: "+ex.getMessage());
+        }
     }
 }

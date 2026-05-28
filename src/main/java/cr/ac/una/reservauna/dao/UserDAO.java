@@ -7,6 +7,7 @@ package cr.ac.una.reservauna.dao;
 import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.model.Role;
 import cr.ac.una.reservauna.model.User;
+import cr.ac.una.reservauna.model.UserState;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,14 +29,14 @@ public class UserDAO implements UserInterface {
 
     @Override
     public boolean insertUser(User user) {
-        String sql = "INSERT INTO USERS_TABLE (user_name, user_mail, role_id, user_state) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO USERS_TABLE (user_name, user_mail, user_password, role_id, user_state) VALUES (?, ?, ?, ?, ?)";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getUserMail());
-            ps.setInt(3, user.getUserRole().getRoleId());
-            ps.setString(4, user.getUserState());
-            ps.setString(5, hashPassword(user.getUserPassword()));
+            ps.setString(3, hashPassword(user.getUserPassword()));
+            ps.setInt(4, user.getUserRole().getRoleId());
+            ps.setString(5, user.getUserState().getUserState());
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -60,14 +61,14 @@ public class UserDAO implements UserInterface {
 
     @Override
     public boolean updateUser(User user) {
-        String sql = "UPDATE USERS_TABLE SET user_name = ?, user_mail = ?, role_id = ?, user_state = ? WHERE user_id = ?";
+        String sql = "UPDATE USERS_TABLE SET user_name = ?, user_mail = ?, user_password = ?, role_id = ?, user_state = ? WHERE user_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getUserMail());
-            ps.setInt(3, user.getUserRole().getRoleId());
-            ps.setString(4, user.getUserState());
-            ps.setString(5, user.getUserPassword());
+            ps.setString(3, user.getUserPassword());
+            ps.setInt(4, user.getUserRole().getRoleId());
+            ps.setString(5, user.getUserState().getUserState()); 
             ps.setInt(6, user.getUserId());
             ps.executeUpdate();
             return true;
@@ -85,7 +86,7 @@ public class UserDAO implements UserInterface {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                return new User(rs.getInt("user_id"),rs.getString("user_name"),rs.getString("user_mail"),Role.values()[rs.getInt("role_id")-1],rs.getString("user_state"),rs.getString("user_password"));
+                return new User(rs.getInt("user_id"),rs.getString("user_name"),rs.getString("user_mail"),Role.values()[rs.getInt("role_id")-1],UserState.valueOf(rs.getString("user_state")),rs.getString("user_password"));
             }
         } catch(SQLException ex){
             System.out.println("Error: " + ex.getMessage());
@@ -102,7 +103,7 @@ public class UserDAO implements UserInterface {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                User user = new User(rs.getInt("user_id"),rs.getString("user_name"),rs.getString("user_mail"),Role.values()[rs.getInt("role_id")-1],rs.getString("user_state"),rs.getString("user_password"));
+                User user = new User(rs.getInt("user_id"),rs.getString("user_name"),rs.getString("user_mail"),Role.values()[rs.getInt("role_id")-1],UserState.valueOf(rs.getString("user_state")),rs.getString("user_password"));
                 users.add(user);
             }
         } catch (SQLException ex) {
@@ -111,7 +112,7 @@ public class UserDAO implements UserInterface {
         }
         return users;
     }
-    
+    //Hace hashing sobre las contraseñas para garantizar mayor seguridad en los registros de la base de datos.
     private String hashPassword(String password){
         try{
             MessageDigest message = MessageDigest.getInstance("SHA-256");
@@ -124,6 +125,24 @@ public class UserDAO implements UserInterface {
         } catch(Exception e){
             return password;
         }
+    }
+    
+    public Role findUser(String email, String password){
+        String sql = "SELECT role_id FROM USERS_TABLE WHERE user_mail = ? AND user_password = ?";
+        String hash = hashPassword(password);
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, hash);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return Role.values()[rs.getInt("role_id")-1];
+            }
+        } catch(SQLException ex){
+            System.out.println("Error: "+ex.getMessage());
+            return null;
+        }
+        return null;
     }
     
 }
