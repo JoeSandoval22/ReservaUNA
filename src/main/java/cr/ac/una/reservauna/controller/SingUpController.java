@@ -58,6 +58,8 @@ public class SingUpController implements Initializable {
         nameText.clear();
         emailText.clear();
         passwordText.clear();
+        roleCombo.getItems().clear();
+        userStateCombo.getItems().clear();
     }
 
     @FXML

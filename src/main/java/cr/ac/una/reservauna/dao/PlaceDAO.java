@@ -6,6 +6,8 @@ package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.model.Place;
+import cr.ac.una.reservauna.model.PlaceType;
+import cr.ac.una.reservauna.model.ResourceState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +34,7 @@ public class PlaceDAO implements PlaceInterface {
             PreparedStatement psRes = connection.prepareStatement(sqlRes,new String[]{"RESOURCE_ID"});
             psRes.setString(1, place.getResourceName());
             psRes.setString(2, place.getDescription());
-            psRes.setString(3, place.getResourceState());
+            psRes.setString(3, place.getResourceState().getResourceState());
             psRes.executeUpdate();
             ResultSet rs = psRes.getGeneratedKeys();
             rs.next();
@@ -41,7 +43,7 @@ public class PlaceDAO implements PlaceInterface {
             PreparedStatement psPlace = connection.prepareStatement(sqlPlace);
             psPlace.setInt(1, place.getCapacity());
             psPlace.setString(2, place.getLocation());
-            psPlace.setString(3, place.getType());
+            psPlace.setString(3, place.getType().getPlaceType());
             psPlace.setInt(4, resourceId);
             psPlace.executeUpdate();
             return true;
@@ -77,13 +79,13 @@ public class PlaceDAO implements PlaceInterface {
             PreparedStatement psPlace = connection.prepareStatement(sqlPlace);
             psPlace.setInt(1, place.getCapacity());
             psPlace.setString(2, place.getLocation());
-            psPlace.setString(3, place.getType());
+            psPlace.setString(3, place.getType().getPlaceType());
             psPlace.setInt(4, place.getResourceId());
             psPlace.executeUpdate();
             PreparedStatement psRes = connection.prepareStatement(sqlRes);
             psRes.setString(1, place.getResourceName());
             psRes.setString(2, place.getDescription());
-            psRes.setString(3, place.getResourceState());
+            psRes.setString(3, place.getResourceState().getResourceState());
             psRes.setInt(4, place.getResourceId());
             psRes.executeUpdate();
             return true;
@@ -103,7 +105,8 @@ public class PlaceDAO implements PlaceInterface {
             psPlace.setInt(1, id);
             ResultSet rs = psPlace.executeQuery();
             if(rs.next()){
-                return new Place(rs.getInt("resource_id"), rs.getString("resource_name"),rs.getString("res_description"),rs.getString("resource_state"),rs.getInt("resource_capacity"),rs.getString("resource_location"),rs.getString("resource_type"));
+                return new Place(rs.getInt("resource_id"), rs.getString("resource_name"),rs.getString("res_description"),ResourceState.valueOf(rs.getString("resource_state")),
+                           rs.getInt("resource_capacity"),rs.getString("resource_location"),PlaceType.valueOf(rs.getString("resource_type")));
             }
         } catch(SQLException ex){
             System.out.println("Error: "+ex.getMessage());
@@ -121,7 +124,8 @@ public class PlaceDAO implements PlaceInterface {
             PreparedStatement ps = connection.prepareStatement(sqlPlace);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                Place place = new Place(rs.getInt("resource_id"), rs.getString("resource_name"),rs.getString("res_description"),rs.getString("resource_state"),rs.getInt("resource_capacity"),rs.getString("resource_location"),rs.getString("resource_type"));
+                Place place = new Place(rs.getInt("resource_id"), rs.getString("resource_name"),rs.getString("res_description"),ResourceState.valueOf(rs.getString("resource_state")),
+                                  rs.getInt("resource_capacity"),rs.getString("resource_location"),PlaceType.valueOf(rs.getString("resource_type")));
                 places.add(place);
             }
         } catch(SQLException ex){

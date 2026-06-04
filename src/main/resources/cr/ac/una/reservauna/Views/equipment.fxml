@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -8,62 +9,50 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane prefHeight="540.0" prefWidth="750.0"
-    xmlns="http://javafx.com/javafx/26"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="cr.ac.una.reservauna.controller.EquipmentController">
+
+<AnchorPane prefHeight="706.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.EquipmentController">
   <children>
-    <Label layoutX="14.0" layoutY="14.0"
-           text="Gestión de Equipos (EQUIPMENT)"
-           style="-fx-font-size:16px;-fx-font-weight:bold;"/>
-    <HBox layoutX="14.0" layoutY="42.0" spacing="8.0">
-      <TextField fx:id="txtBuscar" promptText="Buscar nombre o marca..."
-                 prefWidth="180.0"/>
-      <ComboBox fx:id="cmbFiltroEstado" prefWidth="130.0"/>
-      <Button text="Buscar" onAction="#BtnBuscar"/>
-      <Button text="+ Nuevo" onAction="#BtnLimpiar"
-              style="-fx-background-color:#2a902a;-fx-text-fill:white;"/>
-      <Button fx:id="btnRegresar" text="Regresar" onAction="#BtnRegresar"/>
-    </HBox>
-    <TableView fx:id="tblEquipos" layoutX="14.0" layoutY="76.0"
-               prefHeight="190.0" prefWidth="722.0">
+    <Label layoutX="14.0" layoutY="14.0" style="-fx-font-size:16px;-fx-font-weight:bold;" text="Gestión de Recursos (Equipos)" />
+    <TableView fx:id="equipmentsList" layoutX="14.0" layoutY="88.0" prefHeight="278.0" prefWidth="878.0">
       <columns>
-        <TableColumn fx:id="colId"      text="resource_id"    prefWidth="80.0"/>
-        <TableColumn fx:id="colNombre"  text="resource_name"  prefWidth="150.0"/>
-        <TableColumn fx:id="colMarca"   text="brand"          prefWidth="100.0"/>
-        <TableColumn fx:id="colModelo"  text="resource_model" prefWidth="130.0"/>
-        <TableColumn fx:id="colSerie"   text="series"         prefWidth="120.0"/>
-        <TableColumn fx:id="colEstado"  text="resource_state" prefWidth="140.0"/>
+        <TableColumn fx:id="idColumn" prefWidth="80.0" text="ID de recurso" />
+        <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Nombre de recurso" />
+        <TableColumn fx:id="brandColumn" prefWidth="100.0" text="Marca" />
+        <TableColumn fx:id="modelColumn" prefWidth="130.0" text="Modelo del recurso" />
+        <TableColumn fx:id="seriesColumn" prefWidth="120.0" text="Serie" />
+        <TableColumn fx:id="stateColumn" prefWidth="92.00006103515625" text="Estado" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="204.00003662109373" text="Descripción" />
       </columns>
     </TableView>
-    <Label layoutX="14.0" layoutY="276.0" text="Detalle del equipo"
-           style="-fx-font-size:13px;-fx-font-weight:bold;"/>
-    <HBox layoutX="14.0" layoutY="296.0" spacing="14.0">
-      <VBox spacing="7.0" prefWidth="340.0">
-        <Label text="resource_name *"/>
-        <TextField fx:id="txtNombre"      prefWidth="320.0"/>
-        <Label text="res_description *"/>
-        <TextField fx:id="txtDescripcion" prefWidth="320.0"/>
-        <Label text="brand *"/>
-        <TextField fx:id="txtMarca"       prefWidth="320.0"/>
+    <Label layoutX="25.0" layoutY="380.0" style="-fx-font-size:13px;-fx-font-weight:bold;" text="Detalle del equipo" />
+    <HBox layoutX="25.0" layoutY="400.0" spacing="14.0">
+      <VBox prefHeight="179.0" prefWidth="362.0" spacing="7.0">
+        <Label text="Nombre recurso" />
+        <TextField fx:id="nameText" prefWidth="320.0" />
+        <Label text="Marca" />
+        <TextField fx:id="brandText" prefWidth="320.0" />
+        <Label text="Modelo" />
+        <TextField fx:id="modelText" prefWidth="320.0" />
+        <Label text="Serie" />
+        <TextField fx:id="seriesText" prefWidth="320.0" />
       </VBox>
-      <VBox spacing="7.0" prefWidth="340.0">
-        <Label text="resource_model *"/>
-        <TextField fx:id="txtModelo"  prefWidth="320.0"/>
-        <Label text="series *"/>
-        <TextField fx:id="txtSerie"   prefWidth="320.0"/>
-        <Label text="resource_state *"/>
-        <ComboBox fx:id="cmbEstado"   prefWidth="320.0"/>
+      <VBox prefWidth="340.0" spacing="7.0">
+        <Label text="Estado de recurso" />
+        <ComboBox fx:id="stateCombo" prefWidth="320.0" />
+            <Label text="Descripción" />
+            <TextField fx:id="descriptionText" />
+            <Label text="ID de recurso (solo actualizar)" />
+            <TextField fx:id="updateIdText" />
       </VBox>
     </HBox>
-    <HBox layoutX="14.0" layoutY="460.0" spacing="8.0">
-      <Button fx:id="btnGuardar"  text="Guardar" onAction="#BtnGuardar"
-              style="-fx-background-color:#2a70b0;-fx-text-fill:white;" prefWidth="100.0"/>
-      <Button fx:id="btnEliminar" text="Marcar no disponible" onAction="#BtnEliminar"
-              style="-fx-background-color:#b03030;-fx-text-fill:white;"/>
-      <Button fx:id="btnLimpiar"  text="Limpiar" onAction="#BtnLimpiar" prefWidth="80.0"/>
-    </HBox>
-    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="496.0"
-           style="-fx-font-size:11px;" text=""/>
+    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="496.0" style="-fx-font-size:11px;" text="" />
+   <Button fx:id="backButton" layoutX="807.0" layoutY="24.0" text="Regresar" />
+   <Button fx:id="addButton" layoutX="29.0" layoutY="651.0" onAction="#addEquipment" style="-fx-background-color:#2a902a;-fx-text-fill:white;" text="+ Nuevo Equipo" />
+   <Button fx:id="searchButton" layoutX="242.0" layoutY="50.0" onAction="#searchEquipmentById" text="Buscar" />
+   <TextField fx:id="findIdText" layoutX="14.0" layoutY="50.0" prefWidth="180.0" promptText="Buscar por ID de recurso" />
+      <Button fx:id="showButton" layoutX="338.0" layoutY="50.0" mnemonicParsing="false" onAction="#showAllEquipments" text="Mostrar equipos" />
+   <Button fx:id="clearButton" layoutX="536.0" layoutY="650.0" onAction="#clearFields" prefHeight="26.0" prefWidth="111.0" text="Limpiar Espacios" />
+   <Button fx:id="deleteButton" layoutX="369.0" layoutY="651.0" onAction="#deleteEquipments" style="-fx-background-color:#b03030;-fx-text-fill:white;" text="Eliminar Equipo" />
+   <Button fx:id="updateButton" layoutX="177.0" layoutY="650.0" onAction="#updateEquipments" prefHeight="26.0" prefWidth="129.0" style="-fx-background-color:#2a70b0;-fx-text-fill:white;" text="Actualizar Equipo" />
   </children>
 </AnchorPane>

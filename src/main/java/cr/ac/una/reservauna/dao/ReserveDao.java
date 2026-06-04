@@ -37,7 +37,7 @@ public class ReserveDao implements ReserveInterface {
     @Override
     public boolean insertReserve(Reserve reserve) {
         if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){return false;}
-        String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,?)";
+        String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,'PENDIENTE')";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
             ps.setInt(1, reserve.getUser().getUserId());
@@ -45,7 +45,7 @@ public class ReserveDao implements ReserveInterface {
             ps.setTimestamp(3, Timestamp.valueOf(reserve.getStartDate()));
             ps.setTimestamp(4, Timestamp.valueOf(reserve.getEndDate()));
             ps.setString(5, reserve.getReason());
-            ps.setTimestamp(6, Timestamp.valueOf(reserve.getCreateAt()));
+            ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
             ps.setString(7, reserve.getStatus().getStatus());
             ps.executeUpdate();
             Log log = new Log(reserve,reserve.getUser().getUserId(),LocalDateTime.now(),"CREAR","Reserva creada.");
@@ -60,6 +60,7 @@ public class ReserveDao implements ReserveInterface {
     @Override
     public boolean deleteReserve(Reserve reserve) {
         Reserve existingReserve = findReserveById(reserve.getReserveId());
+        if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){return false;}
         System.out.println("DEBUG - reserveId: " + reserve.getReserveId() + " | existingReserve: " + existingReserve);
         String sqlReserve = "DELETE FROM RESERVE WHERE reserve_id = ?";
         try{
@@ -78,16 +79,15 @@ public class ReserveDao implements ReserveInterface {
     @Override
     public boolean updateReserve(Reserve reserve) {
         Reserve existingReserve = findReserveById(reserve.getReserveId());
-        System.out.println("DEBUG - reserveId: " + reserve.getReserveId() + " | existingReserve: " + existingReserve);
-        String sqlReserve = "UPDATE RESERVE SET start_date = ?, end_date = ?, reason = ?, creat_at = ?, reserve_status = ? WHERE reserve_id = ?";
+        String sqlReserve = "UPDATE RESERVE SET resource_id = ?, start_date = ?, end_date = ?, reason = ?, creat_at = ? WHERE reserve_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
-            ps.setTimestamp(1, Timestamp.valueOf(reserve.getStartDate()));
-            ps.setTimestamp(2, Timestamp.valueOf(reserve.getEndDate()));
-            ps.setString(3, reserve.getReason());
-            ps.setTimestamp(4, Timestamp.valueOf(reserve.getCreateAt()));
-            ps.setString(5, reserve.getStatus().getStatus());
-            ps.setInt(6, reserve.getReserveId());
+            ps.setInt(1, reserve.getResource().getResourceId());
+            ps.setTimestamp(2, Timestamp.valueOf(reserve.getStartDate()));
+            ps.setTimestamp(3, Timestamp.valueOf(reserve.getEndDate()));
+            ps.setString(4, reserve.getReason());
+            ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setInt(6 , reserve.getReserveId());
             ps.executeUpdate();
             Log log = new Log(existingReserve,existingReserve.getUser().getUserId(),LocalDateTime.now(),"ACTUALIZAR","Reserva actualizada.");
             this.logDao.insertLog(log);
@@ -100,7 +100,7 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public boolean isThereAnOverlap(int id, LocalDateTime startDate, LocalDateTime endDate) {
-        String sql = "SELECT * FROM RESERVE WHERE resource_id = ? AND start_date < ? AND end_date > ? AND reserve_status NOT IN ('CANCELADA','RECHAZADA')";
+        String sql = "SELECT * FROM RESERVE WHERE reserve_id = ? AND start_date < ? AND end_date > ? AND reserve_status NOT IN ('CANCELADA','RECHAZADA')";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);

@@ -12,17 +12,17 @@ public abstract class Resource {
     private int resourceId;
     private String resourceName;
     private String description;
-    private String resourceState;
+    private ResourceState resourceState;
     
     //Constructor de consultas
-    public Resource(int id, String name, String description, String state){
+    public Resource(int id, String name,String description, ResourceState state){
         this.resourceId=id;
         this.resourceName=name;
         this.description=description;
         this.resourceState=state;
     }
     //Constructor de creación
-    public Resource(String name, String description, String state){
+    public Resource(String name,String description, ResourceState state){
         this.resourceName=name;
         this.description=description;
         this.resourceState=state;
@@ -39,7 +39,7 @@ public abstract class Resource {
     public void setDescription(String description){
         this.description=description;
     }
-    public void setResourceState(String state){
+    public void setResourceState(ResourceState state){
         this.resourceState=state;
     }
     //Getters
@@ -52,7 +52,12 @@ public abstract class Resource {
     public String getDescription(){
         return this.description;
     }
-    public String getResourceState(){
+    public ResourceState getResourceState(){
         return this.resourceState;
     }
+    @Override
+    public String toString(){
+        return resourceId +" "+ resourceName +" "+ resourceState;
+    }
+    
 }

@@ -1,128 +1,199 @@
 package cr.ac.una.reservauna.controller;
 
+import cr.ac.una.reservauna.dao.ReserveDao;
+import cr.ac.una.reservauna.dao.ResourceAux;
+import cr.ac.una.reservauna.model.Reserve;
+import cr.ac.una.reservauna.model.ReserveStatus;
+import cr.ac.una.reservauna.model.Resource;
+import cr.ac.una.reservauna.model.User;
 import java.net.URL;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ReserveController implements Initializable {
 
-    @FXML private TableView tblReservas;
-    @FXML private TableColumn colId;
-    @FXML private TableColumn colRecurso;
-    @FXML private TableColumn colInicio;
-    @FXML private TableColumn colFin;
-    @FXML private TableColumn colMotivo;
-    @FXML private TableColumn colEstado;
-    @FXML private ComboBox cmbRecurso;
-    @FXML private ComboBox cmbEstado;
-    @FXML private ComboBox cmbFiltroEstado;
-    @FXML private DatePicker dpInicio;
-    @FXML private DatePicker dpFin;
-    @FXML private DatePicker dpFechaInicio;
-    @FXML private DatePicker dpFechaFin;
-    @FXML private TextField txtHoraInicio;
-    @FXML private TextField txtHoraFin;
-    @FXML private TextField txtMotivo;
-    @FXML private TextArea txtMotivoCancel;
-    @FXML private Label lblDisponibilidad;
-    @FXML private Label lblMensaje;
-    @FXML private Button btnGuardar;
-    @FXML private Button btnCancelar;
-    @FXML private Button btnLimpiar;
-    @FXML private Button btnRegresar;
-
+   
+    
+    @FXML 
+    private TableColumn<Reserve, Integer> idColumn;
+    @FXML
+    private TableColumn<Reserve, User> userColumn;
+    @FXML 
+    private TableColumn<Reserve, Resource> resourceNameColumn;
+    @FXML 
+    private TableColumn<Reserve, LocalDateTime> startDateColumn;
+    @FXML
+    private TableColumn<Reserve, LocalDateTime> endDateColumn;
+    @FXML
+    private TableColumn<Reserve, String> reasonColumn;
+    @FXML
+    private TableColumn<Reserve, ReserveStatus> statusColumn;
+    @FXML
+    private TableColumn<Reserve, LocalDateTime> createAtColumn;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button clearButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button updateButton; 
+    @FXML
+    private TextField startHourText;
+    @FXML
+    private TextField endHourText;
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
+    private TextField reasonText;
+    @FXML
+    private TableView<Reserve> reservesList;
+    @FXML
+    private ComboBox<Resource> resourceCombo;
+    @FXML
+    private Button addReserveButton;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private TextField idText;
+    @FXML
+    private TextField userIdText;
+    
+//Queda pendiente de verificar
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cmbEstado.getItems().addAll("PENDIENTE","APROBADA","RECHAZADA","CANCELADA");
-        cmbFiltroEstado.getItems().addAll("Todos","PENDIENTE","APROBADA","RECHAZADA","CANCELADA");
+        try{
+            Resource resource = resourceCombo.getValue();
+            int id = resource.getResourceId();
+             
+        }catch(Exception ex){
+            System.out.println("Error r "+ex.getMessage());
+        }
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("reserveId"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+        resourceNameColumn.setCellValueFactory(new PropertyValueFactory<>("resource"));
+        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        reasonColumn.setCellValueFactory(new PropertyValueFactory<>("reason"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        createAtColumn.setCellValueFactory(new PropertyValueFactory<>("createAt"));
+    }
+    
+    
+
+    @FXML
+    private void clearFields(ActionEvent event) {
+        startHourText.clear();
+        endHourText.clear();
+        reasonText.clear();
+        idText.clear();
+        userIdText.clear();
+    }
+    
+    @FXML
+    private void searchReserve(ActionEvent event) {
+        
     }
 
     @FXML
-    private void BtnVerificar(ActionEvent event) {
-        if (cmbRecurso.getValue() == null || dpInicio.getValue() == null || dpFin.getValue() == null) {
-            lblDisponibilidad.setText("Complete todos los campos primero.");
-            lblDisponibilidad.setStyle("-fx-text-fill: red;");
+    private void cancelReserves(ActionEvent event) {
+        String id = idText.getText().trim();
+        if(id.isEmpty()){
+            showAlert(Alert.AlertType.WARNING,"Espacios en blanco","No deje espacios en blanco.");
             return;
         }
-        lblDisponibilidad.setText("Disponible — sin traslapes.");
-        lblDisponibilidad.setStyle("-fx-text-fill: green;");
+        try{
+            int newId = Integer.parseInt(id);
+            ReserveDao reserveDao = new ReserveDao();
+            boolean success = reserveDao.cancelReserve(newId);
+            if(success){
+                showAlert(Alert.AlertType.CONFIRMATION,"Reserva cancelada","La reserva ha sido cancelada existosamente.");
+            }
+        }catch(Exception ex){
+            System.out.println("Error r: "+ex.getMessage());
+        }
     }
 
     @FXML
-    private void BtnGuardar(ActionEvent event) {
-        if (cmbRecurso.getValue() == null || txtMotivo.getText().isEmpty()
-                || dpInicio.getValue() == null || dpFin.getValue() == null
-                || txtHoraInicio.getText().isEmpty() || txtHoraFin.getText().isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Completá todos los campos obligatorios.");
+    private void updateReserves(ActionEvent event) {
+        String startHour = startHourText.getText().trim();
+        String endHour = endHourText.getText().trim();
+        String reason = reasonText.getText().trim();
+        if(startDatePicker.getValue()==null || startHour.isEmpty() || endDatePicker.getValue()==null || endHour.isEmpty() || reason.isEmpty()){
+            showAlert(Alert.AlertType.WARNING,"Espacios en blanco","No deje espacios en blanco ni opciones sin seleccionar.");
             return;
         }
-        mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Reserva creada con estado PENDIENTE.");
-        BtnLimpiar(event);
+        try{
+            LocalDate start = startDatePicker.getValue();
+            LocalDate end = endDatePicker.getValue();
+            LocalTime sHour = LocalTime.parse(startHour);
+            LocalTime eHour = LocalTime.parse(endHour);
+            ReserveDao reserveDao = new ReserveDao();
+            Reserve reserve = new Reserve(LocalDateTime.of(start, sHour),LocalDateTime.of(end, eHour),reason,LocalDateTime.now());
+            if(reserveDao.updateReserve(reserve)){
+                reservesList.getItems().add(reserve);
+                showAlert(Alert.AlertType.CONFIRMATION,"Reserva actualizada","La reserva se actualizó exitosamente.");
+            }
+        }catch(DateTimeException ex){
+            System.out.println("Error r: "+ex.getMessage());
+        }
     }
 
     @FXML
-    private void BtnCancelar(ActionEvent event) {
-        if (tblReservas.getSelectionModel().getSelectedItem() == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Sin selección", "Seleccioná una reserva para cancelar.");
+    private void addReserve(ActionEvent event) {
+        String userId = userIdText.getText().trim();
+        String startHour = startHourText.getText().trim();
+        String endHour = endHourText.getText().trim();
+        String reason = reasonText.getText().trim();
+        if(userId.isEmpty() || startDatePicker.getValue()==null || startHour.isEmpty() || endDatePicker.getValue()==null || endHour.isEmpty() || reason.isEmpty()){
+            showAlert(Alert.AlertType.WARNING,"Espacios en blanco","No deje espacios en blanco ni opciones sin seleccionar.");
             return;
         }
-        if (txtMotivoCancel.getText().isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Motivo requerido", "Ingresá el motivo de cancelación.");
-            return;
-        }
-        mostrarAlerta(Alert.AlertType.INFORMATION, "Cancelada", "La reserva fue cancelada.");
-    }
-
-    @FXML
-    private void BtnBuscar(ActionEvent event) {
-        // TODO: SELECT con filtros por reserve_status, start_date BETWEEN ? AND ?
-    }
-
-    @FXML
-    private void BtnLimpiar(ActionEvent event) {
-        cmbRecurso.setValue(null);
-        cmbEstado.setValue(null);
-        dpInicio.setValue(null);
-        dpFin.setValue(null);
-        txtHoraInicio.clear();
-        txtHoraFin.clear();
-        txtMotivo.clear();
-        lblDisponibilidad.setText("");
-        lblMensaje.setText("");
-    }
-
-    @FXML
-    private void BtnRegresar(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/administrator.fxml"));
-            Stage stage = (Stage) btnRegresar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+        try{
+            LocalDate start = startDatePicker.getValue();
+            LocalDate end = endDatePicker.getValue();
+            LocalTime sHour = LocalTime.parse(startHour);
+            LocalTime eHour = LocalTime.parse(endHour);
+            ReserveDao reserveDao = new ReserveDao();
+            //Falta cambiar este constructor, necesito el combo box de recursos
+            Reserve reserve = new Reserve(LocalDateTime.of(start, sHour),LocalDateTime.of(end, eHour),reason,LocalDateTime.now());
+            if(reserveDao.insertReserve(reserve)){
+                reservesList.getItems().add(reserve);
+                showAlert(Alert.AlertType.CONFIRMATION,"Reserva agregada","La reserva ha sido agregada exitosamente.");
+            }
+        }catch(DateTimeException ex){
+            System.out.println("Error r: "+ex.getMessage());
         }
     }
 
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert a = new Alert(tipo);
-        a.setTitle(titulo);
-        a.setHeaderText(null);
-        a.setContentText(mensaje);
-        a.showAndWait();
+    @FXML
+    private void backToAdminGUI(ActionEvent event) {
+        
+    }
+    
+    private void showAlert(Alert.AlertType type, String title, String message){
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

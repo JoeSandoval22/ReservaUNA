@@ -6,6 +6,7 @@ package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.model.Equipment;
+import cr.ac.una.reservauna.model.ResourceState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ public class EquipmentDAO implements EquipmentInterface {
             PreparedStatement psRes = connection.prepareStatement(sqlResource,new String[]{"RESOURCE_ID"});
             psRes.setString(1, equipment.getResourceName());
             psRes.setString(2, equipment.getDescription());
-            psRes.setString(3, equipment.getResourceState());
+            psRes.setString(3, equipment.getResourceState().getResourceState());
             psRes.executeUpdate();
             ResultSet rs = psRes.getGeneratedKeys();
             rs.next();
@@ -82,7 +83,7 @@ public class EquipmentDAO implements EquipmentInterface {
             PreparedStatement psRes = connection.prepareStatement(sqlResource);
             psRes.setString(1, equipment.getResourceName());
             psRes.setString(2, equipment.getDescription());
-            psRes.setString(3, equipment.getResourceState());
+            psRes.setString(3, equipment.getResourceState().getResourceState());
             psRes.setInt(4, equipment.getResourceId());
             psRes.executeUpdate();
             return true;
@@ -102,7 +103,9 @@ public class EquipmentDAO implements EquipmentInterface {
             psEquipment.setInt(1, id);
             ResultSet rsE = psEquipment.executeQuery();
             if(rsE.next()){
-                return new Equipment(rsE.getInt("resource_id"),rsE.getString("resource_name"),rsE.getString("res_description"),rsE.getString("resource_state"),rsE.getString("brand"),rsE.getString("resource_model"),rsE.getString("series"));
+                return new Equipment(rsE.getInt("resource_id"),rsE.getString("resource_name"),rsE.getString("res_description"),
+                           ResourceState.valueOf(rsE.getString("resource_state")),
+                           rsE.getString("brand"),rsE.getString("resource_model"),rsE.getString("series"));
             }
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -120,7 +123,9 @@ public class EquipmentDAO implements EquipmentInterface {
             PreparedStatement ps = connection.prepareStatement(sqlEquipment);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                Equipment equiment = new Equipment(rs.getInt("resource_id"),rs.getString("resource_name"),rs.getString("res_description"),rs.getString("resource_state"),rs.getString("brand"),rs.getString("resource_model"),rs.getString("series"));
+                Equipment equiment = new Equipment(rs.getInt("resource_id"),rs.getString("resource_name"),rs.getString("res_description"),
+                                         ResourceState.valueOf(rs.getString("resource_state")),
+                                         rs.getString("brand"),rs.getString("resource_model"),rs.getString("series"));
                 equipments.add(equiment);
             }
         } catch (SQLException ex) {

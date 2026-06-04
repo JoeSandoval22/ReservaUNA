@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,7 +38,7 @@
         <Button fx:id="btnRecursos" onAction="#btnIngresarRecursos" text="Recursos" />
         <Label text="Usuario: " />
         <Label fx:id="LabelCorreo" prefWidth="120.0" />
-        <Button fx:id="btnCerrarSesion" onAction="#btnRegresarInicio" text="Cerrar sesión" />
+        <Button fx:id="btnCerrarSesion" onAction="#btnRegresarInicio" prefHeight="26.0" prefWidth="113.0" text="Cerrar sesión" />
       </children>
     </HBox>
     <Label layoutX="32.0" layoutY="110.0" text="Reservas Activas" />
@@ -55,7 +57,7 @@
       </columns>
     </TableView>
     <Label layoutX="370.0" layoutY="155.0" text="Accesos rápidos" />
-    <VBox layoutX="360.0" layoutY="172.0" prefWidth="230.0" spacing="5.0">
+    <VBox layoutX="534.0" layoutY="173.0" prefWidth="230.0" spacing="5.0">
       <children>
         <Button fx:id="btnNuevaReserva2" onAction="#btnIngresarNuevaReserva2" prefWidth="220.0" text="+ Nueva reserva" />
         <Button fx:id="btnVerCalendario" onAction="#btnIngresarVerCalendario" prefWidth="220.0" text="Ver calendario" />
@@ -63,5 +65,13 @@
         <Button fx:id="btnMisReservas2" onAction="#btnIngresarMisReservas2" prefWidth="220.0" text="Mis reservas" />
       </children>
     </VBox>
+      <SplitMenuButton layoutX="469.0" layoutY="382.0" mnemonicParsing="false" text="SplitMenuButton">
+        <items>
+          <MenuItem fx:id="pResourceGestor" mnemonicParsing="false" text="Gestión de recursos (lugares)" />
+            <MenuItem fx:id="eResourceGestor" mnemonicParsing="false" text="Gestión de recursos (equipos)" />
+          <MenuItem fx:id="reservesGestor" mnemonicParsing="false" text="Gestión de reservas" />
+            <MenuItem fx:id="usersGestor" mnemonicParsing="false" text="Gestión de Usuarios" />
+        </items>
+      </SplitMenuButton>
   </children>
 </AnchorPane>

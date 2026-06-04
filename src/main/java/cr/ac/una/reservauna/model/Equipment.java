@@ -14,14 +14,14 @@ public class Equipment extends Resource{
     private String series;
 
     //Constructor de consulta
-    public Equipment(int id, String name, String description, String state, String brand, String model, String series) {
-        super(id, name, description, state);
+    public Equipment(int id, String name,String description, ResourceState state, String brand, String model, String series) {
+        super(id, name,description, state);
         this.brand=brand;
         this.model=model;
         this.series=series;
     }
     //Constructor de creación
-    public Equipment(String name, String description, String state, String brand, String model, String series){
+    public Equipment(String name,String description, ResourceState state, String brand, String model, String series){
         super(name,description,state);
         this.brand=brand;
         this.model=model;

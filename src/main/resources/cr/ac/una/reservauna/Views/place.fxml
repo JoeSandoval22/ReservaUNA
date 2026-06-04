@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -8,61 +9,51 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane prefHeight="560.0" prefWidth="750.0"
-    xmlns="http://javafx.com/javafx/26"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="cr.ac.una.reservauna.controller.PlaceController">
+
+<AnchorPane prefHeight="733.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.PlaceController">
   <children>
-    <Label layoutX="14.0" layoutY="14.0" text="Gestión de Espacios (PLACE)"
-           style="-fx-font-size:16px;-fx-font-weight:bold;"/>
-    <HBox layoutX="14.0" layoutY="42.0" spacing="8.0">
-      <TextField fx:id="txtBuscar" promptText="Buscar por nombre..." prefWidth="180.0"/>
-      <ComboBox fx:id="cmbFiltroTipo" prefWidth="120.0"/>
-      <ComboBox fx:id="cmbFiltroEstado" prefWidth="130.0"/>
-      <Button text="Buscar" onAction="#BtnBuscar"/>
-      <Button text="+ Nuevo" onAction="#BtnLimpiar"
-              style="-fx-background-color:#2a902a;-fx-text-fill:white;"/>
-      <Button fx:id="btnRegresar" text="Regresar" onAction="#BtnRegresar"/>
-    </HBox>
-    <TableView fx:id="tblEspacios" layoutX="14.0" layoutY="76.0"
-               prefHeight="200.0" prefWidth="722.0">
+    <Label layoutX="14.0" layoutY="14.0" style="-fx-font-size:16px;-fx-font-weight:bold;" text="Gestión de Recursos (Lugares)" />
+    <TableView fx:id="placesList" layoutX="14.0" layoutY="86.0" prefHeight="290.0" prefWidth="875.0">
       <columns>
-        <TableColumn fx:id="colId" text="resource_id" prefWidth="80.0"/>
-        <TableColumn fx:id="colNombre" text="resource_name" prefWidth="150.0"/>
-        <TableColumn fx:id="colCapacidad" text="Capacidad" prefWidth="80.0"/>
-        <TableColumn fx:id="colUbicacion" text="Ubicación" prefWidth="150.0"/>
-        <TableColumn fx:id="colTipo" text="Tipo" prefWidth="110.0"/>
-        <TableColumn fx:id="colEstado" text="Estado" prefWidth="110.0"/>
+        <TableColumn fx:id="idColumn" prefWidth="80.0" text="ID de recurso" />
+        <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Nombre de recurso" />
+        <TableColumn fx:id="capacityColumn" prefWidth="92.0" text="Capacidad" />
+        <TableColumn fx:id="locationColumn" prefWidth="138.4000244140625" text="Ubicación" />
+        <TableColumn fx:id="typeColumn" prefWidth="110.0" text="Tipo" />
+        <TableColumn fx:id="stateColumn" prefWidth="110.0" text="Estado" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="191.9999877929688" text="Descripción" />
       </columns>
     </TableView>
-    <Label layoutX="14.0" layoutY="285.0" text="Detalle del espacio"
-           style="-fx-font-size:13px;-fx-font-weight:bold;"/>
-    <HBox layoutX="14.0" layoutY="305.0" spacing="14.0">
-      <VBox spacing="7.0" prefWidth="340.0">
-        <Label text="resource_name *"/>
-        <TextField fx:id="txtNombre" prefWidth="320.0"/>
-        <Label text="res_description *"/>
-        <TextField fx:id="txtDescripcion" prefWidth="320.0"/>
-        <Label text="resource_capacity *"/>
-        <TextField fx:id="txtCapacidad" prefWidth="320.0"/>
+    <Label layoutX="13.0" layoutY="387.0" style="-fx-font-size:13px;-fx-font-weight:bold;" text="Detalle del espacio" />
+    <HBox layoutX="14.0" layoutY="410.0" spacing="14.0">
+      <VBox prefWidth="340.0" spacing="7.0">
+        <Label text="Nombre de recurso" />
+        <TextField fx:id="nameText" prefWidth="320.0" />
+        <Label text="Capacidad de recurso" />
+        <TextField fx:id="capacityText" prefWidth="320.0" />
+            <Label text="Ubicación" />
+        <TextField fx:id="locationText" prefWidth="320.0" />
+        <Label text="Tipo de recurso" />
+        <ComboBox fx:id="typeCombo" prefWidth="320.0" />
       </VBox>
-      <VBox spacing="7.0" prefWidth="340.0">
-        <Label text="resource_location *"/>
-        <TextField fx:id="txtUbicacion" prefWidth="320.0"/>
-        <Label text="resource_type *"/>
-        <ComboBox fx:id="cmbTipo" prefWidth="320.0"/>
-        <Label text="resource_state *"/>
-        <ComboBox fx:id="cmbEstado" prefWidth="320.0"/>
+      <VBox prefWidth="340.0" spacing="7.0">
+        <Label text="Estado del recurso" />
+        <ComboBox fx:id="stateCombo" prefWidth="320.0" />
+        <Label text="Descripción" />
+        <TextField fx:id="descriptionText" prefWidth="320.0" />
+        <Label text="ID de recurso (solo actualizar)" />
+            <TextField fx:id="idUpdateText" />
       </VBox>
     </HBox>
-    <HBox layoutX="14.0" layoutY="470.0" spacing="8.0">
-      <Button fx:id="btnGuardar" text="Guardar" onAction="#BtnGuardar"
-              style="-fx-background-color:#2a70b0;-fx-text-fill:white;" prefWidth="100.0"/>
-      <Button fx:id="btnEliminar" text="Marcar no disponible" onAction="#BtnEliminar"
-              style="-fx-background-color:#b03030;-fx-text-fill:white;"/>
-      <Button fx:id="btnLimpiar" text="Limpiar" onAction="#BtnLimpiar" prefWidth="80.0"/>
-    </HBox>
-    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="506.0"
-           style="-fx-font-size:11px;"/>
+    <HBox layoutX="14.0" layoutY="470.0" spacing="8.0" />
+    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="506.0" style="-fx-font-size:11px;" />
+   <Button fx:id="updateButton" layoutX="176.0" layoutY="664.0" onAction="#updatePlaces" prefHeight="26.0" prefWidth="115.0" style="-fx-background-color:#2a70b0;-fx-text-fill:white;" text="Actualizar recurso" />
+   <Button fx:id="deleteButton" layoutX="345.0" layoutY="664.0" onAction="#deletePlaces" style="-fx-background-color:#b03030;-fx-text-fill:white;" text="Eliminar recurso" />
+   <Button fx:id="clearButton" layoutX="496.0" layoutY="664.0" onAction="#clearFields" prefWidth="80.0" text="Limpiar" />
+   <Button fx:id="backButton" layoutX="825.0" layoutY="14.0" onAction="#BtnRegresar" text="Regresar" />
+   <Button fx:id="addButton" layoutX="23.0" layoutY="664.0" onAction="#addPlace" style="-fx-background-color:#2a902a;-fx-text-fill:white;" text="+ Nuevo recurso" />
+   <Button fx:id="searchButton" layoutX="243.0" layoutY="40.0" onAction="#searchPlace" text="Buscar" />
+   <TextField fx:id="idtext" layoutX="14.0" layoutY="40.0" prefWidth="180.0" promptText="Buscar por ID" />
+      <Button fx:id="showButton" layoutX="345.0" layoutY="40.0" mnemonicParsing="false" onAction="#showPlaces" text="Mostrar lugares" />
   </children>
 </AnchorPane>

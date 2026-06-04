@@ -6,63 +6,49 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="620.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.ReserveController">
+<AnchorPane prefHeight="689.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.ReserveController">
   <children>
-    <Label layoutX="14.0" layoutY="14.0" style="-fx-font-size:16px;-fx-font-weight:bold;" text="Gestión de Reservas" />
-    <HBox layoutX="14.0" layoutY="40.0" spacing="8.0">
-      <ComboBox fx:id="cmbFiltroEstado" prefWidth="120.0" promptText="Estado" />
-      <DatePicker fx:id="dpFechaInicio" prefWidth="140.0" promptText="Desde" />
-      <DatePicker fx:id="dpFechaFin" prefWidth="140.0" promptText="Hasta" />
-      <Button onAction="#BtnBuscar" text="Buscar" />
-      <Button onAction="#BtnLimpiar" style="-fx-background-color:#2a70b0;-fx-text-fill:white;" text="+ Nueva reserva" />
-    </HBox>
-    <TableView fx:id="tblReservas" layoutX="14.0" layoutY="75.0" prefHeight="180.0" prefWidth="772.0">
+    <Label layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="163.0" style="-fx-font-size:16px;-fx-font-weight:bold;" text="Gestión de Reservas">
+         <font>
+            <Font size="28.0" />
+         </font></Label>
+    <HBox layoutX="14.0" layoutY="40.0" spacing="8.0" />
+    <TableView fx:id="reservesList" layoutX="14.0" layoutY="59.0" prefHeight="210.0" prefWidth="992.0">
       <columns>
-        <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
-        <TableColumn fx:id="colRecurso" prefWidth="150.0" text="Recurso" />
-        <TableColumn fx:id="colInicio" prefWidth="120.0" text="start_date" />
-        <TableColumn fx:id="colFin" prefWidth="120.0" text="end_date" />
-        <TableColumn fx:id="colMotivo" prefWidth="200.0" text="reason" />
-        <TableColumn fx:id="colEstado" prefWidth="120.0" text="Estado" />
+        <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+        <TableColumn fx:id="userColumn" prefWidth="81.60001373291016" text="Usuario" />
+        <TableColumn fx:id="resourceNameColumn" prefWidth="109.5999755859375" text="Recurso" />
+        <TableColumn fx:id="startDateColumn" prefWidth="157.60003662109375" text="Fecha de inicio" />
+        <TableColumn fx:id="endDateColumn" prefWidth="144.7999267578125" text="Fecha final" />
+        <TableColumn fx:id="reasonColumn" prefWidth="216.0" text="Motivo" />
+            <TableColumn fx:id="statusColumn" prefWidth="89.59991455078125" text="Estado" />
+            <TableColumn fx:id="createAtColumn" prefWidth="142.4000244140625" text="Creado el" />
       </columns>
     </TableView>
-    <Label layoutX="14.0" layoutY="265.0" style="-fx-font-size:13px;-fx-font-weight:bold;" text="Nueva / editar reserva" />
-    <VBox layoutX="14.0" layoutY="285.0" prefWidth="380.0" spacing="6.0">
-      <Label text="resource_id — Recurso *" />
-      <ComboBox fx:id="cmbRecurso" prefWidth="360.0" />
-      <Label text="start_date" />
-      <HBox spacing="6.0">
-        <DatePicker fx:id="dpInicio" prefWidth="200.0" />
-        <TextField fx:id="txtHoraInicio" prefWidth="90.0" promptText="HH:mm" />
-      </HBox>
-      <Label text="end_date" />
-      <HBox spacing="6.0">
-        <DatePicker fx:id="dpFin" prefWidth="200.0" />
-        <TextField fx:id="txtHoraFin" prefWidth="90.0" promptText="HH:mm" />
-      </HBox>
-      <Label text="reason *" />
-      <TextField fx:id="txtMotivo" prefWidth="360.0" />
-      <Label text="reserve_status" />
-      <ComboBox fx:id="cmbEstado" prefWidth="360.0" />
-       <HBox spacing="8.0">
-         <Button fx:id="btnGuardar" onAction="#BtnGuardar" style="-fx-background-color:#2a70b0;-fx-text-fill:white;" text="Guardar reserva" />
-         <Button fx:id="btnCancelar" onAction="#BtnCancelar" style="-fx-background-color:#b03030;-fx-text-fill:white;" text="Cancelar reserva" />
-         <Button fx:id="btnLimpiar" onAction="#BtnLimpiar" text="Limpiar" />
-         <Button fx:id="btnRegresar" onAction="#BtnRegresar" text="Regresar" />
-       </HBox>
-    </VBox>
-    <VBox layoutX="410.0" layoutY="285.0" prefWidth="380.0" spacing="6.0">
-      <Label fx:id="lblDisponibilidad" style="-fx-text-fill:green;" />
-      <Button onAction="#BtnVerificar" prefWidth="360.0" style="-fx-background-color:#c07000;-fx-text-fill:white;" text="Verificar disponibilidad" />
-      <Label text="Motivo cancelación (si aplica)" />
-      <TextArea fx:id="txtMotivoCancel" prefHeight="70.0" prefWidth="360.0" promptText="Motivo de cancelación..." />
-    </VBox>
+    <Label layoutX="13.0" layoutY="273.0" style="-fx-font-size:13px;-fx-font-weight:bold;" text="Nueva / Actualizar reserva" />
     <Label fx:id="lblMensaje" layoutX="14.0" layoutY="545.0" style="-fx-font-size:11px;" />
+   <Button fx:id="addReserveButton" layoutX="410.0" layoutY="416.0" onAction="#addReserve" style="-fx-background-color:#2a70b0;-fx-text-fill:white;" text="+ Nueva reserva" />
+   <Button fx:id="searchButton" layoutX="547.0" layoutY="568.0" onAction="#searchReserve" text="Buscar" />
+   <Button fx:id="backButton" layoutX="943.0" layoutY="14.0" onAction="#backToAdminGUI" text="Regresar" />
+   <Button fx:id="clearButton" layoutX="410.0" layoutY="568.0" onAction="#clearFields" text="Limpiar" />
+   <Button fx:id="cancelButton" layoutX="410.0" layoutY="519.0" onAction="#cancelReserves" style="-fx-background-color:#b03030;-fx-text-fill:white;" text="Cancelar reserva" />
+   <Button fx:id="updateButton" layoutX="410.0" layoutY="465.0" onAction="#updateReserves" style="-fx-background-color:#2a70b0;-fx-text-fill:white;" text="Actualizar reserva" />
+      <TextField fx:id="idText" layoutX="14.0" layoutY="581.0" promptText="ID de reserva" />
+   <ComboBox fx:id="resourceCombo" layoutX="14.0" layoutY="352.0" prefHeight="26.0" prefWidth="200.0" promptText="Seleccionar ID de recurso" />
+  <TextField fx:id="startHourText" layoutX="246.0" layoutY="416.0" prefWidth="90.0" promptText="HH:mm" />
+  <DatePicker fx:id="startDatePicker" layoutX="14.0" layoutY="416.0" prefWidth="200.0" />
+  <DatePicker fx:id="endDatePicker" layoutX="14.0" layoutY="478.0" prefWidth="200.0" />
+  <TextField fx:id="endHourText" layoutX="246.0" layoutY="478.0" prefWidth="90.0" promptText="HH:mm" />
+   <TextField fx:id="reasonText" layoutX="14.0" layoutY="532.0" prefHeight="26.0" prefWidth="281.0" promptText="Motivo" />
+      <TextField fx:id="userIdText" layoutX="14.0" layoutY="308.0" promptText="ID de usuario" />
+      <Label layoutX="14.0" layoutY="394.0" text="Fecha de inicio" />
+      <Label layoutX="14.0" layoutY="456.0" text="Fecha final" />
+      <Label layoutX="246.0" layoutY="394.0" text="Hora de inicio" />
+      <Label layoutX="246.0" layoutY="456.0" text="Hora final" />
   </children>
 </AnchorPane>

@@ -11,16 +11,16 @@ package cr.ac.una.reservauna.model;
 public class Place extends Resource {
     private int capacity;
     private String location;
-    private String type;
+    private PlaceType type;
 
-    public Place(int id, String name, String description, String state, int capacity, String location, String type) {
-        super(id, name, description, state);
+    public Place(int id, String name,String description, ResourceState state, int capacity, String location, PlaceType type) {
+        super(id, name,description, state);
         this.capacity=capacity;
         this.location=location;
         this.type=type;
     }
     
-    public Place(String name, String description, String state, int capacity, String location, String type) {
+    public Place(String name,String description, ResourceState state, int capacity, String location, PlaceType type) {
         super(name, description, state);
         this.capacity=capacity;
         this.location=location;
@@ -38,7 +38,7 @@ public class Place extends Resource {
     public void setLocation(String location){
         this.location=location;
     }
-    public void setType(String type){
+    public void setType(PlaceType type){
         this.type=type;
     }
     //Getters
@@ -48,7 +48,7 @@ public class Place extends Resource {
     public String getLocation(){
         return this.location;
     }
-    public String getType(){
+    public PlaceType getType(){
         return this.type;
     }
 }
