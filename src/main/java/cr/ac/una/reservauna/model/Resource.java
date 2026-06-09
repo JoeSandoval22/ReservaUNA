@@ -28,6 +28,10 @@ public abstract class Resource {
         this.resourceState=state;
     }
     
+    public Resource(){
+        
+    }
+    
     public abstract void addDescription();
     //Setters
     public void setResourceId(int id){

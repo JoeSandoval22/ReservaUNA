@@ -78,4 +78,8 @@ public class User {
     public String getUserPassword(){
         return this.password;
     }
+    @Override
+    public String toString(){
+        return userName;
+    }
 }

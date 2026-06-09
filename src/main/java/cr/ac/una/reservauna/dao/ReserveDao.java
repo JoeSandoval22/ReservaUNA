@@ -37,7 +37,7 @@ public class ReserveDao implements ReserveInterface {
     @Override
     public boolean insertReserve(Reserve reserve) {
         if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){return false;}
-        String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,'PENDIENTE')";
+        String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,?)";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
             ps.setInt(1, reserve.getUser().getUserId());
@@ -100,7 +100,7 @@ public class ReserveDao implements ReserveInterface {
 
     @Override
     public boolean isThereAnOverlap(int id, LocalDateTime startDate, LocalDateTime endDate) {
-        String sql = "SELECT * FROM RESERVE WHERE reserve_id = ? AND start_date < ? AND end_date > ? AND reserve_status NOT IN ('CANCELADA','RECHAZADA')";
+        String sql = "SELECT * FROM RESERVE WHERE reserve_id = ? AND start_date <= ? AND end_date >= ? AND reserve_status NOT IN ('CANCELADA','RECHAZADA')";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
@@ -273,7 +273,7 @@ public class ReserveDao implements ReserveInterface {
         ReserveStatus currentStatus = reserve.getStatus();
         switch (currentStatus){
             case PENDIENTE->{
-                return status == ReserveStatus.APROBADA || status == ReserveStatus.RECHAZADA;
+                return status == ReserveStatus.APROBADA || status == ReserveStatus.RECHAZADA || status == ReserveStatus.CANCELADA;
             }
             case APROBADA->{
                 return status == ReserveStatus.CANCELADA;

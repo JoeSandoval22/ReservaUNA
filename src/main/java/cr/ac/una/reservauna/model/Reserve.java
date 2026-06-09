@@ -46,8 +46,9 @@ public class Reserve {
         
     }
     //Constructor para actualizar reservas, pero no el estado de cada una
-    public Reserve(LocalDateTime startDate,LocalDateTime endDate,String reason, LocalDateTime createAt){
-        
+    public Reserve(int id,Resource resource,LocalDateTime startDate,LocalDateTime endDate,String reason, LocalDateTime createAt){
+        this.reserveId=id;
+        this.resource=resource;
         this.startDate=startDate;
         this.endDate=endDate;
         this.reason=reason;

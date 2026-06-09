@@ -6,6 +6,7 @@ package cr.ac.una.reservauna.dao;
 
 import cr.ac.una.reservauna.conexion.Conexion;
 import cr.ac.una.reservauna.model.Equipment;
+import cr.ac.una.reservauna.model.Resource;
 import cr.ac.una.reservauna.model.ResourceState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

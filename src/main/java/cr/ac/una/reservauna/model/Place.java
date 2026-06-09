@@ -26,6 +26,10 @@ public class Place extends Resource {
         this.location=location;
         this.type=type;
     }
+    
+    public Place(){
+        
+    }
 
     @Override
     public void addDescription() {

@@ -28,6 +28,10 @@ public class Equipment extends Resource{
         this.series=series;
     }
 
+    public Equipment(){
+        
+    }
+    
     @Override
     public void addDescription() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
