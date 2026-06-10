@@ -75,14 +75,14 @@ public class AdministratorGUI implements Initializable {
         cargarPantalla("/cr/ac/una/reservauna/Views/place.fxml", btnRecursos);
     }
     @FXML private void btnIngresarNuevaReserva2(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnNuevaReserva);
+        cargarPantalla("/cr/ac/una/reservauna/Views/reservesGestor.fxml", btnNuevaReserva);
     }
     @FXML private void btnIngresarVerCalendario(ActionEvent e) {}
     @FXML private void btnIngresarVerRecursos(ActionEvent e) {
         cargarPantalla("/cr/ac/una/reservauna/Views/equipment.fxml", btnRecursos);
     }
     @FXML private void btnIngresarMisReservas2(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
+        cargarPantalla("/cr/ac/una/reservauna/Views/reservesGestor.fxml", btnMisReservas);
     }
     @FXML private void btnRegresarInicio(ActionEvent e) {
         cargarPantalla("/cr/ac/una/reservauna/Views/login.fxml", btnCerrarSesion);

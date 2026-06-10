@@ -25,16 +25,6 @@ import javafx.stage.Stage;
 
 public class PlaceController implements Initializable {
 
-    private TableView tblEspacios;
-    private ComboBox cmbFiltroTipo;
-    private ComboBox cmbFiltroEstado;
-    private ComboBox cmbTipo;
-    private ComboBox cmbEstado;
-    private TextField txtNombre;
-    private TextField txtDescripcion;
-    private TextField txtCapacidad;
-    private TextField txtUbicacion;
-    @FXML private Label lblMensaje;
     private Button btnRegresar;
     
     @FXML 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.ReserveGestor">
+   <children>
+      <TableView fx:id="reservesList" layoutX="14.0" layoutY="53.0" prefHeight="306.0" prefWidth="850.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="userColumn" prefWidth="75.0" text="Usuario" />
+            <TableColumn fx:id="resourceColumn" prefWidth="90.39999389648438" text="Recurso" />
+            <TableColumn fx:id="startDateColumn" prefWidth="110.4000244140625" text="Hora de inicio" />
+            <TableColumn fx:id="endDateColumn" prefWidth="107.20001220703125" text="Hora final" />
+            <TableColumn fx:id="reasonColumn" prefWidth="183.99996948242188" text="Motivo" />
+            <TableColumn fx:id="statusColumn" prefWidth="86.39996337890625" text="Estado" />
+            <TableColumn fx:id="createAtColumn" prefWidth="121.60003662109375" text="Creado el" />
+        </columns>
+      </TableView>
+      <MenuButton fx:id="searchMenu" layoutX="420.0" layoutY="413.0" mnemonicParsing="false" onAction="#choiceSearchType" text="Mostrar reservas por:">
+        <items>
+          <MenuItem fx:id="showAllButton" mnemonicParsing="false" text="Mostrar todas" />
+          <MenuItem fx:id="reserveIdbutton" mnemonicParsing="false" text="ID de reserva" />
+            <MenuItem fx:id="statusButton" mnemonicParsing="false" text="Estado" />
+            <MenuItem fx:id="userAndReserveId" mnemonicParsing="false" text="ID de usuario y reserva" />
+            <MenuItem fx:id="userIdButton" mnemonicParsing="false" text="ID de usuario" />
+            <MenuItem fx:id="dateButton" mnemonicParsing="false" text="Fecha" />
+        </items>
+      </MenuButton>
+      <TextField fx:id="reserveIdText" layoutX="217.0" layoutY="413.0" promptText="ID de reserva" />
+      <DatePicker fx:id="startDatePicker" layoutX="20.0" layoutY="473.0" />
+      <TextField fx:id="startHourText" layoutX="217.0" layoutY="473.0" promptText="HH:mm" />
+      <DatePicker fx:id="endDatePicker" layoutX="20.0" layoutY="535.0" />
+      <TextField fx:id="endHourText" layoutX="217.0" layoutY="535.0" promptText="HH:mm" />
+      <Button fx:id="deleteButton" layoutX="420.0" layoutY="460.0" mnemonicParsing="false" onAction="#deleteReserves" text="Eliminar reserva" />
+      <Label layoutX="20.0" layoutY="14.0" text="Gestor de Reservas (Buscar/Aprobar/Rechazar)">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="userIdText" layoutX="20.0" layoutY="413.0" promptText="ID de usuario" />
+      <Label layoutX="20.0" layoutY="372.0" text="Filtros de búsqueda" />
+      <Button fx:id="approveButton" layoutX="626.0" layoutY="413.0" mnemonicParsing="false" onAction="#approveReserves" text="Aprobar reserva" />
+      <Button fx:id="rejectButton" layoutX="626.0" layoutY="460.0" mnemonicParsing="false" onAction="#rejectReserves" text="Rechazar reserva" />
+      <Button fx:id="backButton" layoutX="801.0" layoutY="14.0" mnemonicParsing="false" text="Regresar" />
+      <Label layoutX="20.0" layoutY="452.0" text="Fecha de inicio" />
+      <Label layoutX="20.0" layoutY="517.0" text="Fecha final" />
+      <Label layoutX="217.0" layoutY="452.0" text="Hora de inicio" />
+      <Label layoutX="217.0" layoutY="517.0" text="Hora de final" />
+      <ComboBox fx:id="statusCombo" layoutX="420.0" layoutY="504.0" prefHeight="26.0" prefWidth="175.0" promptText="Elegir estado de reserva" />
+   </children>
+</AnchorPane>

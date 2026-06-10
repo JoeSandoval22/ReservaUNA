@@ -39,7 +39,7 @@ public class ReserveDao implements ReserveInterface {
         if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){return false;}
         String sqlReserve = "INSERT INTO RESERVE (user_id,resource_id,start_date,end_date,reason,creat_at,reserve_status) VALUES (?,?,?,?,?,?,?)";
         try{
-            PreparedStatement ps = connection.prepareStatement(sqlReserve);
+            PreparedStatement ps = connection.prepareStatement(sqlReserve, new String[]{"reserve_id"});
             ps.setInt(1, reserve.getUser().getUserId());
             ps.setInt(2, reserve.getResource().getResourceId());
             ps.setTimestamp(3, Timestamp.valueOf(reserve.getStartDate()));
@@ -48,6 +48,12 @@ public class ReserveDao implements ReserveInterface {
             ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
             ps.setString(7, reserve.getStatus().getStatus());
             ps.executeUpdate();
+            try(ResultSet rs = ps.getGeneratedKeys()){
+                if(rs.next()){
+                    int generatedId = rs.getInt(1);
+                    reserve.setReserveId(generatedId);
+                }
+            }
             Log log = new Log(reserve,reserve.getUser().getUserId(),LocalDateTime.now(),"CREAR","Reserva creada.");
             this.logDao.insertLog(log);
             return true;
