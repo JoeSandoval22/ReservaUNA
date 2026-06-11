@@ -66,9 +66,7 @@ public class ReserveDao implements ReserveInterface {
     @Override
     public boolean deleteReserve(Reserve reserve) {
         Reserve existingReserve = findReserveById(reserve.getReserveId());
-        if(isThereAnOverlap(reserve.getResource().getResourceId(),reserve.getStartDate(),reserve.getEndDate())){return false;}
-        System.out.println("DEBUG - reserveId: " + reserve.getReserveId() + " | existingReserve: " + existingReserve);
-        String sqlReserve = "DELETE FROM RESERVE WHERE reserve_id = ?";
+        String sqlReserve = "DELETE FROM RESERVE WHERE reserve_id = ? AND reserve_status != 'APROBADA'";
         try{
             PreparedStatement ps = connection.prepareStatement(sqlReserve);
             ps.setInt(1, reserve.getReserveId());
@@ -81,7 +79,7 @@ public class ReserveDao implements ReserveInterface {
             return false;
         }
     }
-
+    
     @Override
     public boolean updateReserve(Reserve reserve) {
         Reserve existingReserve = findReserveById(reserve.getReserveId());
@@ -103,10 +101,10 @@ public class ReserveDao implements ReserveInterface {
             return false;
         }
     }
-
+    //Se realiza el cambio del ID de reserva por el de recurso
     @Override
     public boolean isThereAnOverlap(int id, LocalDateTime startDate, LocalDateTime endDate) {
-        String sql = "SELECT * FROM RESERVE WHERE reserve_id = ? AND start_date <= ? AND end_date >= ? AND reserve_status NOT IN ('CANCELADA','RECHAZADA')";
+        String sql = "SELECT * FROM RESERVE WHERE resource_id = ? AND start_date <= ? AND end_date >= ? AND reserve_status NOT IN ('CANCELADA','RECHAZADA')";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
