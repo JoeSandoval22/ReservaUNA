@@ -1,6 +1,11 @@
 package cr.ac.una.reservauna.controller;
 
+import cr.ac.una.reservauna.model.Equipment;
+import cr.ac.una.reservauna.model.Place;
+import cr.ac.una.reservauna.model.ReserveItem;
+import cr.ac.una.reservauna.model.Resource;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,92 +21,102 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 
 public class ReserveItemController implements Initializable {
 
-    @FXML private TableView tblItems;
-    @FXML private TableColumn colItemId;
-    @FXML private TableColumn colRecurso;
-    @FXML private TableColumn colInicio;
-    @FXML private TableColumn colFin;
-    @FXML private ComboBox cmbRecurso;
-    @FXML private DatePicker dpInicio;
-    @FXML private DatePicker dpFin;
-    @FXML private TextField txtHoraInicio;
-    @FXML private TextField txtHoraFin;
+    private TableView tblItems;
+    private ComboBox cmbRecurso;
+    private DatePicker dpInicio;
+    private DatePicker dpFin;
+    private TextField txtHoraInicio;
+    private TextField txtHoraFin;
     @FXML private Label lblReservaPadre;
     @FXML private Label lblMensaje;
-    @FXML private Button btnAgregar;
-    @FXML private Button btnEliminar;
-    @FXML private Button btnRegresar;
+    private Button btnRegresar;
+    @FXML
+    private TableView<ReserveItem> itemsList;
+    @FXML
+    private TableColumn<ReserveItem, Integer> itemIdColumn;
+    @FXML
+    private TableColumn<ReserveItem, Resource> resourceColumn;
+    @FXML
+    private TableColumn<ReserveItem, LocalDateTime> startDateColumn;
+    @FXML
+    private TableColumn<ReserveItem, LocalDateTime> endDateColumn;
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private TextField startHourText;
+    @FXML
+    private DatePicker endDatePickr;
+    @FXML
+    private TextField endHourText;
+    @FXML
+    private ComboBox<Place> placeCombo;
+    @FXML
+    private ComboBox<Equipment> equipmentCombo;
+    @FXML
+    private Button addButton;
+    @FXML
+    private ToggleButton choiceButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private TextField idText;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button clearButton;
+    @FXML
+    private Button updateButton;
+    @FXML
+    private TextField itemIdText;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO: cargar recursos disponibles en cmbRecurso
-        //       SELECT resource_id, resource_name FROM RESOURCES
-        //       WHERE resource_state='DISPONIBLE'
-        // TODO: cargar items de la reserva padre en tblItems
-        //       SELECT ri.*, r.resource_name FROM RESERVE_ITEM ri
-        //       JOIN RESOURCES r ON ri.resource_id=r.resource_id
-        //       WHERE ri.parent_reserve=?
+           
     }
-
-    @FXML
-    private void BtnAgregar(ActionEvent event) {
-        if (cmbRecurso.getValue() == null || dpInicio.getValue() == null
-                || dpFin.getValue() == null || txtHoraInicio.getText().isEmpty()
-                || txtHoraFin.getText().isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos",
-                "Completá todos los campos del item.");
-            return;
-        }
-        // TODO: INSERT INTO RESERVE_ITEM
-        //       (parent_reserve, resource_id, start_date, end_date)
-        //       VALUES (?, ?, ?, ?)
-        mostrarAlerta(Alert.AlertType.INFORMATION, "Agregado",
-            "Item agregado a la reserva.");
-        limpiarFormItem();
-    }
-
-    @FXML
-    private void BtnEliminar(ActionEvent event) {
-        if (tblItems.getSelectionModel().getSelectedItem() == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Sin selección",
-                "Seleccioná un item de la tabla.");
-            return;
-        }
-        // TODO: DELETE FROM RESERVE_ITEM WHERE reserve_item_id=?
-        mostrarAlerta(Alert.AlertType.INFORMATION, "Eliminado",
-            "Item eliminado de la reserva.");
-    }
-
-    @FXML
-    private void BtnRegresar(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(
-                "/cr/ac/una/reservauna/Views/reserve.fxml"));
-            Stage stage = (Stage) btnRegresar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void limpiarFormItem() {
-        cmbRecurso.setValue(null);
-        dpInicio.setValue(null);
-        dpFin.setValue(null);
-        txtHoraInicio.clear();
-        txtHoraFin.clear();
-    }
-
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert a = new Alert(tipo);
-        a.setTitle(titulo);
+    
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert a = new Alert(type);
+        a.setTitle(title);
         a.setHeaderText(null);
-        a.setContentText(mensaje);
+        a.setContentText(message);
         a.showAndWait();
     }
+
+    //Agrega más ítems de reserva
+    @FXML
+    private void addReserveItems(ActionEvent event) {
+    }
+    //Permite llamar al ComboBox de lugares y viceversa
+    @FXML
+    private void getPlaceCombo(ActionEvent event) {
+    }
+    
+    @FXML
+    private void back(ActionEvent event) {
+    }
+    //Busca los ítems por su id
+    @FXML
+    private void searchReserveItem(ActionEvent event) {
+    }
+    //Esta función limpia los campos
+    @FXML
+    private void clearFields(ActionEvent event) {
+    }
+    //Actualiza los ítems
+    @FXML
+    private void updateItems(ActionEvent event) {
+    }
+    /*
+    Úsela para llenar una fila, no es necesario usar un botón con esta, es simplemente que para cuado se 
+        se actualizan los ítems de modo que la animación de cambio se vea y no añada debajo.
+    */
+    private void fillTables(){
+        
+    }
+    
 }

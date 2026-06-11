@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -6,55 +7,46 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<AnchorPane prefHeight="460.0" prefWidth="680.0"
-    xmlns="http://javafx.com/javafx/26"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="cr.ac.una.reservauna.controller.ReserveItemController">
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane prefHeight="632.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.ReserveItemController">
   <children>
-    <Label layoutX="14.0" layoutY="14.0" text="Items de Reserva (RESERVE_ITEM)"
-           style="-fx-font-size:16px;-fx-font-weight:bold;"/>
-    <Label fx:id="lblReservaPadre" layoutX="14.0" layoutY="40.0"
-           style="-fx-text-fill:#666;" text=""/>
-    <TableView fx:id="tblItems" layoutX="14.0" layoutY="58.0"
-               prefHeight="170.0" prefWidth="652.0">
+    <Label layoutX="14.0" layoutY="1.0" style="-fx-font-size:16px;-fx-font-weight:bold;" text="Items de Reserva (RESERVE_ITEM)" />
+    <Label fx:id="lblReservaPadre" layoutX="14.0" layoutY="40.0" style="-fx-text-fill:#666;" text="" />
+    <TableView fx:id="itemsList" layoutX="31.0" layoutY="87.0" prefHeight="250.0" prefWidth="653.0">
       <columns>
-        <TableColumn fx:id="colItemId"  text="reserve_item_id" prefWidth="110.0"/>
-        <TableColumn fx:id="colRecurso" text="resource_name"   prefWidth="180.0"/>
-        <TableColumn fx:id="colInicio"  text="start_date"      prefWidth="170.0"/>
-        <TableColumn fx:id="colFin"     text="end_date"        prefWidth="170.0"/>
+        <TableColumn fx:id="itemIdColumn" prefWidth="110.0" text="ID de ítem" />
+        <TableColumn fx:id="resourceColumn" prefWidth="180.0" text="Recurso" />
+        <TableColumn fx:id="startDateColumn" prefWidth="170.0" text="Fecha de inicio" />
+        <TableColumn fx:id="endDateColumn" prefWidth="189.60003662109375" text="Fecha final" />
       </columns>
     </TableView>
-    <Label layoutX="14.0" layoutY="238.0" text="Agregar item a esta reserva"
-           style="-fx-font-size:13px;-fx-font-weight:bold;"/>
-    <HBox layoutX="14.0" layoutY="260.0" spacing="14.0">
-      <VBox spacing="7.0" prefWidth="310.0">
-        <Label text="resource_id — Recurso *"/>
-        <ComboBox fx:id="cmbRecurso" prefWidth="290.0"/>
-      </VBox>
-      <VBox spacing="7.0" prefWidth="310.0">
-        <Label text="start_date *"/>
-        <HBox spacing="6.0">
-          <DatePicker fx:id="dpInicio"       prefWidth="185.0"/>
-          <TextField  fx:id="txtHoraInicio"  promptText="HH:mm" prefWidth="80.0"/>
-        </HBox>
-        <Label text="end_date *"/>
-        <HBox spacing="6.0">
-          <DatePicker fx:id="dpFin"         prefWidth="185.0"/>
-          <TextField  fx:id="txtHoraFin"    promptText="HH:mm" prefWidth="80.0"/>
-        </HBox>
-      </VBox>
-    </HBox>
-    <HBox layoutX="14.0" layoutY="380.0" spacing="8.0">
-      <Button fx:id="btnAgregar"  text="Agregar item" onAction="#BtnAgregar"
-              style="-fx-background-color:#2a70b0;-fx-text-fill:white;" prefWidth="120.0"/>
-      <Button fx:id="btnEliminar" text="Eliminar item" onAction="#BtnEliminar"
-              style="-fx-background-color:#b03030;-fx-text-fill:white;" prefWidth="120.0"/>
-      <Button fx:id="btnRegresar" text="Regresar" onAction="#BtnRegresar" prefWidth="80.0"/>
-    </HBox>
-    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="416.0"
-           style="-fx-font-size:11px;" text=""/>
+    <Label fx:id="lblMensaje" layoutX="14.0" layoutY="416.0" style="-fx-font-size:11px;" text="" />
+ <DatePicker fx:id="startDatePicker" layoutX="28.0" layoutY="435.0" prefWidth="185.0" />
+ <TextField fx:id="startHourText" layoutX="254.0" layoutY="434.0" prefHeight="26.0" prefWidth="120.0" promptText="HH:mm" />
+ <DatePicker fx:id="endDatePickr" layoutX="28.0" layoutY="492.0" prefWidth="185.0" />
+ <TextField fx:id="endHourText" layoutX="254.0" layoutY="491.0" prefHeight="26.0" prefWidth="120.0" promptText="HH:mm" />
+      <StackPane layoutX="15.0" layoutY="379.0" prefHeight="26.0" prefWidth="200.0">
+         <children>
+            <ComboBox fx:id="placeCombo" prefHeight="26.0" prefWidth="168.0" promptText="Elegir recurso (lugar)" />
+            <ComboBox fx:id="equipmentCombo" prefHeight="26.0" prefWidth="168.0" promptText="Elegir recurso (equipo)" />
+         </children>
+      </StackPane>
+   <Button fx:id="addButton" layoutX="438.0" layoutY="379.0" onAction="#addReserveItems" prefWidth="120.0" style="-fx-background-color:#2a70b0;-fx-text-fill:white;" text="Agregar item" />
+      <ToggleButton fx:id="choiceButton" layoutX="245.0" layoutY="379.0" mnemonicParsing="false" onAction="#getPlaceCombo" text="Elegir otro tipo de recurso" />
+      <Label layoutX="28.0" layoutY="415.0" text="Fecha de inicio" />
+      <Label layoutX="31.0" layoutY="472.0" text="Fecha de final" />
+      <Label layoutX="254.0" layoutY="415.0" text="Hora de inicio" />
+      <Label layoutX="254.0" layoutY="472.0" text="Hora final" />
+   <Button fx:id="backButton" layoutX="754.0" layoutY="14.0" onAction="#back" prefWidth="80.0" text="Regresar" />
+    <Label layoutX="31.0" layoutY="348.0" style="-fx-font-size:13px;-fx-font-weight:bold;" text="Agregar item a esta reserva" />
+      <TextField fx:id="idText" layoutX="32.0" layoutY="49.0" promptText="Buscar ítem por ID" />
+      <Button fx:id="searchButton" layoutX="228.0" layoutY="49.0" mnemonicParsing="false" onAction="#searchReserveItem" text="Buscar" />
+      <Button fx:id="clearButton" layoutX="438.0" layoutY="459.0" mnemonicParsing="false" onAction="#clearFields" text="Limpiar espacios" />
+      <Button fx:id="updateButton" layoutX="438.0" layoutY="420.0" mnemonicParsing="false" onAction="#updateItems" text="Actualizar item" />
+      <TextField fx:id="itemIdText" layoutX="28.0" layoutY="547.0" />
+      <Label layoutX="31.0" layoutY="530.0" text="ID de ítems (solo actualizar)" />
   </children>
 </AnchorPane>
