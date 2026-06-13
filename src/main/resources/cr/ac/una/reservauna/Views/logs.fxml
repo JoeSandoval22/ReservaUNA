@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<AnchorPane prefHeight="460.0" prefWidth="800.0"
-    xmlns="http://javafx.com/javafx/26"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="cr.ac.una.reservauna.controller.LogController">
+
+<AnchorPane prefHeight="548.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.LogController">
   <children>
-    <Label layoutX="14.0" layoutY="14.0" text="Bitácora — LOG_TABLE"
-           style="-fx-font-size:16px;-fx-font-weight:bold;"/>
-    <HBox layoutX="14.0" layoutY="42.0" spacing="8.0">
-      <ComboBox fx:id="cmbFiltroAccion" prefWidth="120.0"/>
-      <TextField fx:id="txtBuscarUsuario" promptText="Buscar usuario..." prefWidth="160.0"/>
-      <DatePicker fx:id="dpInicio" promptText="Desde" prefWidth="130.0"/>
-      <DatePicker fx:id="dpFin" promptText="Hasta" prefWidth="130.0"/>
-      <Button fx:id="btnFiltrar" text="Filtrar" onAction="#BtnFiltrar"/>
-      <Button fx:id="btnLimpiar" text="Limpiar" onAction="#BtnLimpiar"/>
-      <Button fx:id="btnRegresar" text="Regresar" onAction="#BtnRegresar"/>
-    </HBox>
-    <TableView fx:id="tblLogs" layoutX="14.0" layoutY="76.0"
-               prefHeight="340.0" prefWidth="772.0">
+    <Label layoutX="14.0" layoutY="14.0" style="-fx-font-size:16px;-fx-font-weight:bold;" text="Gestor de bitácoras" />
+    <TableView fx:id="logsList" layoutX="38.0" layoutY="92.0" prefHeight="340.0" prefWidth="772.0">
       <columns>
-        <TableColumn fx:id="colLogId" text="log_id" prefWidth="60.0"/>
-        <TableColumn fx:id="colReservaId" text="reserve_id" prefWidth="80.0"/>
-        <TableColumn fx:id="colUsuario" text="user_name" prefWidth="150.0"/>
-        <TableColumn fx:id="colAccion" text="action" prefWidth="100.0"/>
-        <TableColumn fx:id="colFecha" text="log_date" prefWidth="130.0"/>
-        <TableColumn fx:id="colDetalle" text="detail" prefWidth="250.0"/>
+        <TableColumn fx:id="idColumn" prefWidth="60.0" text="ID" />
+        <TableColumn fx:id="reserveIdColumn" prefWidth="80.0" text="ID de reserva" />
+        <TableColumn fx:id="userColumn" prefWidth="150.0" text="Reserva de " />
+        <TableColumn fx:id="actionColumn" prefWidth="100.0" text="Acción" />
+        <TableColumn fx:id="dateColumn" prefWidth="151.199951171875" text="Fecha " />
+        <TableColumn fx:id="detailColumn" prefWidth="229.5999755859375" text="Detalle" />
       </columns>
     </TableView>
-    <Label fx:id="lblTotal" layoutX="14.0" layoutY="424.0"
-           style="-fx-font-size:11px;-fx-text-fill:#666;"/>
+    <Label fx:id="lblTotal" layoutX="14.0" layoutY="424.0" style="-fx-font-size:11px;-fx-text-fill:#666;" />
+      <Button fx:id="backButton" layoutX="792.0" layoutY="27.0" mnemonicParsing="false" onAction="#backToAdminGUI" text="Regresar" />
+      <Button fx:id="searchButton" layoutX="230.0" layoutY="53.0" mnemonicParsing="false" onAction="#searchLog" text="Buscar" />
+      <Button fx:id="showButton" layoutX="326.0" layoutY="53.0" mnemonicParsing="false" onAction="#showLogs" text="Mostrar bitácoras" />
+      <TextField fx:id="idText" layoutX="38.0" layoutY="53.0" promptText="ID de bitácora" />
   </children>
 </AnchorPane>

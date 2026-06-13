@@ -70,7 +70,10 @@ public class AdministratorGUI implements Initializable {
     @FXML private void btnIngresarMisReservas(ActionEvent e) {
         cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
     }
-    @FXML private void btnIngresarCalendario(ActionEvent e) {}
+    @FXML private void btnIngresarCalendario(ActionEvent e) {
+                cargarPantalla("/cr/ac/una/reservauna/Views/logs.fxml", btnCalendario);
+
+    }
     @FXML private void btnIngresarRecursos(ActionEvent e) {
         cargarPantalla("/cr/ac/una/reservauna/Views/place.fxml", btnRecursos);
     }

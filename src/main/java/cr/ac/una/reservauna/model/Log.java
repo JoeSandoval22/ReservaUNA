@@ -78,4 +78,10 @@ public class Log {
     public String getDetail(){
         return this.detail;
     }
+    
+    @Override
+    public String toString(){
+        return "";
+    }
+    
 }

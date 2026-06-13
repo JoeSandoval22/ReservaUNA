@@ -105,4 +105,8 @@ public class Reserve {
     public ReserveStatus getStatus(){
         return this.status;
     }
+    @Override
+    public String toString(){
+        return reserveId + "" ;
+    }
 }
