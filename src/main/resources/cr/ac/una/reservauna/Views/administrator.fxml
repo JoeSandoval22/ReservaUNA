@@ -7,57 +7,46 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="623.0" prefWidth="889.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.AdministratorGUI">
+<AnchorPane prefHeight="623.0" prefWidth="889.0" style="-fx-background-color: DB3C1A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.AdministratorGUI">
   <children>
-    <Label layoutX="6.0" layoutY="5.0" text="ReservaUNA — " />
+    <Label layoutX="23.0" layoutY="9.0" text="ReservaUNA — ">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
     <Label fx:id="LabelNombre" layoutX="120.0" layoutY="5.0" />
-    <Label layoutX="230.0" layoutY="5.0" text=" | " />
     <Label fx:id="LabelCorreo" layoutX="245.0" layoutY="5.0" />
-    <HBox layoutY="23.0" prefHeight="25.0" prefWidth="600.0">
-      <children>
-        <Button fx:id="btnArchivo" onAction="#btnIngresarArchivo" text="Archivo" />
-        <Button fx:id="btnReservas" onAction="#btnIngresarReservas" text="Reservas" />
-        <Button fx:id="btnReportes" onAction="#btnIngresarReportes" text="Reportes" />
-        <Button fx:id="btnAdministracion" onAction="#btnIngresarAdministracion" text="Administración" />
-        <Button fx:id="btnAyuda" onAction="#btnIngresarAyuda" text="Ayuda" />
-      </children>
-    </HBox>
-    <HBox layoutY="49.0" prefHeight="50.0" prefWidth="600.0">
-      <children>
-        <Button fx:id="btnNuevaReserva" onAction="#btnIngresarNuevaReserva" prefWidth="120.0" text="Nueva reserva">
-          <font><Font size="14.0" /></font>
-        </Button>
-        <Button fx:id="btnMisReservas" onAction="#btnIngresarMisReservas" prefWidth="110.0" text="Mis reservas">
-          <font><Font size="14.0" /></font>
-        </Button>
-        <Button fx:id="btnCalendario" onAction="#btnIngresarCalendario" text="Calendario" />
-        <Button fx:id="btnRecursos" onAction="#btnIngresarRecursos" text="Recursos" />
-        <Label text="Usuario: " />
-        <Label fx:id="LabelCorreo" prefWidth="120.0" />
-        <Button fx:id="btnCerrarSesion" onAction="#btnRegresarInicio" prefHeight="26.0" prefWidth="113.0" text="Cerrar sesión" />
-      </children>
-    </HBox>
-    <Label layoutX="32.0" layoutY="110.0" text="Reservas Activas" />
+    <Label layoutX="32.0" layoutY="155.0" text="Reservas Activas">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
     <Label fx:id="LabelReservasActivas" layoutX="55.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;" />
-    <Label layoutX="170.0" layoutY="110.0" text="Pendientes" />
+    <Label layoutX="185.0" layoutY="155.0" text="Pendientes">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
     <Label fx:id="LabelPendientes" layoutX="185.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;-fx-text-fill:#7a5000;" />
-    <Label layoutX="310.0" layoutY="110.0" text="Recursos Disponibles" />
+    <Label layoutX="310.0" layoutY="155.0" text="Recursos Disponibles">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
     <Label fx:id="LabelRecursosDisponible" layoutX="340.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;-fx-text-fill:#1a5c2a;" />
-    <Label layoutX="456.0" layoutY="110.0" text="Cupo Restante" />
+    <Label layoutX="494.0" layoutY="155.0" text="Cupo Restante">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
     <Label fx:id="LabelCupoRestante" layoutX="475.0" layoutY="128.0" style="-fx-font-size:18px;-fx-font-weight:bold;-fx-text-fill:#7a1a1a;" />
-    <TableView fx:id="TablaReservas" layoutX="14.0" layoutY="155.0" prefHeight="200.0" prefWidth="340.0">
+    <TableView fx:id="TablaReservas" layoutX="48.0" layoutY="223.0" prefHeight="304.0" prefWidth="446.0">
       <columns>
-        <TableColumn fx:id="colRecurso" prefWidth="110.0" text="Recurso" />
-        <TableColumn fx:id="colFecha" prefWidth="115.0" text="Fecha" />
-        <TableColumn fx:id="colEstado" prefWidth="115.0" text="Estado" />
+        <TableColumn fx:id="colRecurso" prefWidth="141.6000099182129" text="Recurso" />
+        <TableColumn fx:id="colFecha" prefWidth="142.3999481201172" text="Fecha" />
+        <TableColumn fx:id="colEstado" prefWidth="163.20001220703125" text="Estado" />
       </columns>
     </TableView>
-    <Label layoutX="370.0" layoutY="155.0" text="Accesos rápidos" />
-    <VBox layoutX="534.0" layoutY="173.0" prefWidth="230.0" spacing="5.0">
+    <Label layoutX="676.0" layoutY="244.0" text="Accesos rápidos" />
+    <VBox layoutX="613.0" layoutY="289.0" prefWidth="230.0" spacing="5.0">
       <children>
         <Button fx:id="btnNuevaReserva2" onAction="#btnIngresarNuevaReserva2" prefWidth="220.0" text="+ Nueva reserva" />
         <Button fx:id="btnVerCalendario" onAction="#btnIngresarVerCalendario" prefWidth="220.0" text="Ver calendario" />
@@ -65,7 +54,7 @@
         <Button fx:id="btnMisReservas2" onAction="#btnIngresarMisReservas2" prefWidth="220.0" text="Mis reservas" />
       </children>
     </VBox>
-      <SplitMenuButton layoutX="469.0" layoutY="382.0" mnemonicParsing="false" text="SplitMenuButton">
+      <SplitMenuButton layoutX="663.0" layoutY="452.0" mnemonicParsing="false" text="SplitMenuButton">
         <items>
           <MenuItem fx:id="pResourceGestor" mnemonicParsing="false" text="Gestión de recursos (lugares)" />
             <MenuItem fx:id="eResourceGestor" mnemonicParsing="false" text="Gestión de recursos (equipos)" />
@@ -73,5 +62,24 @@
             <MenuItem fx:id="usersGestor" mnemonicParsing="false" text="Gestión de Usuarios" />
         </items>
       </SplitMenuButton>
+  <Button fx:id="btnAyuda" layoutX="728.0" layoutY="61.0" onAction="#btnIngresarAyuda" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: DB9E1A;" text="Ayuda" />
+  <Button fx:id="btnAdministracion" layoutX="379.0" layoutY="48.0" onAction="#btnIngresarAdministracion" prefHeight="24.0" prefWidth="96.0" style="-fx-background-color: DB9E1A;" text="Administración" />
+  <Button fx:id="btnReportes" layoutX="262.0" layoutY="47.0" onAction="#btnIngresarReportes" prefHeight="25.0" prefWidth="96.0" style="-fx-background-color: DB9E1A;" text="Reportes" />
+  <Button fx:id="btnReservas" layoutX="137.0" layoutY="47.0" onAction="#btnIngresarReservas" prefHeight="26.0" prefWidth="96.0" style="-fx-background-color: DB9E1A;" text="Reservas" />
+  <Button fx:id="btnArchivo" layoutX="16.0" layoutY="47.0" onAction="#btnIngresarArchivo" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: DB9E1A;" text="Archivo" />
+  <Label layoutX="452.0" layoutY="100.0" text="Usuario: " />
+  <Button fx:id="btnRecursos" layoutX="358.0" layoutY="96.0" onAction="#btnIngresarRecursos" style="-fx-background-color: DB9E1A;" text="Recursos" />
+  <Button fx:id="btnCalendario" layoutX="274.0" layoutY="96.0" onAction="#btnIngresarCalendario" style="-fx-background-color: DB9E1A;" text="Calendario" />
+  <Button fx:id="btnMisReservas" layoutX="151.0" layoutY="94.0" onAction="#btnIngresarMisReservas" prefWidth="110.0" style="-fx-background-color: DB9E1A;" text="Mis reservas">
+    <font>
+            <Font size="14.0" />
+         </font>
+  </Button>
+  <Button fx:id="btnNuevaReserva" layoutX="16.0" layoutY="94.0" onAction="#btnIngresarNuevaReserva" prefWidth="120.0" style="-fx-background-color: DB9E1A;" text="Nueva reserva">
+    <font>
+            <Font size="14.0" />
+         </font>
+  </Button>
+  <Button fx:id="btnCerrarSesion" layoutX="575.0" layoutY="64.0" onAction="#btnRegresarInicio" prefHeight="26.0" prefWidth="113.0" style="-fx-background-color: DB9E1A;" text="Cerrar sesión" />
   </children>
 </AnchorPane>
