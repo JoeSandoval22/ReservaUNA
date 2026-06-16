@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="623.0" prefWidth="889.0" style="-fx-background-color: DB3C1A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.AdministratorGUI">
+<AnchorPane prefHeight="623.0" prefWidth="889.0" style="-fx-background-color: DB3C1A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.AdministratorGUI">
   <children>
     <Label layoutX="23.0" layoutY="9.0" text="ReservaUNA — ">
          <font>
@@ -69,7 +69,7 @@
   <Button fx:id="btnArchivo" layoutX="16.0" layoutY="47.0" onAction="#btnIngresarArchivo" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: DB9E1A;" text="Archivo" />
   <Label layoutX="452.0" layoutY="100.0" text="Usuario: " />
   <Button fx:id="btnRecursos" layoutX="358.0" layoutY="96.0" onAction="#btnIngresarRecursos" style="-fx-background-color: DB9E1A;" text="Recursos" />
-  <Button fx:id="btnCalendario" layoutX="274.0" layoutY="96.0" onAction="#btnIngresarCalendario" style="-fx-background-color: DB9E1A;" text="Calendario" />
+  <Button fx:id="usersButton" layoutX="274.0" layoutY="96.0" onAction="#switchToUsersHandle" style="-fx-background-color: DB9E1A;" text="Usuarios" />
   <Button fx:id="btnMisReservas" layoutX="151.0" layoutY="94.0" onAction="#btnIngresarMisReservas" prefWidth="110.0" style="-fx-background-color: DB9E1A;" text="Mis reservas">
     <font>
             <Font size="14.0" />

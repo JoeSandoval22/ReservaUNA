@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -28,10 +29,36 @@ public class AdministratorGUI implements Initializable {
     @FXML private TableColumn colEstado;
     @FXML private Button btnNuevaReserva;
     @FXML private Button btnMisReservas;
-    @FXML private Button btnCalendario;
+    private Button btnCalendario;
     @FXML private Button btnRecursos;
     @FXML private Button btnAdministracion;
     @FXML private Button btnCerrarSesion;
+    @FXML
+    private Button btnNuevaReserva2;
+    @FXML
+    private Button btnVerCalendario;
+    @FXML
+    private Button btnVerRecursos;
+    @FXML
+    private Button btnMisReservas2;
+    @FXML
+    private MenuItem pResourceGestor;
+    @FXML
+    private MenuItem eResourceGestor;
+    @FXML
+    private MenuItem reservesGestor;
+    @FXML
+    private MenuItem usersGestor;
+    @FXML
+    private Button btnAyuda;
+    @FXML
+    private Button btnReportes;
+    @FXML
+    private Button btnReservas;
+    @FXML
+    private Button btnArchivo;
+    @FXML
+    private Button usersButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,7 +97,7 @@ public class AdministratorGUI implements Initializable {
     @FXML private void btnIngresarMisReservas(ActionEvent e) {
         cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
     }
-    @FXML private void btnIngresarCalendario(ActionEvent e) {
+    private void btnIngresarCalendario(ActionEvent e) {
                 cargarPantalla("/cr/ac/una/reservauna/Views/logs.fxml", btnCalendario);
 
     }
@@ -89,5 +116,10 @@ public class AdministratorGUI implements Initializable {
     }
     @FXML private void btnRegresarInicio(ActionEvent e) {
         cargarPantalla("/cr/ac/una/reservauna/Views/login.fxml", btnCerrarSesion);
+    }
+
+    @FXML
+    private void switchToUsersHandle(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/usersHandle.fxml", usersButton);
     }
 }

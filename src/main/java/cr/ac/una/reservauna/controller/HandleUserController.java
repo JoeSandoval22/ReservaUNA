@@ -1,6 +1,12 @@
 package cr.ac.una.reservauna.controller;
 
+import cr.ac.una.reservauna.dao.UserDAO;
+import cr.ac.una.reservauna.model.Role;
+import cr.ac.una.reservauna.model.User;
+import cr.ac.una.reservauna.model.UserState;
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,111 +21,145 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class HandleUserController implements Initializable {
 
-    @FXML private TableView tblUsuarios;
-    @FXML private TableColumn colId;
-    @FXML private TableColumn colNombre;
-    @FXML private TableColumn colCorreo;
-    @FXML private TableColumn colRol;
-    @FXML private TableColumn colMax;
-    @FXML private TableColumn colEstado;
-    @FXML private ComboBox cmbFiltroRol;
-    @FXML private ComboBox cmbFiltroEstado;
-    @FXML private ComboBox cmbRol;
-    @FXML private ComboBox cmbEstado;
-    @FXML private TextField txtBuscar;
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtCorreo;
-    @FXML private Label lblMensaje;
-    @FXML private Button btnGuardar;
-    @FXML private Button btnInactivar;
-    @FXML private Button btnLimpiar;
-    @FXML private Button btnNuevo;
-    @FXML private Button btnRegresar;
+    
+    @FXML
+    private TextField idText;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private TableView<User> usersList;
+    @FXML
+    private TableColumn<User, Integer> idColumn;
+    @FXML
+    private TableColumn<User, String> nameColumn;
+    @FXML
+    private TableColumn<User, String> emailColumn;
+    @FXML
+    private TableColumn<User, Role> roleColumn;
+    @FXML
+    private TableColumn<User, Integer> userMaxReserves;
+    @FXML
+    private TableColumn<UserState, String> stateColumn;
+    @FXML
+    private TextField nameText;
+    @FXML
+    private TextField emailText;
+    @FXML
+    private ComboBox<Role> roleCombo;
+    @FXML
+    private ComboBox<UserState> userStateCombo;
+    @FXML
+    private Button updateButton;
+    @FXML
+    private Button clearButton;
+    @FXML
+    private Button showButton;
+    @FXML
+    private TextField idUpdateText;
+    @FXML
+    private TextField passwordText;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cmbFiltroRol.getItems().addAll(
-            "Todos","ADMINISTRADOR","ENCARGADO","PROFESOR","ESTUDIANTE");
-        cmbFiltroEstado.getItems().addAll("Todos","ACTIVO","INACTIVO");
-        cmbRol.getItems().addAll(
-            "1 · ADMINISTRADOR","2 · ENCARGADO","3 · PROFESOR","4 · ESTUDIANTE");
-        cmbEstado.getItems().addAll("ACTIVO","INACTIVO");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("userMail"));
+        roleColumn.setCellValueFactory(new PropertyValueFactory<>("userRole"));
+        stateColumn.setCellValueFactory(new PropertyValueFactory<>("userState"));
+        roleCombo.getItems().setAll(Role.values());
+        userStateCombo.getItems().setAll(UserState.values());
     }
 
-    @FXML
-    private void BtnGuardar(ActionEvent event) {
-        if (txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()
-                || cmbRol.getValue() == null || cmbEstado.getValue() == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos",
-                "Completá todos los campos obligatorios.");
-            return;
-        }
-        mostrarAlerta(Alert.AlertType.INFORMATION, "Guardado",
-            "Usuario guardado correctamente.");
-        BtnLimpiar(event);
-    }
-
-    @FXML
-    private void BtnInactivar(ActionEvent event) {
-        if (tblUsuarios.getSelectionModel().getSelectedItem() == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Sin selección",
-                "Seleccioná un usuario de la tabla.");
-            return;
-        }
-        mostrarAlerta(Alert.AlertType.INFORMATION, "Inactivado",
-            "Usuario marcado como INACTIVO.");
-    }
-
-    @FXML
-    private void BtnNuevo(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(
-                "/cr/ac/una/reservauna/Views/sigUp.fxml"));
-            Stage stage = (Stage) btnNuevo.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    private void BtnBuscar(ActionEvent event) {
-        // SELECT con filtros por user_name, user_mail, role_id, user_state
-    }
-
-    @FXML
-    private void BtnLimpiar(ActionEvent event) {
-        txtNombre.clear();
-        txtCorreo.clear();
-        cmbRol.setValue(null);
-        cmbEstado.setValue(null);
-        lblMensaje.setText("");
-        tblUsuarios.getSelectionModel().clearSelection();
-    }
-
-    @FXML
-    private void BtnRegresar(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(
-                "/cr/ac/una/reservauna/Views/administrator.fxml"));
-            Stage stage = (Stage) btnRegresar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert a = new Alert(tipo);
-        a.setTitle(titulo);
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert a = new Alert(type);
+        a.setTitle(title);
         a.setHeaderText(null);
-        a.setContentText(mensaje);
+        a.setContentText(message);
         a.showAndWait();
+    }
+
+    @FXML
+    private void searchUser(ActionEvent event) {
+        String id = idText.getText().trim();
+        if(id.isEmpty()){
+            showAlert(Alert.AlertType.WARNING,"Espacios vacíos","No deje espacios vacíos.");
+            return;
+        }
+        try{
+            int userId = Integer.parseInt(id);
+            UserDAO userDao = new UserDAO();
+            User user = userDao.findUserById(userId);
+            usersList.getItems().clear();
+            if(user!=null){
+                usersList.getItems().add(user);
+            }else{
+                showAlert(Alert.AlertType.INFORMATION,"Sin resultados","No existe un usuario con ese ID");
+                return;
+            }
+        }catch(Exception ex){
+            showAlert(Alert.AlertType.ERROR,"Formato inválido","Asegúrese que el ID sea estrictamente numérico.");
+            System.out.println("Error: "+ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void backTo(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/administrator.fxml"));
+        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+        Stage window = (Stage) source.getScene().getWindow();
+        window.getScene().setRoot(root);
+    }
+
+    @FXML
+    private void updateUsers(ActionEvent event) {
+        String userId = idUpdateText.getText().trim();
+        String name = nameText.getText().trim();
+        String email = emailText.getText().trim();
+        String password = passwordText.getText().trim();
+        Role role = roleCombo.getValue();
+        UserState state = userStateCombo.getValue();
+        if(userId.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty() || role==null || state==null){
+            showAlert(Alert.AlertType.WARNING,"Espacios vacíos","No deje espacios vacíos u opciones sin seleccionar");
+            return;
+        }
+        try{
+            int id = Integer.parseInt(userId);
+            UserDAO userDao = new UserDAO();
+            User user = new User(id,name,email,role,state,password);
+            if(userDao.insertUser(user)){
+                usersList.getItems().add(user);
+                showAlert(Alert.AlertType.CONFIRMATION,"Usuario agregado","Usuario agregado existosamente.");
+            }
+        }catch(NumberFormatException ex){
+            showAlert(Alert.AlertType.ERROR,"Formato inválido","Asegúrese que el ID sea estrictamente numérico.");
+            System.out.println("Error: "+ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void clearFields(ActionEvent event) {
+        idText.clear();
+        idUpdateText.clear();
+        nameText.clear();
+        emailText.clear();
+        passwordText.clear();
+    }
+
+    @FXML
+    private void showUsers(ActionEvent event) {
+        fillTables();
+    }
+    
+    private void fillTables(){
+        UserDAO userDao = new UserDAO();
+        List<User> users = userDao.getAllUsers();
+        usersList.getItems().setAll(users);
     }
 }
