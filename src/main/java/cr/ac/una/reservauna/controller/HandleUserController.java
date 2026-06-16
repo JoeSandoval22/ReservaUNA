@@ -65,6 +65,10 @@ public class HandleUserController implements Initializable {
     private TextField idUpdateText;
     @FXML
     private TextField passwordText;
+    @FXML
+    private Label lblMensaje;
+    @FXML
+    private Button deleteButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -133,8 +137,8 @@ public class HandleUserController implements Initializable {
             int id = Integer.parseInt(userId);
             UserDAO userDao = new UserDAO();
             User user = new User(id,name,email,role,state,password);
-            if(userDao.insertUser(user)){
-                usersList.getItems().add(user);
+            if(userDao.updateUser(user)){
+                fillTables();
                 showAlert(Alert.AlertType.CONFIRMATION,"Usuario agregado","Usuario agregado existosamente.");
             }
         }catch(NumberFormatException ex){
@@ -161,5 +165,24 @@ public class HandleUserController implements Initializable {
         UserDAO userDao = new UserDAO();
         List<User> users = userDao.getAllUsers();
         usersList.getItems().setAll(users);
+    }
+
+    @FXML
+    private void deleteUsers(ActionEvent event) {
+        User selected = usersList.getSelectionModel().getSelectedItem();
+        if(selected==null){
+            showAlert(Alert.AlertType.WARNING,"Opción inválida","Seleccione una opción para eliminar.");
+            return;
+        }
+        try{
+            UserDAO userDao = new UserDAO();
+            boolean success = userDao.deleteUser(selected);
+            if(success){
+                usersList.getItems().remove(selected);
+                showAlert(Alert.AlertType.CONFIRMATION,"Usuario eliminado","Usuario eliminado existosamente.");
+            } 
+        }catch(Exception ex){
+            System.out.println("Error: "+ex.getMessage());
+        }
     }
 }
