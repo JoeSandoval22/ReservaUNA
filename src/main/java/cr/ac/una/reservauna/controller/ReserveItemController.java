@@ -84,7 +84,6 @@ public class ReserveItemController implements Initializable {
         a.showAndWait();
     }
 
-    // Adds a new reserve item
     @FXML
 private void addReserveItems(ActionEvent event) {
     String startHour = startHourText.getText().trim();
@@ -93,7 +92,7 @@ private void addReserveItems(ActionEvent event) {
 
     if (parentId.isEmpty() || startDatePicker.getValue() == null || startHour.isEmpty()
             || endDatePickr.getValue() == null || endHour.isEmpty()) {
-        showAlert(Alert.AlertType.WARNING, "Empty fields", "Do not leave fields empty or options unselected.");
+        showAlert(Alert.AlertType.WARNING, "Espacios vacíos", "No deje espacios vacíos u opciones por seleccionar.");
         return;
     }
 
@@ -115,7 +114,7 @@ private void addReserveItems(ActionEvent event) {
         Reserve parentReserve = reserveDao.findReserveById(id);
 
         if (parentReserve == null) {
-            showAlert(Alert.AlertType.ERROR, "Not found", "No reserve found with ID: " + id);
+            showAlert(Alert.AlertType.ERROR, "Sin resultados", "No existe una reserva con el ID: " + id);
             return;
         }
 
@@ -123,17 +122,17 @@ private void addReserveItems(ActionEvent event) {
 
         if (reserveItemDAO.insertReserveItem(item)) {
             itemsList.getItems().add(item);
-            showAlert(Alert.AlertType.CONFIRMATION, "Item added", "The reserve item was added successfully.");
+            showAlert(Alert.AlertType.CONFIRMATION, "Ítem agregado", "El ítem fue agregado exitosamente.");
         } else {
-            showAlert(Alert.AlertType.ERROR, "Failed", "Could not add the reserve item. Check limits or overlaps.");
+            showAlert(Alert.AlertType.ERROR, "Fallo", "No se pudo agregar el ítem.");
         }
     } catch (DateTimeException | NumberFormatException ex) {
         System.out.println("Error: " + ex.getMessage());
-        showAlert(Alert.AlertType.ERROR, "Invalid data", "Make sure the hours follow the format 00:00 - 23:59.");
+        showAlert(Alert.AlertType.ERROR, "Datos inválidos", "Asegúrese que las el ID sea estrictamente numérico y las horas tengan el formato 00:00 - 23:59.");
     }
 }
 
-    // Toggles between Place and Equipment combo
+   
     @FXML
     private void getPlaceCombo(ActionEvent event) {
         if (choiceButton.isSelected()) {
@@ -145,18 +144,18 @@ private void addReserveItems(ActionEvent event) {
         }
     }
 
-    // Goes back to the previous screen
+   
     @FXML
     private void back(ActionEvent event) {
     }
 
-    // Searches a reserve item by its ID
+    
     @FXML
     private void searchReserveItem(ActionEvent event) {
         String idInput = idText.getText().trim();
 
         if (idInput.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Empty field", "Do not leave the ID field empty.");
+            showAlert(Alert.AlertType.WARNING, "Espacios vacíos", "No deje espacios vacíos.");
             return;
         }
 
@@ -168,15 +167,15 @@ private void addReserveItems(ActionEvent event) {
             if (found != null) {
                 itemsList.getItems().add(found);
             } else {
-                showAlert(Alert.AlertType.INFORMATION, "Not found", "No reserve item found with ID: " + id);
+                showAlert(Alert.AlertType.INFORMATION, "No encontrado", "No existe un ítem de reserva con el ID: " + id);
             }
         } catch (NumberFormatException ex) {
             System.out.println("Error: " + ex.getMessage());
-            showAlert(Alert.AlertType.ERROR, "Invalid data", "The ID must be a valid number.");
+            showAlert(Alert.AlertType.ERROR, "Datos inválidos", "El ID debe ser estrictamente numérico.");
         }
     }
 
-    // Clears all input fields
+    
     @FXML
     private void clearFields(ActionEvent event) {
         idText.clear();
@@ -189,7 +188,7 @@ private void addReserveItems(ActionEvent event) {
         equipmentCombo.getSelectionModel().clearSelection();
     }
 
-    // Updates an existing reserve item
+    
     @FXML
     private void updateItems(ActionEvent event) {
         String reserveItemId = itemIdText.getText().trim();
@@ -198,7 +197,7 @@ private void addReserveItems(ActionEvent event) {
 
         if (reserveItemId.isEmpty() || startDatePicker.getValue() == null || startHour.isEmpty()
                 || endDatePickr.getValue() == null || endHour.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Empty fields", "Do not leave fields empty or options unselected.");
+            showAlert(Alert.AlertType.WARNING, "Espacios vacíos", "No deje espacios vacíos u opciones por seleccionar.");
             return;
         }
 
@@ -222,7 +221,7 @@ private void addReserveItems(ActionEvent event) {
 
             if (reserveItemDAO.updateReserveItem(updatedItem)) {
                 fillTables();
-                showAlert(Alert.AlertType.CONFIRMATION, "Item updated", "The reserve item was updated successfully.");
+                showAlert(Alert.AlertType.CONFIRMATION, "Ítem actualizado", "El ítem de reserva fue actualizado exitosamente.");
             }
         } catch (DateTimeException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -232,7 +231,7 @@ private void addReserveItems(ActionEvent event) {
     private void deleteReserveItem(ActionEvent event) {
         String id = itemIdText.getText().trim();
         if (id.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Empty field", "Do not leave the ID field empty.");
+            showAlert(Alert.AlertType.WARNING, "Espacios vacíos", "No deje espacios vacíos.");
             return;
         }
         try {
@@ -240,13 +239,13 @@ private void addReserveItems(ActionEvent event) {
             ReserveItem item = reserveItemDAO.findReserveItemById(newId);
             if (reserveItemDAO.deleteReserveItem(item)) {
                 fillTables();
-                showAlert(Alert.AlertType.CONFIRMATION, "Item deleted", "The reserve item was deleted successfully.");
+                showAlert(Alert.AlertType.CONFIRMATION, "Ítem eliminado", "El ítem de reserva fue eliminado existosamente.");
             }
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
-    // Refreshes the table without appending rows
+    
     private void fillTables() {
         List<ReserveItem> items = reserveItemDAO.getAllReserveItems();
         itemsList.getItems().setAll(items);
