@@ -17,30 +17,6 @@ import javafx.stage.Stage;
 
 public class AdministratorGUI implements Initializable {
 
-    @FXML private Label LabelNombre;
-    @FXML private Label LabelCorreo;
-    @FXML private Label LabelReservasActivas;
-    @FXML private Label LabelPendientes;
-    @FXML private Label LabelRecursosDisponible;
-    @FXML private Label LabelCupoRestante;
-    @FXML private TableView TablaReservas;
-    @FXML private TableColumn colRecurso;
-    @FXML private TableColumn colFecha;
-    @FXML private TableColumn colEstado;
-    @FXML private Button btnNuevaReserva;
-    @FXML private Button btnMisReservas;
-    private Button btnCalendario;
-    @FXML private Button btnRecursos;
-    @FXML private Button btnAdministracion;
-    @FXML private Button btnCerrarSesion;
-    @FXML
-    private Button btnNuevaReserva2;
-    @FXML
-    private Button btnVerCalendario;
-    @FXML
-    private Button btnVerRecursos;
-    @FXML
-    private Button btnMisReservas2;
     @FXML
     private MenuItem pResourceGestor;
     @FXML
@@ -48,27 +24,24 @@ public class AdministratorGUI implements Initializable {
     @FXML
     private MenuItem reservesGestor;
     @FXML
-    private MenuItem usersGestor;
-    @FXML
-    private Button btnAyuda;
-    @FXML
-    private Button btnReportes;
-    @FXML
-    private Button btnReservas;
-    @FXML
-    private Button btnArchivo;
-    @FXML
     private Button usersButton;
+    @FXML
+    private Button reservesButton;
+    @FXML
+    private Button placesGestor;
+    @FXML
+    private Button equipmentGestor;
+    @FXML
+    private Button reservesGestorButton;
+    @FXML
+    private Button logsButton;
+    @FXML
+    private Button logOutButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        LabelNombre.setText("Admin Sistema");
-        LabelCorreo.setText("admin@una.ac.cr");
-        LabelReservasActivas.setText("3");
-        LabelPendientes.setText("5");
-        LabelRecursosDisponible.setText("24");
-        LabelCupoRestante.setText("2");
-        // TODO: cargar TableView desde RESERVE WHERE user_id = usuario actual
+        
+        
     }
 
     private void cargarPantalla(String fxml, Button btn) {
@@ -82,44 +55,38 @@ public class AdministratorGUI implements Initializable {
         }
     }
 
-    @FXML private void btnIngresarArchivo(ActionEvent e) {}
-    @FXML private void btnIngresarReservas(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
-    }
-    @FXML private void btnIngresarReportes(ActionEvent e) {}
-    @FXML private void btnIngresarAdministracion(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/usersHandle.fxml", btnAdministracion);
-    }
-    @FXML private void btnIngresarAyuda(ActionEvent e) {}
-    @FXML private void btnIngresarNuevaReserva(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnNuevaReserva);
-    }
-    @FXML private void btnIngresarMisReservas(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
-    }
-    private void btnIngresarCalendario(ActionEvent e) {
-                cargarPantalla("/cr/ac/una/reservauna/Views/logs.fxml", btnCalendario);
-
-    }
-    @FXML private void btnIngresarRecursos(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/place.fxml", btnRecursos);
-    }
-    @FXML private void btnIngresarNuevaReserva2(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reservesGestor.fxml", btnNuevaReserva);
-    }
-    @FXML private void btnIngresarVerCalendario(ActionEvent e) {}
-    @FXML private void btnIngresarVerRecursos(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/equipment.fxml", btnRecursos);
-    }
-    @FXML private void btnIngresarMisReservas2(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reservesGestor.fxml", btnMisReservas);
-    }
-    @FXML private void btnRegresarInicio(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/login.fxml", btnCerrarSesion);
-    }
-
     @FXML
     private void switchToUsersHandle(ActionEvent event) {
         cargarPantalla("/cr/ac/una/reservauna/Views/usersHandle.fxml", usersButton);
+    }
+
+    @FXML
+    private void switchToReserves(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", reservesButton);
+    }
+
+    @FXML
+    private void switchToPlaces(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/place.fxml",placesGestor);
+    }
+
+    @FXML
+    private void switchToEquipments(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/equipment.fxml",equipmentGestor);
+    }
+
+    @FXML
+    private void switchToReservesGestor(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reservesGestor.fxml",reservesGestorButton);
+    }
+
+    @FXML
+    private void switchToLogsHandle(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/logs.fxml",logsButton);
+    }
+
+    @FXML
+    private void switchToLogin(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/login.fxml",logOutButton);
     }
 }

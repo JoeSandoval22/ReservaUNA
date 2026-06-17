@@ -37,6 +37,10 @@ public class ReserveItemDAO implements ReserveItemInterface {
     public boolean insertReserveItem(ReserveItem item) {
         int userId = item.getParentReserve().getUser().getUserId();
         Role role = item.getParentReserve().getUser().getUserRole();
+        int reserveId = item.getParentReserve().getReserveId();
+        if(!avoidBadParentReserves(reserveId)){
+            return false;
+        }
         if(reserveLimitPerUser(userId,role)){
             return false;
         }
@@ -176,6 +180,22 @@ public class ReserveItemDAO implements ReserveItemInterface {
         } catch (SQLException ex) {
             System.out.println("Error: "+ex.getMessage());
             return false;
+        }
+        return false;
+    }
+    
+    public boolean avoidBadParentReserves(int id){
+        String sqlItem = "SELECT * FROM RESERVE WHERE reserve_id = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sqlItem)){
+            ps.setInt(1, id);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
+                    String status = rs.getString("reserve_status");
+                    return !status.equalsIgnoreCase("PENDIENTE") && !status.equalsIgnoreCase("CANCELADA") && !status.equalsIgnoreCase("RECHAZADA");
+                }
+            }  
+        }catch(Exception ex){
+            System.out.println("Error: "+ex.getMessage());
         }
         return false;
     }

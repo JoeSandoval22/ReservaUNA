@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color:#DB3C1A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.ReserveController">
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color:#DB3C1A;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.ReserveController">
   <children>
 
     <Label layoutX="20.0" layoutY="16.0" style="-fx-font-size:20px;-fx-font-weight:bold;-fx-text-fill:white;" text="Gestión de Reservas" />
@@ -70,6 +70,7 @@
     <Button fx:id="updateButton" layoutX="440.0" layoutY="548.0" onAction="#updateReserves" prefHeight="32.0" prefWidth="140.0" style="-fx-background-color:#2a70b0;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Actualizar" />
     <Button fx:id="cancelButton" layoutX="595.0" layoutY="548.0" onAction="#cancelReserves" prefHeight="32.0" prefWidth="140.0" style="-fx-background-color:#c0392b;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Cancelar reserva" />
     <Button fx:id="clearButton" layoutX="750.0" layoutY="548.0" onAction="#clearFields" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Limpiar" />
+      <Button fx:id="itemsButton" layoutX="621.0" layoutY="20.0" mnemonicParsing="false" onAction="#goToReserveItems" text="Ir a ítems de reserva" />
 
   </children>
 </AnchorPane>

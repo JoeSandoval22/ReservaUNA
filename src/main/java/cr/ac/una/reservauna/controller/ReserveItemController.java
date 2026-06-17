@@ -4,11 +4,13 @@ import cr.ac.una.reservauna.dao.EquipmentDAO;
 import cr.ac.una.reservauna.dao.PlaceDAO;
 import cr.ac.una.reservauna.dao.ReserveDao;
 import cr.ac.una.reservauna.dao.ReserveItemDAO;
+import cr.ac.una.reservauna.dao.UserDAO;
 import cr.ac.una.reservauna.model.Equipment;
 import cr.ac.una.reservauna.model.Place;
 import cr.ac.una.reservauna.model.Reserve;
 import cr.ac.una.reservauna.model.ReserveItem;
 import cr.ac.una.reservauna.model.Resource;
+import java.io.IOException;
 import java.net.URL;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -18,7 +20,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class ReserveItemController implements Initializable {
 
@@ -62,6 +67,10 @@ public class ReserveItemController implements Initializable {
     private EquipmentDAO equipment = new EquipmentDAO();
     private PlaceDAO place = new PlaceDAO();
     private ReserveItemDAO reserveItemDAO = new ReserveItemDAO();
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private TextField parentText;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -88,38 +97,30 @@ public class ReserveItemController implements Initializable {
 private void addReserveItems(ActionEvent event) {
     String startHour = startHourText.getText().trim();
     String endHour = endHourText.getText().trim();
-    String parentId = itemIdText.getText().trim();
-
-    if (parentId.isEmpty() || startDatePicker.getValue() == null || startHour.isEmpty()
-            || endDatePickr.getValue() == null || endHour.isEmpty()) {
+    String parentId = parentText.getText().trim();
+    if (parentId.isEmpty() || startDatePicker.getValue() == null || startHour.isEmpty() || endDatePickr.getValue() == null || endHour.isEmpty()) {
         showAlert(Alert.AlertType.WARNING, "Espacios vacíos", "No deje espacios vacíos u opciones por seleccionar.");
         return;
     }
-
     Resource resource = null;
     if (equipmentCombo.isVisible()) {
         resource = equipmentCombo.getValue();
     } else {
         resource = placeCombo.getValue();
     }
-
     try {
         int id = Integer.parseInt(parentId);
         LocalDate start = startDatePicker.getValue();
         LocalDate end = endDatePickr.getValue();
         LocalTime sHour = LocalTime.parse(startHour);
         LocalTime eHour = LocalTime.parse(endHour);
-
         ReserveDao reserveDao = new ReserveDao();
         Reserve parentReserve = reserveDao.findReserveById(id);
-
         if (parentReserve == null) {
             showAlert(Alert.AlertType.ERROR, "Sin resultados", "No existe una reserva con el ID: " + id);
             return;
         }
-
         ReserveItem item = new ReserveItem(parentReserve, resource, LocalDateTime.of(start, sHour), LocalDateTime.of(end, eHour));
-
         if (reserveItemDAO.insertReserveItem(item)) {
             itemsList.getItems().add(item);
             showAlert(Alert.AlertType.CONFIRMATION, "Ítem agregado", "El ítem fue agregado exitosamente.");
@@ -146,7 +147,11 @@ private void addReserveItems(ActionEvent event) {
 
    
     @FXML
-    private void back(ActionEvent event) {
+    private void back(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/reserve.fxml"));
+        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+        Stage window = (Stage) source.getScene().getWindow();
+        window.getScene().setRoot(root);
     }
 
     
@@ -191,11 +196,12 @@ private void addReserveItems(ActionEvent event) {
     
     @FXML
     private void updateItems(ActionEvent event) {
+        String parentId = parentText.getText().trim();
         String reserveItemId = itemIdText.getText().trim();
         String startHour = startHourText.getText().trim();
         String endHour = endHourText.getText().trim();
 
-        if (reserveItemId.isEmpty() || startDatePicker.getValue() == null || startHour.isEmpty()
+        if (parentId.isEmpty() || reserveItemId.isEmpty() || startDatePicker.getValue() == null || startHour.isEmpty()
                 || endDatePickr.getValue() == null || endHour.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Espacios vacíos", "No deje espacios vacíos u opciones por seleccionar.");
             return;
@@ -210,15 +216,15 @@ private void addReserveItems(ActionEvent event) {
 
         try {
             int id = Integer.parseInt(reserveItemId);
+            int parent = Integer.parseInt(parentId);
             LocalDate start = startDatePicker.getValue();
             LocalDate end = endDatePickr.getValue();
             LocalTime sHour = LocalTime.parse(startHour);
             LocalTime eHour = LocalTime.parse(endHour);
 
-            ReserveItem item = reserveItemDAO.findReserveItemById(id);
-            ReserveItem updatedItem = new ReserveItem(id, item.getParentReserve(), resource,
-                    LocalDateTime.of(start, sHour), LocalDateTime.of(end, eHour));
-
+            ReserveDao reserveDao = new ReserveDao();
+            Reserve item = reserveDao.findReserveById(parent);
+            ReserveItem updatedItem = new ReserveItem(id, item, resource,LocalDateTime.of(start, sHour), LocalDateTime.of(end, eHour));
             if (reserveItemDAO.updateReserveItem(updatedItem)) {
                 fillTables();
                 showAlert(Alert.AlertType.CONFIRMATION, "Ítem actualizado", "El ítem de reserva fue actualizado exitosamente.");

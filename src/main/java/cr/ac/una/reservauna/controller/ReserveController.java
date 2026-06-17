@@ -10,6 +10,7 @@ import cr.ac.una.reservauna.model.Reserve;
 import cr.ac.una.reservauna.model.ReserveStatus;
 import cr.ac.una.reservauna.model.Resource;
 import cr.ac.una.reservauna.model.User;
+import java.io.IOException;
 import java.net.URL;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -19,7 +20,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -30,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class ReserveController implements Initializable {
 
@@ -92,6 +96,8 @@ public class ReserveController implements Initializable {
     private PlaceDAO place = new PlaceDAO();
     @FXML
     private TextField searchTextField;
+    @FXML
+    private Button itemsButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -261,5 +267,13 @@ public class ReserveController implements Initializable {
 
     private void showReserves(ActionEvent event) {
         fillTables();
+    }
+
+    @FXML
+    private void goToReserveItems(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/reserveItem.fxml"));
+        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+        Stage window = (Stage) source.getScene().getWindow();
+        window.getScene().setRoot(root);
     }
 }
