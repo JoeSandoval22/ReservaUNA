@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color:#DB3C1A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.HandleUserController">
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #8B1A1A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.HandleUserController">
   <children>
 
     <Label layoutX="20.0" layoutY="16.0" style="-fx-font-size:20px;-fx-font-weight:bold;-fx-text-fill:white;" text="Gestión de Usuarios" />

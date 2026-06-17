@@ -4,22 +4,104 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: DB3C1A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.Login">
-  <children>
-    <Label layoutX="155.0" layoutY="33.0" text="ReservaUNA">
-      <font><Font size="28.0" /></font>
-    </Label>
-    <Label layoutX="120.0" layoutY="80.0" text="Sistema de reservas de espacios y equipos" />
-    <Label layoutX="140.0" layoutY="155.0" text="Correo institucional" />
-    <TextField fx:id="emailText" layoutX="140.0" layoutY="175.0" prefWidth="220.0" promptText="usuario@una.ac.cr" />
-    <Label layoutX="140.0" layoutY="215.0" text="Contraseña" />
-    <PasswordField fx:id="passwordText" layoutX="140.0" layoutY="235.0" prefWidth="220.0" />
-    <Button fx:id="loginButton" layoutX="190.0" layoutY="290.0" onAction="#doLogin" prefWidth="120.0" style="-fx-background-color: DB9E1A;" text="Iniciar sesión" />
-    <Label fx:id="lblMensaje" layoutX="120.0" layoutY="330.0" prefWidth="260.0" style="-fx-text-fill: red;" />
-    <Label layoutX="140.0" layoutY="376.0" style="-fx-font-size: 10px;" text="Roles: Administrador · Encargado · Profesor · Estudiante" />
-      <Button fx:id="registerButton" layoutX="412.0" layoutY="358.0" mnemonicParsing="false" onAction="#switchToSingUp" style="-fx-background-color: DB9E1A;" text="Registrarse" />
-  </children>
+<AnchorPane prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: #8B1A1A;"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="cr.ac.una.reservauna.controller.Login">
+
+    <children>
+
+        <HBox prefHeight="70.0"
+              prefWidth="900.0"
+              style="-fx-background-color: #7A1515;
+                     -fx-border-color: #FFD700;
+                     -fx-border-width: 0 0 3 0;
+                     -fx-padding: 10 20 10 20;
+                     -fx-alignment: CENTER_LEFT;
+                     -fx-spacing: 14;">
+            <children>
+                <ImageView fitHeight="48" fitWidth="48" preserveRatio="true">
+                    <image>
+                        <Image url="@/Image/logo_universidad_nacional_de_costa_rica.png"/>
+                    </image>
+                </ImageView>
+                <VBox spacing="2">
+                    <children>
+                        <Label text="ReservaUNA"
+                               style="-fx-text-fill:white;
+                                      -fx-font-size:20px;
+                                      -fx-font-weight:bold;"/>
+                        <Label text="Sistema de reservas de espacios y equipos"
+                               style="-fx-text-fill: rgba(255,255,255,0.75);
+                                      -fx-font-size:11px;"/>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <VBox layoutX="250.0"
+              layoutY="120.0"
+              prefWidth="400.0"
+              prefHeight="380.0"
+              spacing="12"
+              style="-fx-background-color:white;
+                     -fx-background-radius:12;
+                     -fx-padding:25;">
+            <children>
+                <ImageView fitHeight="90.0"
+                           fitWidth="90.0"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@/Image/logo_universidad_nacional_de_costa_rica.png"/>
+                    </image>
+                </ImageView>
+                <Label text="Iniciar Sesión"
+                       style="-fx-font-size:24px;
+                              -fx-font-weight:bold;
+                              -fx-text-fill:#8B1A1A;" />
+                <Label text="Correo institucional"
+                       style="-fx-font-weight:bold;" />
+                <TextField fx:id="emailText"
+                           promptText="usuario@una.ac.cr"
+                           prefWidth="350"
+                           style="-fx-background-radius:6;" />
+                <Label text="Contraseña"
+                       style="-fx-font-weight:bold;" />
+                <PasswordField fx:id="passwordText"
+                               prefWidth="350"
+                               style="-fx-background-radius:6;" />
+                <Label fx:id="lblMensaje"
+                       prefWidth="350"
+                       style="-fx-text-fill:red;" />
+                <Button fx:id="loginButton"
+                        onAction="#doLogin"
+                        text="Iniciar sesión"
+                        prefWidth="350"
+                        style="-fx-background-color:#FFD700;
+                               -fx-text-fill:#4A2800;
+                               -fx-font-weight:bold;
+                               -fx-background-radius:6;
+                               -fx-padding:10;" />
+                <Button fx:id="registerButton"
+                        onAction="#switchToSingUp"
+                        text="Registrarse"
+                        prefWidth="350"
+                        style="-fx-background-color:#F4F1EC;
+                               -fx-text-fill:#333;
+                               -fx-border-color:#E0D8CE;
+                               -fx-border-radius:6;
+                               -fx-background-radius:6;
+                               -fx-font-weight:bold;" />
+                <Label text="Roles: Administrador · Encargado · Profesor · Estudiante"
+                       style="-fx-font-size:10px;
+                              -fx-text-fill:#777;" />
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

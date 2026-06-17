@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -9,27 +10,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color:#DB3C1A;"
-    xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="cr.ac.una.reservauna.controller.HandleStatusController">
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #8B1A1A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.HandleStatusController">
   <children>
 
-    <Label layoutX="20.0" layoutY="16.0"
-           style="-fx-font-size:20px;-fx-font-weight:bold;-fx-text-fill:white;"
-           text="Aprobar / Rechazar Reservas" />
-    <Button fx:id="btnRegresar" layoutX="790.0" layoutY="16.0" prefWidth="90.0" prefHeight="32.0"
-            onAction="#BtnRegresar"
-            style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;"
-            text="Regresar" />
+    <Label layoutX="20.0" layoutY="16.0" style="-fx-font-size:20px;-fx-font-weight:bold;-fx-text-fill:white;" text="Aprobar / Rechazar Reservas" />
+    <Button fx:id="btnRegresar" layoutX="790.0" layoutY="16.0" onAction="#BtnRegresar" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Regresar" />
 
     <Label layoutX="20.0" layoutY="58.0" style="-fx-text-fill:white;-fx-font-weight:bold;" text="Filtros de búsqueda" />
-    <ComboBox fx:id="cmbFiltroEstado" layoutX="20.0" layoutY="78.0" prefWidth="140.0" prefHeight="32.0" />
-    <DatePicker fx:id="dpFecha" layoutX="175.0" layoutY="78.0" prefWidth="160.0" prefHeight="32.0" promptText="Fecha" />
-    <TextField fx:id="txtBuscarUsuario" layoutX="350.0" layoutY="78.0" prefWidth="180.0" prefHeight="32.0" promptText="Filtrar usuario..." />
-    <Button layoutX="545.0" layoutY="78.0" prefWidth="90.0" prefHeight="32.0"
-            onAction="#BtnBuscar"
-            style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;"
-            text="Buscar" />
+    <ComboBox fx:id="cmbFiltroEstado" layoutX="20.0" layoutY="78.0" prefHeight="32.0" prefWidth="140.0" />
+    <DatePicker fx:id="dpFecha" layoutX="175.0" layoutY="78.0" prefHeight="32.0" prefWidth="160.0" promptText="Fecha" />
+    <TextField fx:id="txtBuscarUsuario" layoutX="350.0" layoutY="78.0" prefHeight="32.0" prefWidth="180.0" promptText="Filtrar usuario..." />
+    <Button layoutX="545.0" layoutY="78.0" onAction="#BtnBuscar" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Buscar" />
 
     <TableView fx:id="tblReservas" layoutX="20.0" layoutY="124.0" prefHeight="240.0" prefWidth="860.0">
       <columns>
@@ -43,25 +34,16 @@
       </columns>
     </TableView>
 
-    <Label fx:id="lblReservaSeleccionada" layoutX="20.0" layoutY="376.0"
-           style="-fx-text-fill:#ffe0d0;-fx-font-size:12px;" />
+    <Label fx:id="lblReservaSeleccionada" layoutX="20.0" layoutY="376.0" style="-fx-text-fill:#ffe0d0;-fx-font-size:12px;" />
 
     <Label layoutX="20.0" layoutY="396.0" style="-fx-text-fill:white;-fx-font-weight:bold;" text="Motivo de aprobación o rechazo *" />
-    <TextArea fx:id="txtMotivo" layoutX="20.0" layoutY="416.0" prefHeight="100.0" prefWidth="860.0"
-              promptText="Ingrese el motivo..." />
+    <TextArea fx:id="txtMotivo" layoutX="20.0" layoutY="416.0" prefHeight="100.0" prefWidth="860.0" promptText="Ingrese el motivo..." />
 
-    <Label fx:id="lblMensaje" layoutX="20.0" layoutY="526.0"
-           style="-fx-font-size:11px;-fx-text-fill:#ffe0d0;" />
+    <Label fx:id="lblMensaje" layoutX="20.0" layoutY="526.0" style="-fx-font-size:11px;-fx-text-fill:#ffe0d0;" />
 
     <!-- BOTONES -->
-    <Button fx:id="btnAprobar" layoutX="20.0" layoutY="556.0" prefWidth="140.0" prefHeight="36.0"
-            onAction="#BtnAprobar"
-            style="-fx-background-color:#2a902a;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;"
-            text="Aprobar" />
-    <Button fx:id="btnRechazar" layoutX="175.0" layoutY="556.0" prefWidth="140.0" prefHeight="36.0"
-            onAction="#BtnRechazar"
-            style="-fx-background-color:#c0392b;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;"
-            text="Rechazar" />
+    <Button fx:id="btnAprobar" layoutX="20.0" layoutY="556.0" onAction="#BtnAprobar" prefHeight="36.0" prefWidth="140.0" style="-fx-background-color:#2a902a;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Aprobar" />
+    <Button fx:id="btnRechazar" layoutX="175.0" layoutY="556.0" onAction="#BtnRechazar" prefHeight="36.0" prefWidth="140.0" style="-fx-background-color:#c0392b;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Rechazar" />
 
   </children>
 </AnchorPane>
