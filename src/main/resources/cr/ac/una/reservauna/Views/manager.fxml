@@ -4,254 +4,79 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="620.0" prefWidth="900.0"
-            style="-fx-background-color:#8B1A1A;"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cr.ac.una.reservauna.controller.ManagerGUI">
+<AnchorPane prefHeight="620.0" prefWidth="900.0" style="-fx-background-color:#8B1A1A;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.ManagerGUI">
     <children>
-        <HBox layoutX="0.0"
-              layoutY="0.0"
-              prefHeight="70.0"
-              prefWidth="900.0"
-              style="-fx-background-color:#7A1515;
-                     -fx-border-color:#FFD700;
-                     -fx-border-width:0 0 3 0;
-                     -fx-padding:10 20 10 20;
-                     -fx-alignment:CENTER_LEFT;
-                     -fx-spacing:14;">
+        <HBox layoutX="0.0" layoutY="0.0" prefHeight="70.0" prefWidth="900.0" style="-fx-background-color:#7A1515;                      -fx-border-color:#FFD700;                      -fx-border-width:0 0 3 0;                      -fx-padding:10 20 10 20;                      -fx-alignment:CENTER_LEFT;                      -fx-spacing:14;">
             <children>
-                <ImageView fitHeight="48.0"
-                           fitWidth="48.0"
-                           preserveRatio="true">
-                    <image>
-                        <Image url="@/Image/logo_universidad_nacional_de_costa_rica.png"/>
-                    </image>
-                </ImageView>
                 <VBox spacing="2">
                     <children>
-                        <Label text="ReservaUNA"
-                               style="-fx-text-fill:white;
-                                      -fx-font-size:20px;
-                                      -fx-font-weight:bold;" />
-                        <Label text="Sistema de reservas de espacios y equipos"
-                               style="-fx-text-fill:rgba(255,255,255,0.75);
-                                      -fx-font-size:11px;" />
+                        <Label style="-fx-text-fill:white;                                       -fx-font-size:20px;                                       -fx-font-weight:bold;" text="ReservaUNA" />
+                        <Label style="-fx-text-fill:rgba(255,255,255,0.75);                                       -fx-font-size:11px;" text="Sistema de reservas de espacios y equipos" />
                     </children>
                 </VBox>
-                <HBox HBox.hgrow="ALWAYS"/>
-                <VBox spacing="2"
-                      style="-fx-alignment:CENTER_RIGHT;">
+                <HBox HBox.hgrow="ALWAYS" />
+                <VBox spacing="2" style="-fx-alignment:CENTER_RIGHT;">
                     <children>
-                        <Label fx:id="LabelNombre"
-                               style="-fx-text-fill:white;
-                                      -fx-font-size:13px;
-                                      -fx-font-weight:bold;" />
-                        <Label fx:id="LabelCorreo"
-                               style="-fx-text-fill:rgba(255,255,255,0.70);
-                                      -fx-font-size:11px;" />
+                        <Label fx:id="LabelNombre" style="-fx-text-fill:white;                                       -fx-font-size:13px;                                       -fx-font-weight:bold;" />
+                        <Label fx:id="LabelCorreo" style="-fx-text-fill:rgba(255,255,255,0.70);                                       -fx-font-size:11px;" />
                     </children>
                 </VBox>
-                <Button fx:id="btnCerrarSesion"
-                        onAction="#btnRegresarInicio"
-                        text="Cerrar sesión"
-                        style="-fx-background-color:#FFD700;
-                               -fx-text-fill:#4A2800;
-                               -fx-font-weight:bold;
-                               -fx-background-radius:6;" />
+                <Button fx:id="logOutButton" onAction="#logOut" style="-fx-background-color:#FFD700;                                -fx-text-fill:#4A2800;                                -fx-font-weight:bold;                                -fx-background-radius:6;" text="Cerrar sesión" />
             </children>
         </HBox>
-        <HBox layoutX="20.0"
-              layoutY="78.0"
-              spacing="10.0">
+        <HBox layoutX="20.0" layoutY="78.0" spacing="10.0">
             <children>
-                <VBox style="-fx-background-color:white;
-                             -fx-background-radius:10;
-                             -fx-padding:12;
-                             -fx-min-width:205;">
+                <VBox style="-fx-background-color:white;                              -fx-background-radius:10;                              -fx-padding:12;                              -fx-min-width:205;">
                     <children>
-                        <Label fx:id="LabelReservasActivas"
-                               style="-fx-font-size:26px;
-                                      -fx-font-weight:bold;
-                                      -fx-text-fill:#8B1A1A;" />
-                        <Label text="Reservas activas"
-                               style="-fx-font-size:11px;
-                                      -fx-text-fill:#888;" />
+                        <Label fx:id="LabelReservasActivas" style="-fx-font-size:26px;                                       -fx-font-weight:bold;                                       -fx-text-fill:#8B1A1A;" />
+                        <Label style="-fx-font-size:11px;                                       -fx-text-fill:#888;" text="Reservas activas" />
                     </children>
                 </VBox>
-                <VBox style="-fx-background-color:white;
-                             -fx-background-radius:10;
-                             -fx-padding:12;
-                             -fx-min-width:205;">
+                <VBox style="-fx-background-color:white;                              -fx-background-radius:10;                              -fx-padding:12;                              -fx-min-width:205;">
                     <children>
-                        <Label fx:id="LabelPendientes"
-                               style="-fx-font-size:26px;
-                                      -fx-font-weight:bold;
-                                      -fx-text-fill:#854F0B;" />
-                        <Label text="Pendientes a revisar"
-                               style="-fx-font-size:11px;
-                                      -fx-text-fill:#888;" />
+                        <Label fx:id="LabelPendientes" style="-fx-font-size:26px;                                       -fx-font-weight:bold;                                       -fx-text-fill:#854F0B;" />
+                        <Label style="-fx-font-size:11px;                                       -fx-text-fill:#888;" text="Pendientes a revisar" />
                     </children>
                 </VBox>
-                <VBox style="-fx-background-color:white;
-                             -fx-background-radius:10;
-                             -fx-padding:12;
-                             -fx-min-width:205;">
+                <VBox style="-fx-background-color:white;                              -fx-background-radius:10;                              -fx-padding:12;                              -fx-min-width:205;">
                     <children>
-                        <Label fx:id="LabelRecursosDisponible"
-                               style="-fx-font-size:26px;
-                                      -fx-font-weight:bold;
-                                      -fx-text-fill:#3B6D11;" />
-                        <Label text="Recursos disponibles"
-                               style="-fx-font-size:11px;
-                                      -fx-text-fill:#888;" />
+                        <Label fx:id="LabelRecursosDisponible" style="-fx-font-size:26px;                                       -fx-font-weight:bold;                                       -fx-text-fill:#3B6D11;" />
+                        <Label style="-fx-font-size:11px;                                       -fx-text-fill:#888;" text="Recursos disponibles" />
                     </children>
                 </VBox>
-                <VBox style="-fx-background-color:white;
-                             -fx-background-radius:10;
-                             -fx-padding:12;
-                             -fx-min-width:205;">
+                <VBox style="-fx-background-color:white;                              -fx-background-radius:10;                              -fx-padding:12;                              -fx-min-width:205;">
                     <children>
-                        <Label fx:id="LabelCupoRestante"
-                               style="-fx-font-size:26px;
-                                      -fx-font-weight:bold;
-                                      -fx-text-fill:#A32D2D;" />
-                        <Label text="Cupo restante"
-                               style="-fx-font-size:11px;
-                                      -fx-text-fill:#888;" />
+                        <Label fx:id="LabelCupoRestante" style="-fx-font-size:26px;                                       -fx-font-weight:bold;                                       -fx-text-fill:#A32D2D;" />
+                        <Label style="-fx-font-size:11px;                                       -fx-text-fill:#888;" text="Cupo restante" />
                     </children>
                 </VBox>
             </children>
         </HBox>
-        <HBox layoutX="20.0"
-              layoutY="160.0"
-              spacing="12.0">
+        <HBox layoutX="20.0" layoutY="160.0" spacing="12.0">
             <children>
-                <VBox prefWidth="620.0"
-                      spacing="8.0"
-                      style="-fx-background-color:white;
-                             -fx-background-radius:10;
-                             -fx-padding:12;">
+                <VBox prefWidth="620.0" spacing="8.0" style="-fx-background-color:white;                              -fx-background-radius:10;                              -fx-padding:12;">
                     <children>
-                        <Label text="Reservas recientes"
-                               style="-fx-font-size:13px;
-                                      -fx-font-weight:bold;
-                                      -fx-text-fill:#555;
-                                      -fx-border-color:#F0EBE3;
-                                      -fx-border-width:0 0 1 0;
-                                      -fx-padding:0 0 8 0;" />
-                        <TableView fx:id="TablaReservas"
-                                   prefHeight="370.0"
-                                   prefWidth="590.0">
+                        <Label style="-fx-font-size:13px;                                       -fx-font-weight:bold;                                       -fx-text-fill:#555;                                       -fx-border-color:#F0EBE3;                                       -fx-border-width:0 0 1 0;                                       -fx-padding:0 0 8 0;" text="Reservas recientes" />
+                        <TableView fx:id="TablaReservas" prefHeight="370.0" prefWidth="590.0">
                             <columns>
-                                <TableColumn fx:id="colRecurso"
-                                             prefWidth="190.0"
-                                             text="Recurso" />
-                                <TableColumn fx:id="colFecha"
-                                             prefWidth="190.0"
-                                             text="Fecha" />
-                                <TableColumn fx:id="colEstado"
-                                             prefWidth="190.0"
-                                             text="Estado" />
+                                <TableColumn fx:id="colRecurso" prefWidth="190.0" text="Recurso" />
+                                <TableColumn fx:id="colFecha" prefWidth="190.0" text="Fecha" />
+                                <TableColumn fx:id="colEstado" prefWidth="190.0" text="Estado" />
                             </columns>
                         </TableView>
                     </children>
                 </VBox>
-                <VBox prefWidth="236.0"
-                      spacing="10.0"
-                      style="-fx-background-color:white;
-                             -fx-background-radius:10;
-                             -fx-padding:12;">
+                <VBox prefWidth="236.0" spacing="10.0" style="-fx-background-color:white;                              -fx-background-radius:10;                              -fx-padding:12;">
                     <children>
-                        <Label text="Accesos rápidos"
-                               style="-fx-font-size:13px;
-                                      -fx-font-weight:bold;
-                                      -fx-text-fill:#555;
-                                      -fx-border-color:#F0EBE3;
-                                      -fx-border-width:0 0 1 0;
-                                      -fx-padding:0 0 8 0;" />
-                        <Button onAction="#btnIngresarArchivo"
-                                prefWidth="210.0"
-                                text="Archivo"
-                                style="-fx-background-color:#F4F1EC;
-                                       -fx-text-fill:#333;
-                                       -fx-background-radius:6;
-                                       -fx-border-color:#E0D8CE;
-                                       -fx-border-radius:6;" />
-                        <Button onAction="#btnIngresarReservas"
-                                prefWidth="210.0"
-                                text="Reservas"
-                                style="-fx-background-color:#F4F1EC;
-                                       -fx-text-fill:#333;
-                                       -fx-background-radius:6;
-                                       -fx-border-color:#E0D8CE;
-                                       -fx-border-radius:6;" />
-                        <Button onAction="#btnIngresarAyuda"
-                                prefWidth="210.0"
-                                text="Ayuda"
-                                style="-fx-background-color:#F4F1EC;
-                                       -fx-text-fill:#333;
-                                       -fx-background-radius:6;
-                                       -fx-border-color:#E0D8CE;
-                                       -fx-border-radius:6;" />
+                        <Label style="-fx-font-size:13px;                                       -fx-font-weight:bold;                                       -fx-text-fill:#555;                                       -fx-border-color:#F0EBE3;                                       -fx-border-width:0 0 1 0;                                       -fx-padding:0 0 8 0;" text="Accesos rápidos" />
 
-                        <Button fx:id="btnNuevaReserva"
-                                onAction="#btnIngresarNuevaReserva"
-                                prefWidth="210.0"
-                                text="+ Nueva reserva"
-                                style="-fx-background-color:#8B1A1A;
-                                       -fx-text-fill:white;
-                                       -fx-font-weight:bold;
-                                       -fx-background-radius:6;" />
+                        <Button fx:id="reserveButton" onAction="#switchToReserves" prefWidth="210.0" style="-fx-background-color:#8B1A1A;                                        -fx-text-fill:white;                                        -fx-font-weight:bold;                                        -fx-background-radius:6;" text="+ Nueva reserva" />
 
-                        <Button fx:id="btnMisReservas"
-                                onAction="#btnIngresarMisReservas"
-                                prefWidth="210.0"
-                                text="Mis reservas"
-                                style="-fx-background-color:#F4F1EC;
-                                       -fx-text-fill:#333;
-                                       -fx-background-radius:6;
-                                       -fx-border-color:#E0D8CE;
-                                       -fx-border-radius:6;" />
-
-                        <Button fx:id="btnVerCalendario"
-                                onAction="#btnIngresarVerCalendario"
-                                prefWidth="210.0"
-                                text="Calendario"
-                                style="-fx-background-color:#F4F1EC;
-                                       -fx-text-fill:#333;
-                                       -fx-background-radius:6;
-                                       -fx-border-color:#E0D8CE;
-                                       -fx-border-radius:6;" />
-
-                        <Button onAction="#btnIngresarAprobar"
-                                prefWidth="210.0"
-                                text="Aprobar / Rechazar"
-                                style="-fx-background-color:#F4F1EC;
-                                       -fx-text-fill:#333;
-                                       -fx-background-radius:6;
-                                       -fx-border-color:#E0D8CE;
-                                       -fx-border-radius:6;" />
-
-                        <Button fx:id="btnNuevaReserva2"
-                                onAction="#btnIngresarNuevaReserva2"
-                                prefWidth="210.0"
-                                text="Nueva reserva (2)"
-                                visible="false"
-                                managed="false"/>
-
-                        <Button fx:id="btnMisReservas2"
-                                onAction="#btnIngresarMisReservas2"
-                                prefWidth="210.0"
-                                text="Mis reservas (2)"
-                                visible="false"
-                                managed="false"/>
+                        <Button fx:id="reservesGestorButton" onAction="#switchToReservesGestor" prefWidth="210.0" style="-fx-background-color:#F4F1EC;                                        -fx-text-fill:#333;                                        -fx-background-radius:6;                                        -fx-border-color:#E0D8CE;                                        -fx-border-radius:6;" text="Gestionar reservas" />
                     </children>
                 </VBox>
             </children>

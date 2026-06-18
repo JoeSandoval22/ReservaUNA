@@ -25,7 +25,7 @@
                         <Label fx:id="LabelCorreo" style="-fx-text-fill:rgba(255,255,255,0.70);                                       -fx-font-size:11px;" />
                     </children>
                 </VBox>
-                <Button fx:id="btnCerrarSesion" onAction="#btnRegresarInicio" style="-fx-background-color:#FFD700;                                -fx-text-fill:#4A2800;                                -fx-font-weight:bold;                                -fx-background-radius:6;" text="Cerrar sesión" />
+                <Button fx:id="logOutButton" onAction="#logOut" style="-fx-background-color:#FFD700;                                -fx-text-fill:#4A2800;                                -fx-font-weight:bold;                                -fx-background-radius:6;" text="Cerrar sesión" />
             </children>
         </HBox>
         <HBox layoutX="20.0" layoutY="78.0" spacing="10.0">
@@ -73,14 +73,7 @@
                 <VBox prefWidth="236.0" spacing="10.0" style="-fx-background-color:white;                              -fx-background-radius:10;                              -fx-padding:12;">
                     <children>
                         <Label style="-fx-font-size:13px;                                       -fx-font-weight:bold;                                       -fx-text-fill:#555;                                       -fx-border-color:#F0EBE3;                                       -fx-border-width:0 0 1 0;                                       -fx-padding:0 0 8 0;" text="Accesos rápidos" />
-                        <Button onAction="#btnIngresarArchivo" prefWidth="210.0" style="-fx-background-color:#F4F1EC;                                        -fx-text-fill:#333;                                        -fx-background-radius:6;                                        -fx-border-color:#E0D8CE;                                        -fx-border-radius:6;" text="Archivo" />
-                        <Button onAction="#btnIngresarReservas" prefWidth="210.0" style="-fx-background-color:#F4F1EC;                                        -fx-text-fill:#333;                                        -fx-background-radius:6;                                        -fx-border-color:#E0D8CE;                                        -fx-border-radius:6;" text="Reservas" />
-                        <Button onAction="#btnIngresarAyuda" prefWidth="210.0" style="-fx-background-color:#F4F1EC;                                        -fx-text-fill:#333;                                        -fx-background-radius:6;                                        -fx-border-color:#E0D8CE;                                        -fx-border-radius:6;" text="Ayuda" />
-                        <Button fx:id="btnNuevaReserva" onAction="#btnIngresarNuevaReserva" prefWidth="210.0" style="-fx-background-color:#8B1A1A;                                        -fx-text-fill:white;                                        -fx-font-weight:bold;                                        -fx-background-radius:6;" text="+ Nueva reserva" />
-                        <Button fx:id="btnMisReservas" onAction="#btnIngresarMisReservas" prefWidth="210.0" style="-fx-background-color:#F4F1EC;                                        -fx-text-fill:#333;                                        -fx-background-radius:6;                                        -fx-border-color:#E0D8CE;                                        -fx-border-radius:6;" text="Mis reservas" />
-                        <Button fx:id="btnVerCalendario" onAction="#btnIngresarVerCalendario" prefWidth="210.0" style="-fx-background-color:#F4F1EC;                                        -fx-text-fill:#333;                                        -fx-background-radius:6;                                        -fx-border-color:#E0D8CE;                                        -fx-border-radius:6;" text="Ver calendario" />
-                        <Button fx:id="btnNuevaReserva2" managed="false" onAction="#btnIngresarNuevaReserva2" prefWidth="210.0" text="Nueva reserva (2)" visible="false" />
-                        <Button fx:id="btnMisReservas2" managed="false" onAction="#btnIngresarMisReservas2" prefWidth="210.0" text="Mis reservas (2)" visible="false" />
+                        <Button fx:id="reservesButton" onAction="#switchToReserves" prefWidth="210.0" style="-fx-background-color:#8B1A1A;                                        -fx-text-fill:white;                                        -fx-font-weight:bold;                                        -fx-background-radius:6;" text="+ Nueva reserva" />
                     </children>
                 </VBox>
             </children>

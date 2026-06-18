@@ -26,9 +26,15 @@ public class ManagerGUI implements Initializable {
     @FXML private TableColumn colRecurso;
     @FXML private TableColumn colFecha;
     @FXML private TableColumn colEstado;
-    @FXML private Button btnNuevaReserva;
-    @FXML private Button btnMisReservas;
-    @FXML private Button btnCerrarSesion;
+    private Button btnNuevaReserva;
+    private Button btnMisReservas;
+    private Button btnCerrarSesion;
+    @FXML
+    private Button logOutButton;
+    @FXML
+    private Button reserveButton;
+    @FXML
+    private Button reservesGestorButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -42,39 +48,35 @@ public class ManagerGUI implements Initializable {
 
     private void cargarPantalla(String fxml, Button btn) {
         try {
+            Scene scene = btn.getScene();
             Parent root = FXMLLoader.load(getClass().getResource(fxml));
-            Stage stage = (Stage) btn.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+            NavegationController nav = new NavegationController(scene);
+            nav.goingTo(root);
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error al cargar: " + fxml + " — " + e.getMessage());
         }
     }
 
-    @FXML private void btnIngresarArchivo(ActionEvent e) {}
-    @FXML private void btnIngresarReservas(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
+    @FXML
+    private void logOut(ActionEvent event) {
+        try {
+            Scene scene = logOutButton.getScene();
+            Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/login.fxml"));
+            NavegationController nav = new NavegationController(scene);
+            nav.cleanHistory();
+            nav.goingTo(root);
+        } catch (Exception e) {
+            System.out.println("Error al cerrar sesión: " + e.getMessage());
+        }
     }
-    @FXML private void btnIngresarReportes(ActionEvent e) {}
-    @FXML private void btnIngresarAyuda(ActionEvent e) {}
-    @FXML private void btnIngresarNuevaReserva(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnNuevaReserva);
+
+    @FXML
+    private void switchToReserves(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", reserveButton);
     }
-    @FXML private void btnIngresarMisReservas(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
-    }
-    @FXML private void btnIngresarCalendario(ActionEvent e) {}
-    @FXML private void btnIngresarAprobar(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/handleStatus.fxml", btnNuevaReserva);
-    }
-    @FXML private void btnIngresarNuevaReserva2(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnNuevaReserva);
-    }
-    @FXML private void btnIngresarVerCalendario(ActionEvent e) {}
-    @FXML private void btnIngresarMisReservas2(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/reserve.fxml", btnMisReservas);
-    }
-    @FXML private void btnRegresarInicio(ActionEvent e) {
-        cargarPantalla("/cr/ac/una/reservauna/Views/login.fxml", btnCerrarSesion);
+
+    @FXML
+    private void switchToReservesGestor(ActionEvent event) {
+        cargarPantalla("/cr/ac/una/reservauna/Views/reservesGestor.fxml", reservesGestorButton);
     }
 }
