@@ -5,15 +5,45 @@
 package cr.ac.una.reservauna.controller;
 
 import java.util.Stack;
-import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 /**
  *
  * @author User
  */
 public class NavegationController {
-    private static final Stack<String> backStack = new Stack<>();
-    private static final Stack<String> fordwardStack = new Stack<>();
-    private Stage stage;
+    private final Scene mainScene;
+    private static final Stack<Parent> historyStack = new Stack<>();
+    private Parent currentWindow;
     
+    
+    public NavegationController(Scene mainScene){
+        this.mainScene=mainScene;
+        if(currentWindow==null){
+            this.currentWindow=mainScene.getRoot();
+        }
+    }
+    
+    public void goingTo(Parent fxmlFile){
+        if(currentWindow!=null){
+            historyStack.push(currentWindow);
+        }
+        currentWindow=fxmlFile;
+        mainScene.setRoot(fxmlFile);
+    }
+    
+    public void goBackTo(){
+        if(!historyStack.isEmpty()){
+            Parent previousWindow = historyStack.pop();
+            currentWindow = previousWindow;
+            mainScene.setRoot(previousWindow);
+        }else{
+            System.out.println("Fin del historial.");
+        }
+    }
+
+    public void cleanHistory() {
+        historyStack.clear();
+    }
 }

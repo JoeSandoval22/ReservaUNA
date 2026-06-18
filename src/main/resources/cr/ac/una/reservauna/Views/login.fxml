@@ -4,103 +4,35 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0"
-            style="-fx-background-color: #8B1A1A;"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cr.ac.una.reservauna.controller.Login">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #8B1A1A;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.Login">
 
     <children>
 
-        <HBox prefHeight="70.0"
-              prefWidth="900.0"
-              style="-fx-background-color: #7A1515;
-                     -fx-border-color: #FFD700;
-                     -fx-border-width: 0 0 3 0;
-                     -fx-padding: 10 20 10 20;
-                     -fx-alignment: CENTER_LEFT;
-                     -fx-spacing: 14;">
+        <HBox prefHeight="70.0" prefWidth="900.0" style="-fx-background-color: #7A1515;                      -fx-border-color: #FFD700;                      -fx-border-width: 0 0 3 0;                      -fx-padding: 10 20 10 20;                      -fx-alignment: CENTER_LEFT;                      -fx-spacing: 14;">
             <children>
-                <ImageView fitHeight="48" fitWidth="48" preserveRatio="true">
-                    <image>
-                        <Image url="@/Image/logo_universidad_nacional_de_costa_rica.png"/>
-                    </image>
-                </ImageView>
                 <VBox spacing="2">
                     <children>
-                        <Label text="ReservaUNA"
-                               style="-fx-text-fill:white;
-                                      -fx-font-size:20px;
-                                      -fx-font-weight:bold;"/>
-                        <Label text="Sistema de reservas de espacios y equipos"
-                               style="-fx-text-fill: rgba(255,255,255,0.75);
-                                      -fx-font-size:11px;"/>
+                        <Label style="-fx-text-fill:white;                                       -fx-font-size:20px;                                       -fx-font-weight:bold;" text="ReservaUNA" />
+                        <Label style="-fx-text-fill: rgba(255,255,255,0.75);                                       -fx-font-size:11px;" text="Sistema de reservas de espacios y equipos" />
                     </children>
                 </VBox>
             </children>
         </HBox>
-        <VBox layoutX="250.0"
-              layoutY="120.0"
-              prefWidth="400.0"
-              prefHeight="380.0"
-              spacing="12"
-              style="-fx-background-color:white;
-                     -fx-background-radius:12;
-                     -fx-padding:25;">
+        <VBox layoutX="250.0" layoutY="120.0" prefHeight="380.0" prefWidth="400.0" spacing="12" style="-fx-background-color:white;                      -fx-background-radius:12;                      -fx-padding:25;">
             <children>
-                <ImageView fitHeight="90.0"
-                           fitWidth="90.0"
-                           preserveRatio="true">
-                    <image>
-                        <Image url="@/Image/logo_universidad_nacional_de_costa_rica.png"/>
-                    </image>
-                </ImageView>
-                <Label text="Iniciar Sesión"
-                       style="-fx-font-size:24px;
-                              -fx-font-weight:bold;
-                              -fx-text-fill:#8B1A1A;" />
-                <Label text="Correo institucional"
-                       style="-fx-font-weight:bold;" />
-                <TextField fx:id="emailText"
-                           promptText="usuario@una.ac.cr"
-                           prefWidth="350"
-                           style="-fx-background-radius:6;" />
-                <Label text="Contraseña"
-                       style="-fx-font-weight:bold;" />
-                <PasswordField fx:id="passwordText"
-                               prefWidth="350"
-                               style="-fx-background-radius:6;" />
-                <Label fx:id="lblMensaje"
-                       prefWidth="350"
-                       style="-fx-text-fill:red;" />
-                <Button fx:id="loginButton"
-                        onAction="#doLogin"
-                        text="Iniciar sesión"
-                        prefWidth="350"
-                        style="-fx-background-color:#FFD700;
-                               -fx-text-fill:#4A2800;
-                               -fx-font-weight:bold;
-                               -fx-background-radius:6;
-                               -fx-padding:10;" />
-                <Button fx:id="registerButton"
-                        onAction="#switchToSingUp"
-                        text="Registrarse"
-                        prefWidth="350"
-                        style="-fx-background-color:#F4F1EC;
-                               -fx-text-fill:#333;
-                               -fx-border-color:#E0D8CE;
-                               -fx-border-radius:6;
-                               -fx-background-radius:6;
-                               -fx-font-weight:bold;" />
-                <Label text="Roles: Administrador · Encargado · Profesor · Estudiante"
-                       style="-fx-font-size:10px;
-                              -fx-text-fill:#777;" />
+                <Label style="-fx-font-size:24px;                               -fx-font-weight:bold;                               -fx-text-fill:#8B1A1A;" text="Iniciar Sesión" />
+                <Label style="-fx-font-weight:bold;" text="Correo institucional" />
+                <TextField fx:id="emailText" prefWidth="350" promptText="usuario@una.ac.cr" style="-fx-background-radius:6;" />
+                <Label style="-fx-font-weight:bold;" text="Contraseña" />
+                <PasswordField fx:id="passwordText" prefWidth="350" style="-fx-background-radius:6;" />
+                <Label fx:id="lblMensaje" prefWidth="350" style="-fx-text-fill:red;" />
+                <Button fx:id="loginButton" onAction="#doLogin" prefWidth="350" style="-fx-background-color:#FFD700;                                -fx-text-fill:#4A2800;                                -fx-font-weight:bold;                                -fx-background-radius:6;                                -fx-padding:10;" text="Iniciar sesión" />
+                <Button fx:id="registerButton" onAction="#switchToSingUp" prefWidth="350" style="-fx-background-color:#F4F1EC;                                -fx-text-fill:#333;                                -fx-border-color:#E0D8CE;                                -fx-border-radius:6;                                -fx-background-radius:6;                                -fx-font-weight:bold;" text="Registrarse" />
+                <Label style="-fx-font-size:10px;                               -fx-text-fill:#777;" text="Roles: Administrador · Encargado · Profesor · Estudiante" />
             </children>
         </VBox>
     </children>

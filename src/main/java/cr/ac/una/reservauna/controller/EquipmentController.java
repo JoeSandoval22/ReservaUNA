@@ -9,9 +9,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -65,6 +67,8 @@ public class EquipmentController implements Initializable {
     private Button updateButton;
     @FXML
     private TextField descriptionText;
+    @FXML
+    private Label lblMensaje;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -197,4 +201,15 @@ public class EquipmentController implements Initializable {
             System.out.println("Error e: "+ex.getMessage());
         }
     } 
+
+    @FXML
+    private void backToAdmin(ActionEvent event) {
+        try {
+            Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            NavegationController nav = new NavegationController(scene);
+            nav.goBackTo();
+        } catch (Exception e) {
+            System.out.println("Error al regresar al menú de Administrador: " + e.getMessage());
+        }
+    }
 }

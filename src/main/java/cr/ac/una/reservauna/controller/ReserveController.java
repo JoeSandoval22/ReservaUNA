@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -235,10 +236,6 @@ public class ReserveController implements Initializable {
         }
     }
 
-    @FXML
-    private void backToAdminGUI(ActionEvent event) {
-        
-    }
     
     private void showAlert(Alert.AlertType type, String title, String message){
         Alert alert = new Alert(type);
@@ -275,5 +272,16 @@ public class ReserveController implements Initializable {
         javafx.scene.Node source = (javafx.scene.Node) event.getSource();
         Stage window = (Stage) source.getScene().getWindow();
         window.getScene().setRoot(root);
+    }
+
+    @FXML
+    private void backTo(ActionEvent event) {
+        try {
+            Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            NavegationController nav = new NavegationController(scene);
+            nav.goBackTo();
+        } catch (Exception e) {
+            System.out.println("Error al regresar: " + e.getMessage());
+        }
     }
 }

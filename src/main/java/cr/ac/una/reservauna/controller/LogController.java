@@ -62,7 +62,13 @@ public class LogController implements Initializable {
 
     @FXML
     private void backToAdminGUI(ActionEvent event) {
-        
+        try {
+            Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            NavegationController nav = new NavegationController(scene);
+            nav.goBackTo();
+        } catch (Exception e) {
+            System.out.println("Error al regresar al menú de Administrador: " + e.getMessage());
+        }
     }
 
     @FXML

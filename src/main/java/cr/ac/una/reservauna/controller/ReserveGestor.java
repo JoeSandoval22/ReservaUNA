@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -297,4 +298,15 @@ public class ReserveGestor implements Initializable{
         alert.setContentText(message);
         alert.showAndWait();
     }  
+
+    @FXML
+    private void backTo(ActionEvent event) {
+        try {
+            Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            NavegationController nav = new NavegationController(scene);
+            nav.goBackTo();
+        } catch (Exception e) {
+            System.out.println("Error al regresar: " + e.getMessage());
+        }
+    }
 }

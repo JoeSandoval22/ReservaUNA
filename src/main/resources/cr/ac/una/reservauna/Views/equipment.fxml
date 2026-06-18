@@ -8,11 +8,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #8B1A1A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.EquipmentController">
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #8B1A1A;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.EquipmentController">
   <children>
 
     <Label layoutX="20.0" layoutY="16.0" style="-fx-font-size:20px;-fx-font-weight:bold;-fx-text-fill:white;" text="Gestión de Recursos (Equipos)" />
-    <Button fx:id="backButton" layoutX="790.0" layoutY="16.0" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Regresar" />
+    <Button fx:id="backButton" layoutX="790.0" layoutY="16.0" onAction="#backToAdmin" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Regresar" />
 
     <TextField fx:id="findIdText" layoutX="20.0" layoutY="68.0" prefHeight="32.0" prefWidth="200.0" promptText="Buscar por ID de recurso" />
     <Button fx:id="searchButton" layoutX="232.0" layoutY="68.0" onAction="#searchEquipmentById" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color:#DB9E1A;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;" text="Buscar" />

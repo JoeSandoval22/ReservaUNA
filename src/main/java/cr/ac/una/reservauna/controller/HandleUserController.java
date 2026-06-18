@@ -115,10 +115,13 @@ public class HandleUserController implements Initializable {
 
     @FXML
     private void backTo(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/administrator.fxml"));
-        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
-        Stage window = (Stage) source.getScene().getWindow();
-        window.getScene().setRoot(root);
+        try {
+            Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            NavegationController nav = new NavegationController(scene);
+            nav.goBackTo();
+        } catch (Exception e) {
+            System.out.println("Error al regresar al menú de Administrador: " + e.getMessage());
+        }
     }
 
     @FXML

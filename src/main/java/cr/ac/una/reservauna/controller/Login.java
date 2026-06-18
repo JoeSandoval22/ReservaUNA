@@ -30,6 +30,12 @@ public class Login implements Initializable {
     private Button loginButton;
     @FXML
     private Button registerButton;
+    
+    private NavegationController nav;
+    
+    public void setNavigator(NavegationController nav){
+        this.nav=nav;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,10 +53,14 @@ public class Login implements Initializable {
 
     @FXML
     private void switchToSingUp(ActionEvent event) throws IOException{
+        //Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/sigUp.fxml"));
+        //javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+        //Stage currentWindow = (Stage) source.getScene().getWindow();
+        //currentWindow.getScene().setRoot(root);
+        Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
         Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/sigUp.fxml"));
-        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
-        Stage currentWindow = (Stage) source.getScene().getWindow();
-        currentWindow.getScene().setRoot(root);
+        NavegationController nav = new NavegationController(scene);
+        nav.goingTo(root);
     }
 
     @FXML

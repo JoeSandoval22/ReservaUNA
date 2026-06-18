@@ -5,101 +5,41 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="650.0" prefWidth="900.0"
-            style="-fx-background-color: #8B1A1A;"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cr.ac.una.reservauna.controller.SingUpController">
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #8B1A1A;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.reservauna.controller.SingUpController">
     <children>
-        <HBox prefHeight="70.0"
-              prefWidth="900.0"
-              style="-fx-background-color: #7A1515;
-                     -fx-border-color: #FFD700;
-                     -fx-border-width: 0 0 3 0;
-                     -fx-padding: 10 20 10 20;
-                     -fx-alignment: CENTER_LEFT;
-                     -fx-spacing: 14;">
+        <HBox prefHeight="70.0" prefWidth="900.0" style="-fx-background-color: #7A1515;                      -fx-border-color: #FFD700;                      -fx-border-width: 0 0 3 0;                      -fx-padding: 10 20 10 20;                      -fx-alignment: CENTER_LEFT;                      -fx-spacing: 14;">
             <children>
-                <ImageView fitHeight="48" fitWidth="48" preserveRatio="true">
-                    <image>
-                        <Image url="@/Image/logo_universidad_nacional_de_costa_rica.png"/>
-                    </image>
-                </ImageView>
                 <VBox spacing="2">
                     <children>
-                        <Label text="ReservaUNA"
-                               style="-fx-text-fill:white;
-                                      -fx-font-size:20px;
-                                      -fx-font-weight:bold;"/>
-                        <Label text="Sistema de reservas de espacios y equipos"
-                               style="-fx-text-fill: rgba(255,255,255,0.75);
-                                      -fx-font-size:11px;"/>
+                        <Label style="-fx-text-fill:white;                                       -fx-font-size:20px;                                       -fx-font-weight:bold;" text="ReservaUNA" />
+                        <Label style="-fx-text-fill: rgba(255,255,255,0.75);                                       -fx-font-size:11px;" text="Sistema de reservas de espacios y equipos" />
                     </children>
                 </VBox>
             </children>
         </HBox>
-        <VBox layoutX="240.0"
-              layoutY="100.0"
-              prefWidth="420.0"
-              spacing="10.0"
-              style="-fx-background-color:white;
-                     -fx-background-radius:12;
-                     -fx-padding:25;">
+        <VBox layoutX="240.0" layoutY="100.0" prefWidth="420.0" spacing="10.0" style="-fx-background-color:white;                      -fx-background-radius:12;                      -fx-padding:25;">
             <children>
-                <Label text="Registrar Usuario"
-                       style="-fx-font-size:24px;
-                              -fx-font-weight:bold;
-                              -fx-text-fill:#8B1A1A;" />
+                <Label style="-fx-font-size:24px;                               -fx-font-weight:bold;                               -fx-text-fill:#8B1A1A;" text="Registrar Usuario" />
                 <Label text="Nombre completo" />
-                <TextField fx:id="nameText"
-                           promptText="Ingrese su nombre completo" />
+                <TextField fx:id="nameText" promptText="Ingrese su nombre completo" />
                 <Label text="Correo institucional" />
-                <TextField fx:id="emailText"
-                           promptText="usuario@una.ac.cr" />
+                <TextField fx:id="emailText" promptText="usuario@una.ac.cr" />
                 <Label text="Contraseña" />
                 <PasswordField fx:id="passwordText" />
                 <Label text="Rol" />
-                <ComboBox fx:id="roleCombo"
-                          prefWidth="370.0" />
+                <ComboBox fx:id="roleCombo" prefWidth="370.0" />
                 <Label text="Estado del usuario" />
-                <ComboBox fx:id="userStateCombo"
-                          prefWidth="370.0" />
-                <Label fx:id="lblMensaje"
-                       style="-fx-font-size:11px;
-                              -fx-text-fill:red;" />
+                <ComboBox fx:id="userStateCombo" prefWidth="370.0" />
+                <Label fx:id="lblMensaje" style="-fx-font-size:11px;                               -fx-text-fill:red;" />
                 <HBox spacing="10">
                     <children>
-                        <Button fx:id="saveButton"
-                                onAction="#addUser"
-                                prefWidth="120"
-                                text="Guardar"
-                                style="-fx-background-color:#FFD700;
-                                       -fx-text-fill:#4A2800;
-                                       -fx-font-weight:bold;
-                                       -fx-background-radius:6;" />
-                        <Button fx:id="clearButton"
-                                onAction="#clearFields"
-                                prefWidth="120"
-                                text="Limpiar"
-                                style="-fx-background-color:#F4F1EC;
-                                       -fx-text-fill:#333;
-                                       -fx-border-color:#E0D8CE;
-                                       -fx-border-radius:6;
-                                       -fx-background-radius:6;" />
-                        <Button fx:id="backButton"
-                                onAction="#backToLogin"
-                                prefWidth="120"
-                                text="Regresar"
-                                style="-fx-background-color:#8B1A1A;
-                                       -fx-text-fill:white;
-                                       -fx-font-weight:bold;
-                                       -fx-background-radius:6;" />
+                        <Button fx:id="saveButton" onAction="#addUser" prefWidth="120" style="-fx-background-color:#FFD700;                                        -fx-text-fill:#4A2800;                                        -fx-font-weight:bold;                                        -fx-background-radius:6;" text="Guardar" />
+                        <Button fx:id="clearButton" onAction="#clearFields" prefWidth="120" style="-fx-background-color:#F4F1EC;                                        -fx-text-fill:#333;                                        -fx-border-color:#E0D8CE;                                        -fx-border-radius:6;                                        -fx-background-radius:6;" text="Limpiar" />
+                        <Button fx:id="backButton" onAction="#backToLogin" prefWidth="120" style="-fx-background-color:#8B1A1A;                                        -fx-text-fill:white;                                        -fx-font-weight:bold;                                        -fx-background-radius:6;" text="Regresar" />
                     </children>
                 </HBox>
             </children>

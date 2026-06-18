@@ -73,6 +73,8 @@ public class PlaceController implements Initializable {
     private TextField idtext;
     @FXML
     private Button showButton;
+    @FXML
+    private Label lblMensaje;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,18 +87,6 @@ public class PlaceController implements Initializable {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         stateColumn.setCellValueFactory(new PropertyValueFactory<>("resourceState"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-    }
-
-    @FXML
-    private void BtnRegresar(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/cr/ac/una/reservauna/Views/administrator.fxml"));
-            Stage stage = (Stage) btnRegresar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
     }
     
     private void showAlert(Alert.AlertType type, String title, String message){
@@ -217,5 +207,16 @@ public class PlaceController implements Initializable {
     @FXML
     private void showPlaces(ActionEvent event) {
         fillTable();
+    }
+
+    @FXML
+    private void backToAdmin(ActionEvent event) {
+        try {
+            Scene scene = ((javafx.scene.Node) event.getSource()).getScene();
+            NavegationController nav = new NavegationController(scene);
+            nav.goBackTo();
+        } catch (Exception e) {
+            System.out.println("Error al regresar al menú de Administrador: " + e.getMessage());
+        }
     }
 }

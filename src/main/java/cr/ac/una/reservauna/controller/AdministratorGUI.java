@@ -38,6 +38,12 @@ public class AdministratorGUI implements Initializable {
     @FXML
     private Button logOutButton;
 
+    private NavegationController nav;
+    
+    public void setNavigator(NavegationController nav){
+        this.nav=nav;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -46,10 +52,12 @@ public class AdministratorGUI implements Initializable {
 
     private void cargarPantalla(String fxml, Button btn) {
         try {
+            Scene scene = btn.getScene();
             Parent root = FXMLLoader.load(getClass().getResource(fxml));
-            Stage stage = (Stage) btn.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+            
+            NavegationController nav = new NavegationController(scene);
+            nav.goingTo(root);
+            
         } catch (Exception e) {
             System.out.println("Error al cargar: " + fxml + " — " + e.getMessage());
         }
